@@ -1,13 +1,14 @@
-import './styles/App.css';
+import './styles/index.css';
+import AddMission from "./components/AddMission";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Bonjour, je suis une page React</h1>
-      </header>
-    </div>
-  );
+    return(
+        <div className="App">
+            <header className="header">
+                < AddMission />
+            </header>
+        </div>
+    );
 }
 
 export default App;
