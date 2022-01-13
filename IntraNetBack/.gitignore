@@ -387,5 +387,5 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
-.slnx.sqlite
-*.slnx.sqlite
+.vs/slnx.sqlite
+*vs/slnx.sqlite
