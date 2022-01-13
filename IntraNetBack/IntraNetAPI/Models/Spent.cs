@@ -10,7 +10,7 @@ namespace IntraNetAPI.Models
         private bool advanceCash;
         private bool isExactAmount;
         public virtual Mission Mission { get; set; }
-        public virtual List<string> PdfUrl { get; set; }
+        public virtual List<Proof> Proofs { get; set; }
         public int Id { get => id; set => id = value; }
         public decimal Amount { get => amount; set => amount = value; }
         public string Commentary { get => commentary; set => commentary = value; }
