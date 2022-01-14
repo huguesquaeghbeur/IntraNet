@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntraNetAPI.Models;
+using IntraNetAPI.Tools;
 
 namespace IntraNetAPI
 {
@@ -24,8 +26,16 @@ namespace IntraNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddServices();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("specialOrigin", builder =>
+                {
+                    builder.WithMethods("GET").WithOrigins("https://localhost:5000");
+                    builder.WithMethods("POST").WithOrigins("https://localhost:5000");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,10 +49,17 @@ namespace IntraNetAPI
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors(c => c
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{Controller=Mission}/{Action=Getcollabs}/{id?}");
             });
         }
     }
