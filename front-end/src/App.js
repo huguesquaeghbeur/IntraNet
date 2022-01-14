@@ -1,12 +1,28 @@
+import React from "react";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Switch,
+    Route,
+} from "react-router-dom";
 import './styles/index.css';
 import AddMission from "./components/AddMission";
+import BillsOverview from "./containers/BillsOverview"
 
 function App() {
-    return(
+    return (
         <div className="App">
-            <header className="header">
-                < AddMission />
-            </header>
+            <Router>
+                <header className="header">
+                    < AddMission />
+                </header>
+                <Routes>
+                    <Route
+                        path="bills"
+                        element={<BillsOverview />}
+                    />
+                </Routes>
+            </Router>
         </div>
     );
 }
