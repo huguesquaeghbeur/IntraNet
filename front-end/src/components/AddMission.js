@@ -24,7 +24,7 @@ function AddMission() {
                     <input type="text" className="missionDescription border-l-4 border-red-500 focus:outline-none" placeholder="Description"/>
                     <input type="date" className="startTime"/>
                     <input type="date" className="endTime"/>
-                    <button onClick={AddCollab}>Ajouter un collaborateur</button>
+                    <button onClick={AddCollab} className="rounded-full hover:rounded-lg">Ajouter un collaborateur</button>
                     <button onClick={onSubmit}>Valider</button>
                 </form>
             </div>
