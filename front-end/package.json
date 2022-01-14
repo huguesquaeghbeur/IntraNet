@@ -11,7 +11,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "7.2.6",
-    "react-router-dom": "^6.2.1",
+    "react-router-dom": "6.2.1",
     "react-scripts": "5.0.0",
     "redux-thunk": "2.4.1",
     "thunk": "0.0.1",
@@ -42,8 +42,8 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.13"
+    "autoprefixer": "10.4.2",
+    "postcss": "8.4.5",
+    "tailwindcss": "3.0.13"
   }
 }
