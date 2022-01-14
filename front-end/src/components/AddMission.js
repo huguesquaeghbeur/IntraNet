@@ -1,7 +1,6 @@
 import '../index.css';
 import axios from "axios";
 import {Component} from "react";
-import {data} from "autoprefixer";
 
 export default class AddMission extends Component
 {
@@ -11,6 +10,7 @@ export default class AddMission extends Component
             name: "",
             description: "",
             collabs: [],
+            chiefs: [],
             startTime: "",
             endTime: "",
             userId: ""
@@ -19,9 +19,14 @@ export default class AddMission extends Component
     }
 
     componentDidMount = () => {
-        axios.get('http://localhost:5000/api/collabs')
+        axios.get('http://localhost:5000/api/missions/collabs')
             .then(res => {
                 this.setState({collabs: res.data})
+            })
+
+        axios.get('http://localhost:5000/api/missions/manager')
+            .then(res => {
+                this.setState({chiefs: res.data})
             })
     }
 
@@ -43,7 +48,7 @@ export default class AddMission extends Component
             EndTime: this.state.endTime
         }
 
-        axios.post("http://localhost:5000/api/savemission", missionData)
+        axios.post("http://localhost:5000/api/missions/save", missionData)
             .then(res => {
                 console.log(res)
             })
@@ -55,17 +60,24 @@ export default class AddMission extends Component
                 <div className="w-2/4">
                     <h1 className="title">Créer une mission</h1>
                     <form className="submitForm flex flex-col" onSubmit={this.HandleSubmit}>
-                        <input type="text" name="name" className="missionName border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Nom de la mission"/>
+                        <span>Chef de service</span>
                         <select className="manager">
-                            {this.state.collabs.map((data, key) =>
-                                <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
-                            )}
+                            {this.state.chiefs.map((data, key) => {
+                                return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
+                            })}
                         </select>
+                        <input type="text" name="name" className="missionName border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Nom de la mission"/>
                         <input type="text" name="description" className="missionDescription border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Description"/>
+                        <span>Liste des collaborateurs</span>
+                        <select className="collaborators">
+                            {this.state.collabs.map((data, key) => {
+                                return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
+                            })}
+                        </select>
                         <input type="date" name="startTime" className="startTime" onChange={this.OnChange}/>
                         <input type="date" name="endTime" className="endTime" onChange={this.OnChange}/>
                         <button className="rounded-full hover:rounded-lg">Ajouter un collaborateur</button>
-                        <button>Valider</button>
+                        <button type="submit">Valider</button>
                     </form>
                 </div>
             </div>

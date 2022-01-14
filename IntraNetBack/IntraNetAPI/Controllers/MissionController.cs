@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Controllers
 {
@@ -25,29 +27,48 @@ namespace IntraNetAPI.Controllers
             _missionRepository = missionRepo;
             _collabRepository = collabRepo;
         }
+        
 
         [HttpGet]
-        [Route("/api/missions")]
+        [Route("/api/missions/all")]
         public IActionResult GetMission()
         {
             IEnumerable<Mission> missions = _missionRepository.GetAll();
             return Ok(missions);
         }
+        
 
         [HttpGet]
-        [Route("/api/collabs")]
+        [Route("/api/missions/collabs")]
         public IActionResult GetCollabs()
         {
-            IEnumerable<Collaborator> _collaborator = _collabRepository.GetAll();
-            return Ok(_collaborator);
+            IEnumerable<Collaborator> collaborator = _collabRepository.GetAll();
+            return Ok(collaborator);
         }
+        
 
-        [HttpPost]
-        [Route("/api/savemission")]
-        public IActionResult SaveMission()
+        [HttpGet]
+        [Route("/api/missions/manager")]
+        public IActionResult GetManager()
         {
-            IEnumerable<Mission> missions = _missionRepository.GetAll();
-            return Ok();
+            IEnumerable<Collaborator> managers = _collabRepository.Search(s => s.IsChief == true);
+            return Ok(managers);
+        }
+        
+        
+        [HttpPost]
+        [Route("/api/missions/save")]
+        public IActionResult SaveMission([FromForm] string name, [FromForm] string description, [FromForm] Collaborator chief, [FromForm] DateTime startTime, [FromForm] DateTime endTime)
+        {
+            var missions = _context.Missions;
+            Mission mission = new Mission();
+            mission.Name = name;
+            mission.Description = description;
+            mission.StartTime = startTime;
+            mission.EndTime = endTime;
+            mission.IsActive = true;
+            missions.Add(mission);
+            return Ok(mission);
         }
     }
 }
