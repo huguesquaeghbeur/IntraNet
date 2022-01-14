@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntraNetAPI.Tools;
 
 namespace IntraNetAPI
 {
@@ -24,8 +25,15 @@ namespace IntraNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddDbContext<DataContext>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("allAllowd", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,6 +45,7 @@ namespace IntraNetAPI
             }
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthorization();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntraNetAPI.Models;
+using IntraNetAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Tools
