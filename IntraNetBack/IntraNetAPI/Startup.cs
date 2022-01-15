@@ -27,6 +27,17 @@ namespace IntraNetAPI
         {
             services.AddOurServices();
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("allConnections", buider =>
+                {
+                    buider.AllowAnyOrigin().AllowAnyMethod();
+                });
+                options.AddPolicy("specialOrigin", builder =>
+                {
+                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +50,8 @@ namespace IntraNetAPI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
