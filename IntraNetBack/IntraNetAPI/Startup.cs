@@ -1,6 +1,3 @@
-using IntraNetAPI.Interfaces;
-using IntraNetAPI.Models;
-using IntraNetAPI.Repositories;
 using IntraNetAPI.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,10 +25,8 @@ namespace IntraNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOurServices();
             services.AddControllers();
-            services.AddDbContext<DataContext>();
-            services.AddScoped<IRepository<Holiday>, HolidayRepository>();
-
             services.AddCors(options =>
             {
                 options.AddPolicy("allConnections", buider =>
@@ -52,8 +47,11 @@ namespace IntraNetAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
+
             app.UseCors();
 
             app.UseAuthorization();
