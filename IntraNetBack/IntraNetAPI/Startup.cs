@@ -36,6 +36,7 @@ namespace IntraNetAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
 
             app.UseRouting();
 
