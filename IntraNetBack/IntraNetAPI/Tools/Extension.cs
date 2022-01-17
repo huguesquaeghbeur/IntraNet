@@ -1,6 +1,7 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Repositories;
+using IntraNetAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IntraNetAPI.Tools

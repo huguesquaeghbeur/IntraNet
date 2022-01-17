@@ -25,7 +25,8 @@ namespace IntraNetAPI.Repositories
 
         public bool Save(Spent element)
         {
-            throw new NotImplementedException();
+            _dataContext.Spents.Add(element);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public IEnumerable<Spent> Search(Expression<Func<Spent, bool>> predicate)
