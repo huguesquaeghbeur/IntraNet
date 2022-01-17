@@ -9,6 +9,7 @@ import './styles/index.css';
 import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview";
 import HolidayOverview from "./containers/HolidayOverview";
+import InfoOverview from "./containers/InfoOverview";
 
 function App() {
     return (
@@ -25,6 +26,10 @@ function App() {
                     <Route
                         path="holidays"
                         element={<HolidayOverview />}
+                    />
+                    <Route
+                        path="infos"
+                        element={<InfoOverview />}
                     />
                 </Routes>
             </Router>

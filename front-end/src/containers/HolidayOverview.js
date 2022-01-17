@@ -8,6 +8,7 @@ class HolidayOverview extends PureComponent {
         }
     }
 
+
     render() {
 
         return (
