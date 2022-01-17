@@ -7,7 +7,8 @@ import {
 } from "react-router-dom";
 import './styles/index.css';
 import AddMission from "./components/AddMission";
-import BillsOverview from "./containers/BillsOverview"
+import BillsOverview from "./containers/BillsOverview";
+import HolidayOverview from "./containers/HolidayOverview";
 
 function App() {
     return (
@@ -20,6 +21,10 @@ function App() {
                     <Route
                         path="bills"
                         element={<BillsOverview />}
+                    />
+                    <Route
+                        path="holidays"
+                        element={<HolidayOverview />}
                     />
                 </Routes>
             </Router>
