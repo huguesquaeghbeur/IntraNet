@@ -8,7 +8,7 @@ import {
 import './styles/index.css';
 import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview"
-
+// import BillsOverviewID from "./containers/BillsOverviewId"
 function App() {
     return (
         <div className="App">
@@ -20,7 +20,9 @@ function App() {
                     <Route
                         path="bills"
                         element={<BillsOverview />}
-                    />
+                    >
+                        {/* <Route path=":invoiceId" element={<BillsOverviewID />} />     */}
+                    </Route>
                 </Routes>
             </Router>
         </div>
