@@ -18,6 +18,7 @@ namespace IntraNetAPI.Tools
             services.AddScoped<IRepository<Mission>, MissionRepository>();
             services.AddScoped<IRepository<Proof>, ProofRepository>();
             services.AddScoped<IRepository<Spent>, SpentRepository>();
+            services.AddTransient<UploadService>();
         }
     }
 }
