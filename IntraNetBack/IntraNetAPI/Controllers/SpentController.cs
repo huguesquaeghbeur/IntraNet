@@ -28,7 +28,7 @@ namespace IntraNetAPI.Controllers
             _uploadService = uploadService;   
         }
         [HttpPost]
-        public IActionResult Post([FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal billId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
+        public IActionResult Post([FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
         {
             Spent spent = new Spent()
             {

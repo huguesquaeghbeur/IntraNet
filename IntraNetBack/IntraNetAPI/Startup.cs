@@ -35,7 +35,7 @@ namespace IntraNetAPI
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {
-                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                    builder.WithMethods("POST").WithOrigins("http://localhost:42515");
                 });
             });
         }

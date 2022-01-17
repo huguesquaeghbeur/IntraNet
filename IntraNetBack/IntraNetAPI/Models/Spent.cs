@@ -4,6 +4,11 @@ namespace IntraNetAPI.Models
 {
     public class Spent
     {
+        public Spent()
+        {
+            Proofs = new List<Proof>();
+        }
+
         private int id;
         private decimal amount;
         private string commentary;
@@ -26,5 +31,7 @@ namespace IntraNetAPI.Models
             Valided,
         }
         public ValidationEnum Validate { get; set; }
+
+
     }
 }

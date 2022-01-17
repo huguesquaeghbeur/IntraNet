@@ -15,7 +15,7 @@ namespace IntraNetAPI.Repositories
 
         public Mission FinById(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Missions.Find(id);
         }
 
         public IEnumerable<Mission> GetAll()

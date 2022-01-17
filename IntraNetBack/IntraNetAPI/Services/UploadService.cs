@@ -10,21 +10,23 @@ namespace IntraNetAPI.Services
 {
     public class UploadService
     {
-
-        private IWebHostEnvironment _webHostEnvironment;
-        public UploadService(IWebHostEnvironment webHostEnvironment)
+        private void MakeDir(string path)
         {
-            _webHostEnvironment = webHostEnvironment;
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
         }
 
         public string Upload(IFormFile file)
         {
             string fileName = Guid.NewGuid().ToString() + "-" + file.FileName;
-            string path = Path.Combine(_webHostEnvironment.WebRootPath, "proofs", fileName);
+            string path = Path.Combine(Environment.CurrentDirectory, "pdf", fileName);
+            MakeDir(Path.Combine(Environment.CurrentDirectory, "pdf"));
             Stream stream = System.IO.File.Create(path);
             file.CopyTo(stream);
             stream.Close();
-            return "proofs/" + fileName;
+            return "pdf/" + fileName;
         }
     }
 }
