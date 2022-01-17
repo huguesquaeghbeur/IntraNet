@@ -1,22 +1,30 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 
-class InfoOverview extends PureComponent{
-    constructor(props){
+class InfoOverview extends PureComponent {
+    constructor(props) {
         super(props)
         this.state = {
             infos: []
         }
     }
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <h1 className='justify-center'>Demande d'information</h1>
                 <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md'>
                     <div className='bg-white py-8 px-6 shadow rounded-lg sm:px-10'>
                         <form className='mb-0 space-y-6' method='POST'>
-                            <label for="collaborator" className="block text-sm font-medium text-gray-700">Demandeur</label>
+                            <label for="collaborator" className="block text-sm font-medium text-gray-700 ">Demandeur</label>
                             <div>
-                                <input id='collaborator' name='collaborator' required className='w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'/>
+                                <input id='collaborator' name='collaborator' required className='w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500' />
+                            </div>
+                            <label for="service" className='block text-sm font-medium text-gray-700'>Service</label>
+                            <div className='mt-1'>
+                                <select className='w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500'>
+                                    <option value="">Comptabilité</option>
+                                    <option value="">Direction</option>
+                                    <option value="">RH</option>
+                                </select>
                             </div>
                             <label for="commentary" className="block text-sm font-medium text-gray-700">Description</label>
                             <div>
@@ -30,7 +38,7 @@ class InfoOverview extends PureComponent{
 
         )
     }
-   
+
 
 }
 
