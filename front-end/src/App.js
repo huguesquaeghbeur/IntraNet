@@ -2,12 +2,12 @@ import React from "react";
 import {
     BrowserRouter as Router,
     Routes,
-    Switch,
     Route,
 } from "react-router-dom";
 import './styles/index.css';
 import AddMission from "./components/AddMission";
-import BillsOverview from "./containers/BillsOverview"
+import BillsOverview from "./containers/BillsOverview";
+import AddCollaborator from "./components/AddCollaboratorForm";
 
 function App() {
     return (
@@ -20,6 +20,10 @@ function App() {
                     <Route
                         path="bills"
                         element={<BillsOverview />}
+                    />
+                    <Route
+                        path="collaborator"
+                        element={<AddCollaborator/>}
                     />
                 </Routes>
             </Router>
