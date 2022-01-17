@@ -7,10 +7,10 @@ namespace IntraNetAPI.Controllers
     [ApiController]
     public class MissionController : Controller
     {
-        [HttpGet]
-        public Task<IActionResult> CreateMission()
-        {
+        //[HttpGet]
+        //public Task<IActionResult> CreateMission()
+        //{
             
-        }
+        //}
     }
 }

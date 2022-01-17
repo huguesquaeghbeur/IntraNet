@@ -7,8 +7,14 @@ import {
 } from "react-router-dom";
 import './styles/index.css';
 import AddMission from "./components/AddMission";
+<<<<<<< HEAD
 import BillsOverview from "./containers/BillsOverview"
 // import BillsOverviewID from "./containers/BillsOverviewId"
+=======
+import BillsOverview from "./containers/BillsOverview";
+import HolidayOverview from "./containers/HolidayOverview";
+
+>>>>>>> Dev
 function App() {
     return (
         <div className="App">
@@ -20,9 +26,11 @@ function App() {
                     <Route
                         path="bills"
                         element={<BillsOverview />}
-                    >
-                        {/* <Route path=":invoiceId" element={<BillsOverviewID />} />     */}
-                    </Route>
+                    />
+                    <Route
+                        path="holidays"
+                        element={<HolidayOverview />}
+                    />
                 </Routes>
             </Router>
         </div>
