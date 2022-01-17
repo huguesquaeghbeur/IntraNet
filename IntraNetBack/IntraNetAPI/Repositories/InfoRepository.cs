@@ -15,7 +15,7 @@ namespace IntraNetAPI.Repositories
 
         public Info FinById(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Infos.Find(id);
         }
 
         public IEnumerable<Info> GetAll()
