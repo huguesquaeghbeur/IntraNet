@@ -48,7 +48,7 @@ namespace IntraNetAPI.Controllers
                 LastName = LastName,
                 Birthday = Birthday,
                 IsChief = false,
-                IsAdmin = false,
+                IsAdmin = true,
                 HalfDayBreak = 60,
                 Email = Email,
                 Password = Password
