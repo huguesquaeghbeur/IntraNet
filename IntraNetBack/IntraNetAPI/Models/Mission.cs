@@ -11,6 +11,7 @@ namespace IntraNetAPI.Models
         private string description;
         private DateTime startTime;
         private DateTime endTime;
+        
         public virtual Department Department { get; set; }
         public virtual List<Collaborator> Collaborators { get; set; }
         public int Id { get => id; set => id = value; }

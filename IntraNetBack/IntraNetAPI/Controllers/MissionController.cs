@@ -17,17 +17,18 @@ namespace IntraNetAPI.Controllers
     [ApiController]
     public class MissionController : Controller
     {
-        private readonly DataContext _context;  
+        private readonly DataContext _context;
         private IRepository<Mission> _missionRepository;
         private IRepository<Collaborator> _collabRepository;
 
-        public MissionController(DataContext context, IRepository<Mission> missionRepo, IRepository<Collaborator> collabRepo)
+        public MissionController(DataContext context, IRepository<Mission> missionRepo,
+            IRepository<Collaborator> collabRepo)
         {
             _context = context;
             _missionRepository = missionRepo;
             _collabRepository = collabRepo;
         }
-        
+
 
         [HttpGet]
         [Route("/api/missions/all")]
@@ -36,7 +37,7 @@ namespace IntraNetAPI.Controllers
             IEnumerable<Mission> missions = _missionRepository.GetAll();
             return Ok(missions);
         }
-        
+
 
         [HttpGet]
         [Route("/api/missions/collabs")]
@@ -45,7 +46,7 @@ namespace IntraNetAPI.Controllers
             IEnumerable<Collaborator> collaborator = _collabRepository.GetAll();
             return Ok(collaborator);
         }
-        
+
 
         [HttpGet]
         [Route("/api/missions/manager")]
@@ -54,11 +55,12 @@ namespace IntraNetAPI.Controllers
             IEnumerable<Collaborator> managers = _collabRepository.Search(s => s.IsChief == true);
             return Ok(managers);
         }
-        
-        
+
+
         [HttpPost]
         [Route("/api/missions/save")]
-        public IActionResult SaveMission([FromForm] string name, [FromForm] string description, [FromForm] Collaborator chief, [FromForm] DateTime startTime, [FromForm] DateTime endTime)
+        public IActionResult SaveMission([FromForm] string name, [FromForm] string description,
+            [FromForm] Collaborator chief, [FromForm] DateTime startTime, [FromForm] DateTime endTime)
         {
             var missions = _context.Missions;
             Mission mission = new Mission();

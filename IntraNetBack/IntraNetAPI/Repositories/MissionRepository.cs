@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,30 +13,20 @@ namespace IntraNetAPI.Repositories
     {
         public MissionRepository(DataContext dataContext) : base(dataContext)
         {
-            
-        }
 
-        public bool Save(Mission element)
-        {
-            try
-            {
-                _dataContext.Missions.Add(element);
-                _dataContext.SaveChanges();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return false;
-            }
-        }
-
-        public bool Update(Mission element)
-        {
-            return _dataContext.SaveChanges() > 0;
         }
 
         public Mission FinById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Mission> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Save(Mission element)
         {
             throw new NotImplementedException();
         }
@@ -50,10 +40,11 @@ namespace IntraNetAPI.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public IEnumerable<Mission> GetAll()
+        
+        public bool Update(Mission element)
         {
-            return _dataContext.Missions;
+            throw new NotImplementedException();
         }
     }
 }
+
