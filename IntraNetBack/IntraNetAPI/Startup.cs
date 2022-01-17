@@ -1,3 +1,4 @@
+using IntraNetAPI.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,17 @@ namespace IntraNetAPI
                 options.AddPolicy("allAllowd", builder =>
                 {
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            services.AddOurServices();
+            services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("allConnections", buider =>
+                {
+                    buider.AllowAnyOrigin().AllowAnyMethod();
+                });
+                options.AddPolicy("specialOrigin", builder =>
+                {
+                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
                 });
             });
         }
@@ -43,9 +55,15 @@ namespace IntraNetAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
 
             app.UseRouting();
             app.UseCors();
+<<<<<<< HEAD
+=======
+
+            app.UseCors();
+>>>>>>> b40a792cfd57653f5544bf5d0b90c8054edb0372
 
             app.UseAuthorization();
 
