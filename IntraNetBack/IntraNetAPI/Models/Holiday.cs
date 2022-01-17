@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IntraNetAPI.Models
 {
@@ -13,7 +14,7 @@ namespace IntraNetAPI.Models
         public DateTime StartDate { get => startDate; set => startDate = value; }
         public DateTime EndDate { get => endDate; set => endDate = value; }
         public bool StartOnMorning { get => startOnMorning; set => startOnMorning = value; }
-
+        
         public enum ValidationEnum
         {
             Refused,
