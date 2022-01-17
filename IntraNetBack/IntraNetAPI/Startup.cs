@@ -27,12 +27,6 @@ namespace IntraNetAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("allAllowd", builder =>
-                {
-                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
             services.AddOurServices();
             services.AddControllers();
             services.AddCors(options =>
@@ -59,11 +53,9 @@ namespace IntraNetAPI
 
             app.UseRouting();
             app.UseCors();
-<<<<<<< HEAD
-=======
 
-            app.UseCors();
->>>>>>> b40a792cfd57653f5544bf5d0b90c8054edb0372
+
+ 
 
             app.UseAuthorization();
 

@@ -23,10 +23,12 @@ function App() {
                         element={<BillsOverview />}
                     />
                     <Route
-                        path="collaborator"
-                        element={<AddCollaborator/>}
                         path="holidays"
                         element={<HolidayOverview />}
+                    />
+                    <Route
+                        path="collaborator"
+                        element={<AddCollaborator/>}
                     />
                 </Routes>
             </Router>
