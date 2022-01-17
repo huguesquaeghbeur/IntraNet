@@ -24,7 +24,7 @@ export default class AddMission extends Component
                 this.setState({collabs: res.data})
             })
 
-        axios.get('http://localhost:5000/api/missions/manager')
+        axios.get('http://localhost:5000/api/missions/managers')
             .then(res => {
                 this.setState({chiefs: res.data})
             })
@@ -37,12 +37,17 @@ export default class AddMission extends Component
         })
     }
 
+    AddCollab = () => {
+        this.setState({collab: this.refs.selectOptions})
+    }
+
     HandleSubmit = (event) => {
         event.preventDefault()
 
         const missionData = {
             Name: this.state.name,
             Description: this.state.description,
+            Collab: this.state.collabs,
             UserId: this.state.userId,
             StartTime: this.state.startTime,
             EndTime: this.state.endTime
@@ -52,6 +57,9 @@ export default class AddMission extends Component
             .then(res => {
                 console.log(res)
             })
+            .catch(error => {
+                console.log(error)
+        })
     }
 
     render(){
@@ -68,15 +76,15 @@ export default class AddMission extends Component
                         </select>
                         <input type="text" name="name" className="missionName border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Nom de la mission"/>
                         <input type="text" name="description" className="missionDescription border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Description"/>
+                        <input type="date" name="startTime" className="startTime" onChange={this.OnChange}/>
+                        <input type="date" name="endTime" className="endTime" onChange={this.OnChange}/>
                         <span>Liste des collaborateurs</span>
-                        <select className="collaborators">
+                        <select className="collaborators" ref="selectOptions">
                             {this.state.collabs.map((data, key) => {
                                 return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
                             })}
                         </select>
-                        <input type="date" name="startTime" className="startTime" onChange={this.OnChange}/>
-                        <input type="date" name="endTime" className="endTime" onChange={this.OnChange}/>
-                        <button className="rounded-full hover:rounded-lg">Ajouter un collaborateur</button>
+                        <button className="rounded-full hover:rounded-lg" onClick={this.AddCollab}>Ajouter un collaborateur</button>
                         <button type="submit">Valider</button>
                     </form>
                 </div>

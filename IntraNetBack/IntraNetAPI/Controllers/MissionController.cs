@@ -49,7 +49,7 @@ namespace IntraNetAPI.Controllers
 
 
         [HttpGet]
-        [Route("/api/missions/manager")]
+        [Route("/api/missions/managers")]
         public IActionResult GetManager()
         {
             IEnumerable<Collaborator> managers = _collabRepository.Search(s => s.IsChief == true);
@@ -59,18 +59,17 @@ namespace IntraNetAPI.Controllers
 
         [HttpPost]
         [Route("/api/missions/save")]
-        public IActionResult SaveMission([FromForm] string name, [FromForm] string description,
-            [FromForm] Collaborator chief, [FromForm] DateTime startTime, [FromForm] DateTime endTime)
+        public async Task<ActionResult<Mission>> CreateMission(Mission mission)
         {
-            var missions = _context.Missions;
-            Mission mission = new Mission();
-            mission.Name = name;
-            mission.Description = description;
-            mission.StartTime = startTime;
-            mission.EndTime = endTime;
-            mission.IsActive = true;
-            missions.Add(mission);
-            return Ok(mission);
+            var savedMission = new Mission();
+            savedMission.Name = mission.Name;
+            savedMission.Description = mission.Description;
+            savedMission.StartTime = mission.StartTime;
+            savedMission.EndTime = mission.EndTime;
+            savedMission.Collaborators = mission.Collaborators;
+            _context.Missions.Add(savedMission);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

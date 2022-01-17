@@ -3,6 +3,7 @@ using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace IntraNetAPI.Repositories
@@ -35,7 +36,7 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Collaborator> Search(Expression<Func<Collaborator, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Collaborators.Where(predicate);
         }
 
         public Collaborator SearchOne(Expression<Func<Collaborator, bool>> searchMethode)

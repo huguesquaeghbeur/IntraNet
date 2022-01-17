@@ -23,7 +23,7 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Mission> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Missions;
         }
 
         public bool Save(Mission element)
