@@ -18,12 +18,12 @@ namespace IntraNetAPI.Repositories
 
         public Collaborator FinById(int id)
         {
-           return _dataContext.Collaborators.Include(c => c.Bills).Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
+           return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
         }
 
         public IEnumerable<Collaborator> GetAll()
         {
-            return _dataContext.Collaborators.Include(c=>c.Bills).Include(c=>c.Holidays).Include(c=>c.Missions);
+            return _dataContext.Collaborators.Include(c=>c.Holidays).Include(c=>c.Missions);
         }
 
         public bool Save(Collaborator element)
@@ -34,12 +34,12 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Collaborator> Search(Expression<Func<Collaborator, bool>> predicate)
         {
-            return _dataContext.Collaborators.Include(c => c.Bills).Include(c => c.Holidays).Include(c => c.Missions).Where(predicate);
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Where(predicate);
         }
 
         public Collaborator SearchOne(Expression<Func<Collaborator, bool>> searchMethode)
         {
-            return _dataContext.Collaborators.Include(c => c.Bills).Include(c => c.Holidays).Include(c => c.Missions).Where(searchMethode).FirstOrDefault();
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Where(searchMethode).FirstOrDefault();
         }
 
         public bool Update(Collaborator element)
