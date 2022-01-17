@@ -17,32 +17,33 @@ namespace IntraNetAPI.Repositories
 
         public Bill FinById(int id)
         {
-            return _dataContext.Bills.Include(b=>b.Spents).ThenInclude(s=>s.Mission).FirstOrDefault(b=>b.Id==id);
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).FirstOrDefault(b=>b.Id==id);
         }
 
         public IEnumerable<Bill> GetAll()
         {
-            return _dataContext.Bills.Include(b=>b.Spents);
+            return _dataContext.Bills.Include(b=>b.Collaborator).Include(b=>b.Spents).ThenInclude(s=>s.Mission).Include(b=>b.Spents).ThenInclude(s=>s.Proofs);
         }
 
         public bool Save(Bill element)
         {
-            throw new NotImplementedException();
+            _dataContext.Bills.Add(element);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public IEnumerable<Bill> Search(Expression<Func<Bill, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(predicate);
         }
 
         public Bill SearchOne(Expression<Func<Bill, bool>> searchMethode)
         {
-            throw new NotImplementedException();
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(searchMethode).FirstOrDefault();
         }
 
         public bool Update(Bill element)
         {
-            throw new NotImplementedException();
+            return _dataContext.SaveChanges() > 0;
         }
     }
 }

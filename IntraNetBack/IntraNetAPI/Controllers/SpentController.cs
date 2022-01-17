@@ -1,6 +1,7 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace IntraNetAPI.Controllers
 {
+    [EnableCors("specialOrigin")]
+    [Route("intranet/v1/spent")]
+    [ApiController]
     public class SpentController : ControllerBase
     {
         IRepository<Spent> _spentRepository;
@@ -38,6 +42,21 @@ namespace IntraNetAPI.Controllers
             spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
             _spentRepository.Save(spent);
             return Ok(new { Message = "Spent added", id = spent.Id });
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_spentRepository.GetAll());
+        }
+
+        [HttpGet("{spentId}")]
+        public IActionResult Get(int spentId)
+        {
+            Spent spent = _spentRepository.FinById(spentId);
+            if (spent != null)
+                return Ok(spent);
+            return NotFound(new { Message = "spent not found"});
         }
     }
 }
