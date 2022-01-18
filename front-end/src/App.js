@@ -7,14 +7,9 @@ import {
 } from "react-router-dom";
 import './styles/index.css';
 import AddMission from "./components/AddMission";
-<<<<<<< HEAD
-import BillsOverview from "./containers/BillsOverview"
-// import BillsOverviewID from "./containers/BillsOverviewId"
-=======
 import BillsOverview from "./containers/BillsOverview";
 import HolidayOverview from "./containers/HolidayOverview";
 
->>>>>>> Dev
 function App() {
     return (
         <div className="App">

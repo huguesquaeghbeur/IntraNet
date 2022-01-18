@@ -11,16 +11,19 @@ import {
 
 export function fetchAllBills() {
     return (dispatch) => {
-        dispatch({
-            type: IS_LOADING,
-            value: true
-        })
+        // dispatch({
+        //     type: IS_LOADING,
+        //     value: true
+        // })
     getAllBills().then(res =>{
+        console.log("get all bills then "+res)
         dispatch({
             type: END_GETTING_ALL_BILLS,
             bills: res.data
         })
     }).catch(error => {
+        console.log("get all bills error "+error)
+
         dispatch({
             type : ERROR_GETTING_ALL_BILLS,
             error: error

@@ -1,5 +1,6 @@
 import {createStore,combineReducers,compose,applyMiddleware} from 'redux'
-import userReducer from './reducers/userReducer'
+// import userReducer from './reducers/userReducer'
+import billsReducer from './reducers/billsReducer'
 import thunk from 'redux-thunk'
 
 const composeEnhancer=compose
