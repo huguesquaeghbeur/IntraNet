@@ -1,16 +1,24 @@
 import React, { PureComponent } from 'react';
-import { getAllRequestHoliday, getHolidayById, postHolidayData } from "../services/holidayData";
+import axios from "axios"
+import { holidaySelector } from '../redux/selectors/holidaySelector';
+import { connect } from 'react-redux';
+import { getHolidaysFromApi } from '../redux/actions/holidayAction';
+import HolidayList from '../components/HolidayList';
 
 class HolidayOverview extends PureComponent {
     constructor(props) {
         super(props)
-        this.state = {
-            holidays: []
-        }
+        // this.state = {
+        //     holidays: []
+        // }
     }
 
-    render() {
+    getHolidaysFromApiClick = () => {
+        this.props.getHolidaysFromApi()
+    }
 
+
+    render() {
         return (
             <div>
                 <h1 className="justify-center">Demande de congés</h1>
@@ -18,14 +26,14 @@ class HolidayOverview extends PureComponent {
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                         <form className="mb-0 space-y-6" method="POST">
                             <div>
-                                <label for="collaborator" className="block text-sm font-medium text-gray-700">Demandeur</label>
+                                <label htmlFor="collaborator" className="block text-sm font-medium text-gray-700">Demandeur</label>
                                 <div>
                                     <input id="collaborator" name="collaborator" required className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
-                            
+
                             <div>
-                                <label for="holidayType" className="block text-sm font-medium text-gray-700">Type de congés</label>
+                                <label htmlFor="holidayType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                 <div className="mt-1">
                                     <select className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                         <option value="">Congés payés</option>
@@ -38,13 +46,13 @@ class HolidayOverview extends PureComponent {
 
                             {/* Holiday Begin on ... */}
                             <div>
-                                <label for="startDate" className="block text-sm font-medium text-gray-700">Date de début</label>
+                                <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Date de début</label>
                                 <div>
-                                    <input type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"/>
+                                    <input type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
                             <div>
-                                <label for="startOnMorning" className="block text-sm font-medium text-gray-700">Heure de début</label>
+                                <label htmlFor="startOnMorning" className="block text-sm font-medium text-gray-700">Heure de début</label>
                                 <div className="mt-1">
                                     <select className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                         <option value="">Matin</option>
@@ -55,13 +63,13 @@ class HolidayOverview extends PureComponent {
 
                             {/* Holiday End on ... */}
                             <div>
-                                <label for="endDate" className="block text-sm font-medium text-gray-700">Date de fin</label>
+                                <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">Date de fin</label>
                                 <div>
-                                    <input type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"/>
+                                    <input type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
                             <div>
-                                <label for="endOnMorning" className="block text-sm font-medium text-gray-700">Heure de fin</label>
+                                <label htmlFor="endOnMorning" className="block text-sm font-medium text-gray-700">Heure de fin</label>
                                 <div className="mt-1">
                                     <select className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                         <option value="">Matin</option>
@@ -72,14 +80,14 @@ class HolidayOverview extends PureComponent {
 
                             {/* Will be calculated automatically with input form */}
                             <div>
-                                <label for="halfDayBreak" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
+                                <label htmlFor="halfDayBreak" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
                                 <div>
                                     <input value="0" id="halfDayBreak" name="halfDayBreak" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
 
                             <div>
-                                <label for="commentary" className="block text-sm font-medium text-gray-700">Commentaires</label>
+                                <label htmlFor="commentary" className="block text-sm font-medium text-gray-700">Commentaires</label>
                                 <div>
                                     <textarea id="commentary" name="commentary" className="w-full border border-gray-300 px-3 py-20 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"></textarea>
                                 </div>
@@ -106,9 +114,31 @@ class HolidayOverview extends PureComponent {
                         </form>
                     </div>
                 </div>
+                <div className="flex flex-row justify-around">
+                    <button type="" onClick={this.getHolidaysFromApiClick} className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 focus:ring-offset-2 focus:ring-orange-500">
+                        Voir la liste des congés en attente
+                    </button>
+                </div>
+                {this.props.holidays != undefined ? (
+                    <div>
+                        <HolidayList />
+                    </div>
+                ) : null}
             </div>
         );
     }
 }
 
-export default HolidayOverview;
+const mapStateToProps = (state) => {
+    console.log(state.holiday.holidays)
+    return {
+        holidays: state.holiday.holidays
+    }
+}
+const mapActionToProps = (dispatch) => {
+    return {
+        getHolidaysFromApi: () => dispatch(getHolidaysFromApi())
+    }
+}
+
+export default connect(mapStateToProps, mapActionToProps)(HolidayOverview);
