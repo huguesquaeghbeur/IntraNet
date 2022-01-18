@@ -1,30 +1,27 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { getHolidaysFromApi } from '../redux/actions/holidayAction';
-import HolidayList from '../components/HolidayList';
-import { postHolidayData } from '../services/holidayData';
+import { postRequestHolidayInApi } from '../redux/actions/holidayAction';
 
-class HolidayOverview extends PureComponent {
-    constructor(props) {
-        super(props)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        // this.state = {
-        // }
+class PostRequestHoliday extends PureComponent {
+    state = {
+        collabId: '',
+        startDate: '',
+        startOnMorning: '',
+        endDate: '',
+        endOnMorning: '',
+        halfDayBreakCount: ''
     }
 
-    getHolidaysFromApiClick = () => {
-        this.props.getHolidaysFromApi()
+    handleTextChange = (event) => {
+        const {target: {collabId, value}} = event;
+        this.setState({ [collabId]: value});
+        console.log(this.state);
     }
 
-    handleSubmit(e){
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('collaboratorId', this.collabId);
-        formData.append('startDate', this.startDate);
-        formData.append('endDate', this.endDate);
-        formData.append('startOnMorning', this.startOnMorning);
-        formData.append('endOnMorning', this.endOnMorning);
-        postHolidayData(formData);
+    handleOnSubmit = (event) => {
+        event.preventDefault();
+        this.props.postRequestHolidayInApi(this.state);
+        this.setState();
     }
 
     render() {
@@ -33,11 +30,11 @@ class HolidayOverview extends PureComponent {
                 <h1 className="justify-center">Demande de congés</h1>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                        <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit}>
+                        <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleOnSubmit}>
                             <div>
                                 <label htmlFor="collaborator" className="block text-sm font-medium text-gray-700">Demandeur</label>
                                 <div>
-                                    <input ref={(collabId) => this.collabId = collabId} id="collaborator" name="collaborator" required className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input onChange={this.handleTextChange}  id="collaborator" name="collaborator" required className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
 
@@ -57,15 +54,15 @@ class HolidayOverview extends PureComponent {
                             <div>
                                 <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Date de début</label>
                                 <div>
-                                    <input ref={(startDate) => this.startDate = startDate} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input onChange={this.handleTextChange} value={this.state.startDate} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="startOnMorning" className="block text-sm font-medium text-gray-700">Heure de début</label>
                                 <div className="mt-1">
-                                    <select name="startOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option ref={(startOnMorning) => this.startOnMorning = startOnMorning} value={1}>Matin</option>
-                                        <option ref={(startOnMorning) => this.startOnMorning = startOnMorning} value={0}>Après-midi</option>
+                                    <select onChange={this.handleTextChange} value={this.state.startOnMorning} name="startOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option onChange={this.handleTextChange} value={this.state.startOnMorning = true}>Matin</option>
+                                        <option onChange={this.handleTextChange} value={this.state.startOnMorning = false}>Après-midi</option>
                                     </select>
                                 </div>
                             </div>
@@ -74,15 +71,15 @@ class HolidayOverview extends PureComponent {
                             <div>
                                 <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">Date de fin</label>
                                 <div>
-                                    <input ref={(endDate) => this.endDate = endDate} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input onChange={this.handleTextChange} value={this.state.endDate} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="endOnMorning" className="block text-sm font-medium text-gray-700">Heure de fin</label>
                                 <div className="mt-1">
                                     <select name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option ref={(endOnMorning) => this.endOnMorning = endOnMorning} value={1}>Matin</option>
-                                        <option ref={(endOnMorning) => this.endOnMorning = endOnMorning} value={0}>Après-midi</option>
+                                        <option onChange={this.handleTextChange} value={this.state.endOnMorning = true}>Matin</option>
+                                        <option onChange={this.handleTextChange} value={this.state.endOnMorning = false}>Après-midi</option>
                                     </select>
                                 </div>
                             </div>
@@ -91,7 +88,7 @@ class HolidayOverview extends PureComponent {
                             <div>
                                 <label htmlFor="halfDayBreak" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
                                 <div>
-                                    <input value="0" id="halfDayBreak" name="halfDayBreak" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input onChange={this.handleTextChange} value={this.state.halfDayBreakCount} id="halfDayBreak" name="halfDayBreak" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
 
@@ -123,31 +120,9 @@ class HolidayOverview extends PureComponent {
                         </form>
                     </div>
                 </div>
-                <div className="flex flex-row justify-around">
-                    <button type="" onClick={this.getHolidaysFromApiClick} className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 focus:ring-offset-2 focus:ring-orange-500">
-                        Voir la liste des congés en attente
-                    </button>
-                </div>
-                {this.props.holidays != undefined ? (
-                    <div>
-                        <HolidayList />
-                    </div>
-                ) : null}
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    console.log(state.holiday.holidays)
-    return {
-        holidays: state.holiday.holidays
-    }
-}
-const mapActionToProps = (dispatch) => {
-    return {
-        getHolidaysFromApi: () => dispatch(getHolidaysFromApi())
-    }
-}
-
-export default connect(mapStateToProps, mapActionToProps)(HolidayOverview);
+export default connect()(PostRequestHoliday);
