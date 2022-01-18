@@ -29,9 +29,9 @@ namespace IntraNetAPI
             services.AddControllers();
             services.AddCors(options =>
             {
-                options.AddPolicy("allConnections", buider =>
+                options.AddPolicy("allConnections", builder =>
                 {
-                    buider.AllowAnyOrigin().AllowAnyMethod();
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {
@@ -50,7 +50,6 @@ namespace IntraNetAPI
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors();
 
             app.UseCors();
 

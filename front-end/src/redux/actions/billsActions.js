@@ -1,7 +1,7 @@
 import {
     getAllBills,
     createBill,
-    updateBill,
+    updateBillApi,
 } from "../../services/billsService";
 import {
     IS_LOADING,
@@ -10,13 +10,15 @@ import {
 } from "../reducers/billsReducer"
 
 export function fetchAllBills() {
+    console.log("dans fetch all bills ")
+
     return (dispatch) => {
         // dispatch({
         //     type: IS_LOADING,
         //     value: true
         // })
     getAllBills().then(res =>{
-        console.log("get all bills then "+res)
+        console.log("get all bills then "+res.data)
         dispatch({
             type: END_GETTING_ALL_BILLS,
             bills: res.data
@@ -30,3 +32,19 @@ export function fetchAllBills() {
         })
     })
 }}
+
+export function postBill(bill){
+    console.log("post action bill "+bill)
+    createBill(bill).then(res=>{
+        console.log("post bill then"+res)
+    }).catch(error=>{
+        console.log("post bill catch"+error)
+    })}
+
+    export function updateBill(bill){
+        console.log("update action bill "+bill)
+        updateBillApi(bill).then(res=>{
+            console.log("update bill then"+res)
+        }).catch(error=>{
+            console.log("update bill catch"+error)
+        })}

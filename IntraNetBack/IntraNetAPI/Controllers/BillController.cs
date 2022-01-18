@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IntraNetAPI.Controllers
 {
-    [EnableCors("specialOrigin")]
+    [EnableCors("allConnections")]
     [Route("intranet/v1/bill")]
     [ApiController]
     public class BillController : ControllerBase
@@ -44,7 +44,7 @@ namespace IntraNetAPI.Controllers
         }
         [HttpPost]
         public IActionResult Post([FromForm]int collabId)
-        {
+            {
             Bill bill = new Bill()
             {
                 Collaborator = _collaboratorRepository.FinById(collabId),
@@ -68,7 +68,8 @@ namespace IntraNetAPI.Controllers
                     IsExactAmount = isExactAmount,
                     Validate = Spent.ValidationEnum.InitialState,
                 };
-                spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
+                if(proof != null)
+                    spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
                 bill.Spents.Add(spent);
                 _billRepository.Update(bill);
                 return Ok(new { Message = "bill added", id = bill.Id });

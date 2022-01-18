@@ -1,15 +1,15 @@
 import axios from "axios"
-const baseUrl = "http://localhost:42515/intranet/v1"
+const baseUrl = "http://localhost:42515/intranet/v1/bill"
 
 export const getAllBills = () => {
-    console.log("chemin "+baseUrl+"/bill")
-    return axios.get(baseUrl+"/bill")
+    return axios.get(baseUrl)
 }
 
 export const createBill = (bill) => {
-    return axios.post(baseUrl+"/bill", {...bill})
+    console.log("billservice "+bill.collabId)
+    return axios.post(baseUrl, bill)
 }
 
-export const updateBill = (bill) => {
-    return axios.patch(baseUrl+"/bill", {...bill})
+export const updateBillApi = (bill) => {
+    return axios.patch(baseUrl, bill)
 }
