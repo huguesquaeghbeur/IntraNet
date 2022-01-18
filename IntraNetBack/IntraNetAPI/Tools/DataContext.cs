@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntraNetAPI.Models;
+using IntraNetAPI.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Tools
@@ -11,6 +12,12 @@ namespace IntraNetAPI.Tools
     {
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Collaborator> Collaborators { get; set; }
+
+        internal void Holiday()
+        {
+            throw new NotImplementedException();
+        }
+
         public DbSet<Department> Departments { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<Info> Infos { get; set; }
