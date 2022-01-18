@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace IntraNetAPI.Models
@@ -23,7 +24,7 @@ namespace IntraNetAPI.Models
         public bool IsAdmin { get => isAdmin; set => isAdmin = value; }
         public int HalfDayBreak { get => halfDayBreak; set => halfDayBreak = value; }
         public virtual List<Mission> Missions { get; set; }
-        //public virtual List<Bill> Bills { get; set; }
+        public virtual List<Bill> Bills { get; set; }
         public virtual List<Holiday> Holidays { get; set; }
         public virtual Department Department { get; set; }
         public string Email { get => email; set => email = value; }

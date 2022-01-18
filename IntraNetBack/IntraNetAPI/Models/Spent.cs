@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace IntraNetAPI.Models
 {
@@ -14,6 +16,9 @@ namespace IntraNetAPI.Models
         private string commentary;
         private bool advanceCash;
         private bool isExactAmount;
+        public int MissionId { get; set; }
+        [ForeignKey("MissionId")]
+        [JsonIgnore]
         public virtual Mission Mission { get; set; }
         public virtual List<Proof> Proofs { get; set; }
         public int Id { get => id; set => id = value; }
