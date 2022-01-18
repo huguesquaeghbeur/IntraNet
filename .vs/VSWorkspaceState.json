@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\IntraNetBack",
+    "\\IntraNetBack\\IntraNetAPI",
+    "\\IntraNetBack\\IntraNetAPI\\Controllers"
+  ],
+  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\DepartmentController.cs",
+  "PreviewInSolutionExplorer": false
+}
