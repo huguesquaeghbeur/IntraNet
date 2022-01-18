@@ -15,11 +15,11 @@ namespace IntraNetAPI.Controllers
     public class HolidayAPIController : ControllerBase
     {
         IRepository<Holiday> _holidayRepository;
-        //IRepository<Collaborator> _collaboratorRepository;
-        public HolidayAPIController(IRepository<Holiday> holidayRepository)
+        IRepository<Collaborator> _collaboratorRepository;
+        public HolidayAPIController(IRepository<Holiday> holidayRepository, IRepository<Collaborator> collaboratorRepository)
         {
             _holidayRepository = holidayRepository;
-            //_collaboratorRepository = collaboratorRepository;
+            _collaboratorRepository = collaboratorRepository;
         }
         // GET: api/<HolidayAPIController>
         [HttpGet]
@@ -37,23 +37,27 @@ namespace IntraNetAPI.Controllers
             {
                 return Ok(h);
             }
-            return NotFound();
+            return NotFound(new { Message = "holiday not found"});
         }
 
         // POST api/<HolidayAPIController>
         [HttpPost]
-        public IActionResult Post([FromForm] int collabId, [FromForm] Department department, [FromForm] DateTime startDate, [FromForm] bool isMorningStart, [FromForm] DateTime endDate, [FromForm] bool isMorningEnd)
+        public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning)
         {
             Holiday holiday = new Holiday()
             {
-                //Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
+                Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
                 StartDate = startDate,
-                StartOnMorning = isMorningStart,
+                StartOnMorning = startOnMorning,
                 EndDate = endDate,
+                EndOnMorning = endOnMorning,
                 Validation = Holiday.ValidationEnum.InitialState,
             };
-            _holidayRepository.Save(holiday);
-            return Ok(new { Message = "Holiday added", Id = holiday.Id});
+            if (_holidayRepository.Save(holiday))
+            {
+                return Ok(new { Message = "Holiday added", Id = holiday.Id });
+            }
+            else return NotFound(new { Message = "holiday error" });
         }
 
         //// PUT api/<HolidayAPIController>/5
