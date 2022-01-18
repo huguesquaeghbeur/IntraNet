@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace IntraNetAPI.Controllers
 {
-    [EnableCors("specialOrigin")]
+    [EnableCors("allConnections")]
     [Route("collaborator")]
     public class CollaboratorController : Controller
     {
