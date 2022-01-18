@@ -7,4 +7,5 @@ const composeEnhancer=compose
 export default createStore(
     combineReducers({
         // user:userReducer,
+        bills: billsReducer
     }),composeEnhancer(applyMiddleware(thunk)))
