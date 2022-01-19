@@ -25,6 +25,7 @@ class PostRequestHoliday extends PureComponent {
         formData.append('isMorningStart', this.state.isMorningStart);
         formData.append('endDate', this.state.endDate);
         formData.append('isMorningEnd', this.state.isMorningEnd);
+        formData.append('halfDayBreakCount', this.state.endDate - this.state.startDate);
         console.log(this.state)
 
         postHolidayData(formData).then(res => {
@@ -86,8 +87,8 @@ class PostRequestHoliday extends PureComponent {
                                 <label htmlFor="startOnMorning" className="block text-sm font-medium text-gray-700">Heure de début</label>
                                 <div className="mt-1">
                                     <select value={isMorningStart} name="startOnMorning" onChange={this.handleChange} name="startOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option onChange={this.handleChange} value={true}>Matin</option>
-                                        <option onChange={this.handleChange} value={false}>Après-midi</option>
+                                        <option onChange={this.handleChange} value={1}>Matin</option>
+                                        <option onChange={this.handleChange} value={0}>Après-midi</option>
                                     </select>
                                 </div>
                             </div>
@@ -103,17 +104,17 @@ class PostRequestHoliday extends PureComponent {
                                 <label htmlFor="endOnMorning" className="block text-sm font-medium text-gray-700">Heure de fin</label>
                                 <div className="mt-1">
                                     <select value={isMorningEnd} onChange={this.handleChange} name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option onChange={this.handleChange} value={true} >Matin</option>
-                                        <option onChange={this.handleChange} value={false} >Après-midi</option>
+                                        <option onChange={this.handleChange} value={1}>Matin</option>
+                                        <option onChange={this.handleChange} value={0}>Après-midi</option>
                                     </select>
                                 </div>
                             </div>
 
                             {/* Will be calculated automatically with input form */}
                             <div>
-                                <label htmlFor="halfDayBreak" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
+                                <label htmlFor="halfDayBreakCount" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
                                 <div>
-                                    <input value={halfDayBreakCount} onChange={this.handleChange} id="halfDayBreak" name="halfDayBreak" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input value={halfDayBreakCount} onChange={this.handleChange} id="halfDayBreakCount" name="halfDayBreakCount" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
 

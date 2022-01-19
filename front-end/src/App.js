@@ -29,7 +29,7 @@ function App() {
                         element={<HolidayList />}
                     />
                     <Route
-                        path="post"
+                        path="holidays/post"
                         element={<PostRequestHoliday />}
                     />
                     <Route
