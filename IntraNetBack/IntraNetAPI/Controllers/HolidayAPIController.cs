@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace IntraNetAPI.Controllers
 {
-    [EnableCors("specialOrigin")]
+    [EnableCors("allConnections")]
     [Route("intranet/v1/holidays")]
     [ApiController]
     public class HolidayAPIController : ControllerBase

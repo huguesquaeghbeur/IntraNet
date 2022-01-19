@@ -30,6 +30,10 @@ function App() {
                         element={<HolidayList />}
                     />
                     <Route
+                        path="holidays/post"
+                        element={<PostRequestHoliday />}
+                    />
+                    <Route
                         path="collaborator"
                         element={<AddCollaborator/>}
                     />
