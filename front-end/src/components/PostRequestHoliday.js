@@ -6,15 +6,24 @@ class PostRequestHoliday extends PureComponent {
     state = {
         collabId: '',
         startDate: '',
-        isMorningStart: '',
+        startOnMorning: true,
         endDate: '',
-        isMorningEnd: '',
+        endOnMorning: true,
+        leaveType: '',
         halfDayBreakCount: ''
     }
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
+        this.delayDate(this.state.startDate, this.state.startDate)
+    }
+
+    delayDate = (date1, date2) => {
+        const date1Tmp = date1.Day;
+        const date2Tmp = date2.Day;
+        const diffTmp = date2Tmp - date1Tmp;
+        return diffTmp;
     }
 
     handleSubmit = (e) => {
@@ -22,10 +31,11 @@ class PostRequestHoliday extends PureComponent {
         const formData = new FormData();
         formData.append('collabId', this.state.collabId);
         formData.append('startDate', this.state.startDate);
-        formData.append('isMorningStart', this.state.isMorningStart);
+        formData.append('startOnMorning', this.state.startOnMorning);
         formData.append('endDate', this.state.endDate);
-        formData.append('isMorningEnd', this.state.isMorningEnd);
-        formData.append('halfDayBreakCount', this.state.endDate - this.state.startDate);
+        formData.append('endOnMorning', this.state.endOnMorning);
+        formData.append('leaveType', this.state.leaveType);
+        formData.append('halfDayBreakCount', this.delayDate(this.state.startDate, this.state.endDate));
         console.log(this.state)
 
         postHolidayData(formData).then(res => {
@@ -50,7 +60,7 @@ class PostRequestHoliday extends PureComponent {
     // }
 
     render() {
-        const { collabId, startDate, isMorningStart, endDate, isMorningEnd, halfDayBreakCount } = this.state;
+        const { collabId, startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount } = this.state;
         return (
             <div>
                 <h1 className="justify-center">Demande de congés</h1>
@@ -65,13 +75,13 @@ class PostRequestHoliday extends PureComponent {
                             </div>
 
                             <div>
-                                <label htmlFor="holidayType" className="block text-sm font-medium text-gray-700">Type de congés</label>
+                                <label htmlFor="leaveType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                 <div className="mt-1">
-                                    <select name="holidayType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option value="">Congés payés</option>
-                                        <option value="">Sans solde</option>
-                                        <option value="">RTT</option>
-                                        <option value="">Autre ...</option>
+                                    <select value={leaveType} onChange={this.handleChange} name="leaveType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option onChange={this.handleChange} value="0">Congés payés</option>
+                                        <option onChange={this.handleChange} value="1">Congé maladie</option>
+                                        <option onChange={this.handleChange} value="2">Congé parental</option>
+                                        <option onChange={this.handleChange} value="3">Sans solde</option>
                                     </select>
                                 </div>
                             </div>
@@ -86,9 +96,9 @@ class PostRequestHoliday extends PureComponent {
                             <div>
                                 <label htmlFor="startOnMorning" className="block text-sm font-medium text-gray-700">Heure de début</label>
                                 <div className="mt-1">
-                                    <select value={isMorningStart} name="startOnMorning" onChange={this.handleChange} name="startOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option onChange={this.handleChange} value={1}>Matin</option>
-                                        <option onChange={this.handleChange} value={0}>Après-midi</option>
+                                    <select value={startOnMorning} name="startOnMorning" onChange={this.handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option onChange={this.handleChange} value="true">Matin</option>
+                                        <option onChange={this.handleChange} value="false">Après-midi</option>
                                     </select>
                                 </div>
                             </div>
@@ -103,9 +113,9 @@ class PostRequestHoliday extends PureComponent {
                             <div>
                                 <label htmlFor="endOnMorning" className="block text-sm font-medium text-gray-700">Heure de fin</label>
                                 <div className="mt-1">
-                                    <select value={isMorningEnd} onChange={this.handleChange} name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option onChange={this.handleChange} value={1}>Matin</option>
-                                        <option onChange={this.handleChange} value={0}>Après-midi</option>
+                                    <select value={endOnMorning} onChange={this.handleChange} name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option onChange={this.handleChange} value="true">Matin</option>
+                                        <option onChange={this.handleChange} value="false">Après-midi</option>
                                     </select>
                                 </div>
                             </div>

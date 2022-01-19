@@ -42,15 +42,17 @@ namespace IntraNetAPI.Controllers
 
         // POST api/<HolidayAPIController>
         [HttpPost]
-        public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning)
+        public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
             Holiday holiday = new Holiday()
             {
                 Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
-                StartDate = startDate,
+                StartDate = startDate.ToLocalTime(),
                 StartOnMorning = startOnMorning,
-                EndDate = endDate,
+                EndDate = endDate.ToLocalTime(),
                 EndOnMorning = endOnMorning,
+                HalfDayBreakCount = endDate.Day - startDate.Day,
+                LeaveType = (Holiday.LeaveTypeEnum)leaveType,
                 Validation = Holiday.ValidationEnum.InitialState,
             };
             if (_holidayRepository.Save(holiday))

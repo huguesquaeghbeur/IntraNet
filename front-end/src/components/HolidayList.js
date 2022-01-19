@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { getAllHolidays } from '../services/holidayData';
 
 class HolidayList extends PureComponent {
@@ -36,7 +36,7 @@ class HolidayList extends PureComponent {
                                         <div className="bg-green-300 rounded-md p-1">congés validé</div>
                                     ) : (post.validation === 0) ? (
                                         <div className="bg-red-300 rounded-md p-1">refusé</div>
-                                    ) : null }
+                                    ) : null}
                                 </div>
                                 <div className="rounded-full bg-cyan-300 p-1 m-1">
                                     # {post.id}
@@ -46,7 +46,17 @@ class HolidayList extends PureComponent {
                                 Collaborateur : <b>{post.collaboratorId}</b>
                             </div>
                             <div className="flex justify-start">
-                                Type de congé : <b></b>
+                            Type : <b>
+                                {post.leaveType === 0 ? (
+                                    <div>Congé payé</div>
+                                ) : (post.leaveType === 1) ? (
+                                    <div>Congé maladie</div>
+                                ) : (post.leaveType === 2) ? (
+                                    <div>Congé parental</div>
+                                ) : (post.leaveType === 3) ? (
+                                    <div>Congé sans solde</div>
+                                ) : null}
+                                </b>
                             </div>
                             <div className="flex flex-row justify-around">
                                 <div className="p-2">
@@ -54,6 +64,9 @@ class HolidayList extends PureComponent {
                                 </div>
                                 <div className="p-2">
                                     Fin : <b>{post.endDate}</b>
+                                </div>
+                                <div>
+                                    Jours cumulés : <b>{post.halfDayBreakCount / 2}</b>
                                 </div>
                             </div>
                         </div>
