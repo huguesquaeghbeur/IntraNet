@@ -12,3 +12,7 @@ export const getAllCollaborator = () => {
 export const getCollaboratorById = (id) => {
     return axios.get(baseUrl + '/collaborator/' + id)
 }
+
+// export const updateCollaboratorData = (data) => {
+//     return axios.put(baseUrl + '/collaborator/' + id, data)
+// }
