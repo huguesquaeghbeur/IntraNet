@@ -6,6 +6,7 @@ using IntraNetAPI.Interfaces;
 using IntraNetAPI.Tools;
 using IntraNetAPI.Models;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Repositories
 {
@@ -24,7 +25,7 @@ namespace IntraNetAPI.Repositories
 
         public List<Collaborator> GetAll()
         {
-            return _dataContext.Collaborators.ToList();
+            return _dataContext.Collaborators.Include(c => c.Missions).Include(c => c.Holidays).Include(c => c.Bills).ToList();
         }
 
         public Collaborator GetById(int id)

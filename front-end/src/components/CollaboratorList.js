@@ -1,51 +1,53 @@
-import axios from "axios";
-import React from "react";
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { getAllCollaborator } from "../services/collaboratorData";
 
-const collabArray = [
-    // {
-    //     firstName: "Helmut",
-    //     lastName: "Dietrich",
-    //     birthday: "1980-11-23",
-    //     email: "helmut.dietrich@gmail.com",
-    //     password: "azerty"
-    // }
-    
-]
 
-const ListCollaborator = () => {
-    //const [collaborators, setCollaborators] = useState("");
-    axios.get('http://localhost:42515/collaborator')
-    .then(res => {
-        collabArray.push(res.data)
-        console.log(collabArray)
-    }).catch(err => {
-        console.log(err)
-    });
+class CollaboratorList extends PureComponent {
+    constructor(props) {
+        super(props)
+        this.state = {
+            collaborators: []
+        }
+    }
 
-    return (
-        <div>
-            <button onClick={ListCollaborator}>Lister</button>
-            
-        {collabArray.map((c, index) => {
-            return(
-                <div key={index}>
-                
-                    <p>Prenom : {c.firstName} </p>
-                    <p>Nom : {c.lastName} </p>
-                    <p>Date de naissance : {c.birthday} </p>
-                    <p>Email : {c.email} </p>
-                    <p>Password : {c.password} </p>
-                
+    componentDidMount() {
+        getAllCollaborator().then(response => {
+            this.setState({
+                collaborators: response.data
+            })
+            console.log(response.data)
+        })
+    }
+    render() {
+        const { collaborators } = this.state
+        return (
+            <div className="flex flex-col justify-around">
+                {collaborators.map(collaborator =>
+                    <div key={collaborator.id} className="border">
+                        <div className="flex justify-end">
+                            {collaborator.id}
+                        </div>
+                        <p>Prénom : {collaborator.firstName} </p>
+                        <p>Nom : {collaborator.lastName} </p>
+                        <p>Date de naissance : {collaborator.birthday} </p>
+                        <p>Email : {collaborator.email} </p>
+                        <p>Password : {collaborator.password} </p>
+                    </div>
+                )}
             </div>
-            )
-        })}
-       
-       
-        
-        </div>
-       
-        
-    )
+        )
+    }
 }
 
-export default ListCollaborator;
+const mapStateToProps = (state) => {
+    return {
+        firstName: state.collaborator.firstName,
+        lastname: state.collaborator.lastname,
+        birthday: state.collaborator.birthday,
+        email: state.collaborator.email,
+        password: state.collaborator.password
+    }
+}
+
+export default connect (mapStateToProps, null)(CollaboratorList);

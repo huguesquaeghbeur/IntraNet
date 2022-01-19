@@ -1,97 +1,85 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import { getCollaborator } from "../redux/actions/collaboratorAction";
-//import AddCollaboratorAction from "../services/collaboratorService";
+import {postCollaboratorData} from "../services/collaboratorData";
 
-const AddCollaborator = (props) => {
-    const { register, handleSubmit, formState: { errors }, } = useForm();
-    const onSubmit = (data) => {
-        props.getCollaborator(data);
-        console.log(data.firstName);
-        // axios({
-        //         headers: {
-        //             'content-type': 'text/plain',
-        //         },
-        //         method: 'post',
-        //         url: 'http://localhost:42515/collaborator',
-        //         data: {
-        //             firstName: data.firstName,
-        //             lastName: data.lastName,
-        //             birthday: data.birthday,
-        //             email: data.email,
-        //             password: data.password
-        //         }
-        //     })
-        axios.post('http://localhost:42515/collaborator', {
-            firstName: data.firstName,
-            lastName: data.lastName,
-            birthday: data.birthday,
-            email: data.email,
-            password: data.password
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+
+class AddCollaborator extends PureComponent {
+    state = {
+        firstName: '',
+        lastName: '',
+        birthday: '',
+        email: '',
+        password: ''
     }
 
-    return (
-        <div>
+    handleChange = (e) => {
+        
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.getCollaborator(this.state);
+        postCollaboratorData().then(response => {
+            this.setState({
+                collaborators: response.data
+            })
+            console.log(response.data)
+        })
+        
+    }
+    render() {
+        return (
             <div>
-                <form onSubmit={handleSubmit(onSubmit)} >
-                    <div>
+                <h1 className="justify-center">Ajouter un collaborateur</h1>
+                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                    <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit} >
                         <div>
-                            <label htmlFor="firstName">Nom</label>
-                            <input type="text"
-                                name="firstname"
-                                {...register("firstName", { required: true })} />
-                            {errors.firstName && errors.firstName.type === "required" && (<p>Le nom est obligatoire</p>)}
+                            <div>
+                                <label htmlFor="firstName">Nom</label>
+                                <input  type="text"
+                                        name="firstname"
+                                        required /> 
+                            </div>
+                            <div>
+                                <label htmlFor="lastName">Prénom</label>
+                                <input  type="text"
+                                        name="lastname"
+                                        onChange={this.handleTextChange} value={this.state.lastName}
+                                        required />
+                            </div>
+                            <div>
+                                <label htmlFor="birthday">Date de naissance</label>
+                                <input  type="date"
+                                        name="birthday"
+                                        onChange={this.handleTextChange} value={this.state.birthday}
+                                        required/>     
+                            </div>
+                            <div>
+                                <label htmlFor="email">Email</label>
+                                <input  type="text"
+                                        className="form-control"
+                                        name="email"
+                                        onChange={this.handleTextChange} value={this.state.email}
+                                        required/>
+                            </div>
+                            <div>
+                                <label htmlFor="password">Mot de passe</label>
+                                <input  type="password"
+                                        className="form-control"
+                                        name="password"
+                                        onChange={this.handleTextChange} value={this.state.}
+                                        required/>
+                            </div>
+                            <div>
+                                <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">Valider</button>
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="lastName">Prénom</label>
-                            <input type="text"
-                                name="lastname"
-                                {...register("lastName", { required: true })} />
-                            {errors.lastName && errors.lastName.type === "required" && (<p>Le prénom est obligatoire</p>)}
-                        </div>
-                        <div>
-                            <label htmlFor="birthday">Date de naissance</label>
-                            <input type="date"
-                                name="birthday"
-                                {...register("birthday", { required: true })} />
-                            {errors.birthday && errors.birthday.type === "required" && (<p>La date de naissance est obligatoire</p>)}
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input type="text"
-                                className="form-control"
-                                name="email"
-                                {...register("email", { required: true, pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })} />
-                            {errors.email && errors.email.type === "required" && (<p>Un email est obligatoire</p>)}
-                            {errors.email && errors.email.type === "pattern" && (<p>Votre mail doit être valide</p>)}
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Mot de passe</label>
-                            <input type="password"
-                                className="form-control"
-                                name="password"
-                                {...register("password", { required: true, validate: (value) => value.length > 3 && value.length < 20 })} />
-                            {errors.password && errors.password.type === "required" && (<p>Un mot de passe est obligatoire</p>)}
-                            {errors.password && errors.password.type === "validate" && (<p>Votre mot de passe doit avoir entre 3 et 20 caractéres</p>)}
-                        </div>
-                        <div>
-                            <button type="submit">Valider</button>
-                            {/* < AddCollaboratorAction /> */}
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 const mapStateToProps = (state) => {
