@@ -2,6 +2,7 @@ import { PureComponent } from "react"
 import { connect } from 'react-redux';
 import { fetchAllBills, postBill, updateBill } from '../redux/actions/billsActions'
 import {fakeBillPost} from '../datas/billData'
+import { BillCard } from "../components/BillCard";
 export class BillsOverview extends PureComponent {
     constructor(props) {
         super(props)
@@ -53,7 +54,7 @@ export class BillsOverview extends PureComponent {
             <div>
                 <h1>Je suis une liste de bills</h1>
                 {console.log("Le map suit")}
-                {this.props.bills !== undefined ? this.props.bills.map(bill => console.log(bill)) : null}
+                <div className="flex flex-wrap justify-around">{this.props.bills !== undefined ? this.props.bills.map((bill,index) => <BillCard key={index} bill={bill}/>) : null}</div>
                 <button onClick={() => this.handleFetchClick()}> Fetch bills </button> 
                 <button onClick={() => this.handlePostClick()}> Post bills </button> 
                 <button onClick={() => this.handleUpdateClick()}> Update bills </button>

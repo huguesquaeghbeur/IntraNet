@@ -9,6 +9,7 @@ import './styles/index.css';
 import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview";
 import HolidayOverview from "./containers/HolidayOverview";
+import BillById from "./containers/BillById"
 
 function App() {
     return (
@@ -21,6 +22,10 @@ function App() {
                     <Route
                         path="bills"
                         element={<BillsOverview />}
+                    />
+                    <Route
+                        path="bills/:id"
+                        element={<BillById />}
                     />
                     <Route
                         path="holidays"
