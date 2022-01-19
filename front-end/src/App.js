@@ -9,7 +9,8 @@ import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
 import HolidayOverview from "./containers/HolidayOverview";
-import CollaboratorList from "./components/CollaboratorList";
+import PostRequestHoliday from "./components/PostRequestHoliday";
+import HolidayList from "./components/HolidayList";
 
 function App() {
     return (
@@ -25,7 +26,7 @@ function App() {
                     />
                     <Route
                         path="holidays"
-                        element={<HolidayOverview />}
+                        element={<HolidayList />}
                     />
                     {/* <Route
                         path="collaborator"

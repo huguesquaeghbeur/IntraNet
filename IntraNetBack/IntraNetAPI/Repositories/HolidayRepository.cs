@@ -16,7 +16,7 @@ namespace IntraNetAPI.Repositories
 
         public Holiday FinById(int id)
         {
-            return _dataContext.Holidays.Find();
+            return _dataContext.Holidays.Find(id);
         }
 
         public IEnumerable<Holiday> GetAll()
