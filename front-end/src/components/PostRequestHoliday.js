@@ -1,47 +1,72 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { postRequestHolidayInApi } from '../redux/actions/holidayAction';
+import { postHolidayData } from '../services/holidayData';
 
 class PostRequestHoliday extends PureComponent {
     state = {
         collabId: '',
         startDate: '',
-        startOnMorning: '',
+        isMorningStart: '',
         endDate: '',
-        endOnMorning: '',
+        isMorningEnd: '',
         halfDayBreakCount: ''
     }
-
-    handleTextChange = (event) => {
-        const {target: {collabId, value}} = event;
-        this.setState({ [collabId]: value});
-        console.log(this.state);
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
-    handleOnSubmit = (event) => {
-        event.preventDefault();
-        this.props.postRequestHolidayInApi(this.state);
-        this.setState();
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('collabId', this.state.collabId);
+        formData.append('startDate', this.state.startDate);
+        formData.append('isMorningStart', this.state.isMorningStart);
+        formData.append('endDate', this.state.endDate);
+        formData.append('isMorningEnd', this.state.isMorningEnd);
+        console.log(this.state)
+
+        postHolidayData(formData).then(res => {
+            this.setState({
+                posts: res.data
+            })
+            console.log(res.data)
+
+        })
     }
+
+    // handleTextChange = (event) => {
+    //     const {target: {collabId, value}} = event;
+    //     this.setState({ [collabId]: value});
+    //     console.log(this.state);
+    // }
+
+    // handleOnSubmit = (event) => {
+    //     event.preventDefault();
+    //     this.props.postRequestHolidayInApi(this.state);
+    //     this.setState();
+    // }
 
     render() {
+        const { collabId, startDate, isMorningStart, endDate, isMorningEnd, halfDayBreakCount } = this.state;
         return (
             <div>
                 <h1 className="justify-center">Demande de congés</h1>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                        <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleOnSubmit}>
+                        <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit}>
                             <div>
-                                <label htmlFor="collaborator" className="block text-sm font-medium text-gray-700">Demandeur</label>
+                                <label htmlFor="collabId" className="block text-sm font-medium text-gray-700">Demandeur</label>
                                 <div>
-                                    <input onChange={this.handleTextChange}  id="collaborator" name="collaborator" required className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input value={collabId} onChange={this.handleChange} id="collabId" name="collabId" required className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
 
                             <div>
                                 <label htmlFor="holidayType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                 <div className="mt-1">
-                                    <select className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <select name="holidayType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                         <option value="">Congés payés</option>
                                         <option value="">Sans solde</option>
                                         <option value="">RTT</option>
@@ -54,15 +79,15 @@ class PostRequestHoliday extends PureComponent {
                             <div>
                                 <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Date de début</label>
                                 <div>
-                                    <input onChange={this.handleTextChange} value={this.state.startDate} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input value={startDate} name="startDate" onChange={this.handleChange} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="startOnMorning" className="block text-sm font-medium text-gray-700">Heure de début</label>
                                 <div className="mt-1">
-                                    <select onChange={this.handleTextChange} value={this.state.startOnMorning} name="startOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option onChange={this.handleTextChange} value={this.state.startOnMorning = true}>Matin</option>
-                                        <option onChange={this.handleTextChange} value={this.state.startOnMorning = false}>Après-midi</option>
+                                    <select value={isMorningStart} name="startOnMorning" onChange={this.handleChange} name="startOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option onChange={this.handleChange} value={true}>Matin</option>
+                                        <option onChange={this.handleChange} value={false}>Après-midi</option>
                                     </select>
                                 </div>
                             </div>
@@ -71,15 +96,15 @@ class PostRequestHoliday extends PureComponent {
                             <div>
                                 <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">Date de fin</label>
                                 <div>
-                                    <input onChange={this.handleTextChange} value={this.state.endDate} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input value={endDate} name="endDate" onChange={this.handleChange} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
                             <div>
                                 <label htmlFor="endOnMorning" className="block text-sm font-medium text-gray-700">Heure de fin</label>
                                 <div className="mt-1">
-                                    <select name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                        <option onChange={this.handleTextChange} value={this.state.endOnMorning = true}>Matin</option>
-                                        <option onChange={this.handleTextChange} value={this.state.endOnMorning = false}>Après-midi</option>
+                                    <select value={isMorningEnd} onChange={this.handleChange} name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <option onChange={this.handleChange} value={true} >Matin</option>
+                                        <option onChange={this.handleChange} value={false} >Après-midi</option>
                                     </select>
                                 </div>
                             </div>
@@ -88,7 +113,7 @@ class PostRequestHoliday extends PureComponent {
                             <div>
                                 <label htmlFor="halfDayBreak" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
                                 <div>
-                                    <input onChange={this.handleTextChange} value={this.state.halfDayBreakCount} id="halfDayBreak" name="halfDayBreak" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                    <input value={halfDayBreakCount} onChange={this.handleChange} id="halfDayBreak" name="halfDayBreak" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                 </div>
                             </div>
 

@@ -6,6 +6,7 @@ using IntraNetAPI.Interfaces;
 using IntraNetAPI.Tools;
 using IntraNetAPI.Models;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Repositories
 {
@@ -13,50 +14,33 @@ namespace IntraNetAPI.Repositories
     {
         public CollaboratorRepository(DataContext dataContext) : base(dataContext)
         {
-            
-        }
 
-        public bool Save(Collaborator collaborator)
-        {
-            _dataContext.Collaborators.Add(collaborator);
-            return _dataContext.SaveChanges() > 0;
-        }
-
-        public List<Collaborator> GetAll()
-        {
-            return _dataContext.Collaborators.ToList();
-        }
-
-        public Collaborator GetById(int id)
-        {
-            return _dataContext.Collaborators.Find(id);
-        }
-
-        public bool Update(Collaborator element)
-        {
-            throw new NotImplementedException();
         }
 
         public Collaborator FinById(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
         }
-
+        public IEnumerable<Collaborator> GetAll()
+        {
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions);
+        }
+        public bool Save(Collaborator element)
+        {
+            _dataContext.Collaborators.Add(element);
+            return _dataContext.SaveChanges() > 0;
+        }
         public IEnumerable<Collaborator> Search(Expression<Func<Collaborator, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Where(predicate);
         }
-
         public Collaborator SearchOne(Expression<Func<Collaborator, bool>> searchMethode)
         {
-            throw new NotImplementedException();
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Where(searchMethode).FirstOrDefault();
         }
-
-        IEnumerable<Collaborator> IRepository<Collaborator>.GetAll()
+        public bool Update(Collaborator element)
         {
-            throw new NotImplementedException();
+            return _dataContext.SaveChanges() > 0;
         }
-
-        
     }
 }
