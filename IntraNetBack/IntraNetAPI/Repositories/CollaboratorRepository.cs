@@ -23,7 +23,7 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Collaborator> GetAll()
         {
-            return _dataContext.Collaborators.Include(c=>c.Holidays).Include(c=>c.Missions);
+            return _dataContext.Collaborators.Include(c => c.Missions).Include(c => c.Holidays).Include(c => c.Department).Include(c => c.Bills);
         }
 
         public bool Save(Collaborator element)

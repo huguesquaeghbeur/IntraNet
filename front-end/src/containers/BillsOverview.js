@@ -6,7 +6,6 @@ export class BillsOverview extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            bills: ""
         }
     }
     handleUpdateClick = () => {
@@ -19,7 +18,6 @@ export class BillsOverview extends PureComponent {
         formdata.append('missionId',1)
         formdata.append('collabId',1)
 
-        console.log("fakeBillPost"+JSON.stringify(fakeBillPost))
         console.log("formdata "+formdata)
 
         this.props.updateBill(formdata)
@@ -41,28 +39,31 @@ export class BillsOverview extends PureComponent {
 
     }
 
-    handleClick=()=>{
+    handleFetchClick=()=>{
         console.log("handle click overview")
-
         this.props.getAllBillsFromApi()
-        console.log(this.state.bills)
+        console.log(this.props.bills)
     }
-
+    componentDidUpdate(){
+        console.log("BillsOverview updated ")
+        console.log(this.props.bills)
+    }
     render() {
         return(
             <div>
                 <h1>Je suis une liste de bills</h1>
-                <button onClick={() => this.handleClick()}> Fetch bills </button> 
+                {console.log("Le map suit")}
+                {this.props.bills !== undefined ? this.props.bills.map(bill => console.log(bill)) : null}
+                <button onClick={() => this.handleFetchClick()}> Fetch bills </button> 
                 <button onClick={() => this.handlePostClick()}> Post bills </button> 
-                <button onClick={() => this.handleUpdateClick()}> Update bills </button> 
-
-
+                <button onClick={() => this.handleUpdateClick()}> Update bills </button>
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
+    console.log("mapstatetoprops "+state.bills.bills)
     return {
         bills: state.bills.bills
     }
