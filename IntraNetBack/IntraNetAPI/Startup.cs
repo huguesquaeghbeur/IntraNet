@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IntraNetAPI.Tools;
+
 
 namespace IntraNetAPI
 {
@@ -33,7 +33,7 @@ namespace IntraNetAPI
             {
                 options.AddPolicy("allConnections", buider =>
                 {
-                    buider.AllowAnyOrigin().AllowAnyMethod();
+                    buider.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {
@@ -53,9 +53,6 @@ namespace IntraNetAPI
 
             app.UseRouting();
             app.UseCors();
-
-
- 
 
             app.UseAuthorization();
 

@@ -1,14 +1,42 @@
 import React from "react";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
+import axios from "axios";
 import { getCollaborator } from "../redux/actions/collaboratorAction";
-import AddCollaboratorAction from "../services/collaboratorService";
+//import AddCollaboratorAction from "../services/collaboratorService";
 
 const AddCollaborator = (props) => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const onSubmit = (data) => {
         props.getCollaborator(data);
-        console.log(data);
+        console.log(data.firstName);
+        // axios({
+        //         headers: {
+        //             'content-type': 'text/plain',
+        //         },
+        //         method: 'post',
+        //         url: 'http://localhost:42515/collaborator',
+        //         data: {
+        //             firstName: data.firstName,
+        //             lastName: data.lastName,
+        //             birthday: data.birthday,
+        //             email: data.email,
+        //             password: data.password
+        //         }
+        //     })
+        axios.post('http://localhost:42515/collaborator', {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            birthday: data.birthday,
+            email: data.email,
+            password: data.password
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return (
@@ -18,24 +46,24 @@ const AddCollaborator = (props) => {
                     <div>
                         <div>
                             <label htmlFor="firstName">Nom</label>
-                            <input  type="text"
-                                    name="firstname"
-                                    {...register("firstName", {required: true})} />
-                                {errors.firstName && errors.firstName.type === "required" && (<p>Le nom est obligatoire</p>)}
+                            <input type="text"
+                                name="firstname"
+                                {...register("firstName", { required: true })} />
+                            {errors.firstName && errors.firstName.type === "required" && (<p>Le nom est obligatoire</p>)}
                         </div>
                         <div>
                             <label htmlFor="lastName">Prénom</label>
-                            <input  type="text"
-                                    name="lastname"
-                                    {...register("lastName", {required: true})} />
-                                {errors.lastName && errors.lastName.type === "required" && (<p>Le prénom est obligatoire</p>)}
+                            <input type="text"
+                                name="lastname"
+                                {...register("lastName", { required: true })} />
+                            {errors.lastName && errors.lastName.type === "required" && (<p>Le prénom est obligatoire</p>)}
                         </div>
                         <div>
                             <label htmlFor="birthday">Date de naissance</label>
-                            <input  type="date"
-                                    name="birthday"
-                                    {...register("birthday", {required: true})} />
-                                {errors.birthday && errors.birthday.type === "required" && (<p>La date de naissance est obligatoire</p>)}
+                            <input type="date"
+                                name="birthday"
+                                {...register("birthday", { required: true })} />
+                            {errors.birthday && errors.birthday.type === "required" && (<p>La date de naissance est obligatoire</p>)}
                         </div>
                         <div className="form-group">
                             <label htmlFor="email">Email</label>
@@ -57,7 +85,7 @@ const AddCollaborator = (props) => {
                         </div>
                         <div>
                             <button type="submit">Valider</button>
-                            < AddCollaboratorAction />
+                            {/* < AddCollaboratorAction /> */}
                         </div>
                     </div>
                 </form>

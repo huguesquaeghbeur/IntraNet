@@ -9,6 +9,7 @@ import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
 import HolidayOverview from "./containers/HolidayOverview";
+import CollaboratorList from "./components/CollaboratorList";
 
 function App() {
     return (
@@ -26,9 +27,13 @@ function App() {
                         path="holidays"
                         element={<HolidayOverview />}
                     />
-                    <Route
+                    {/* <Route
                         path="collaborator"
                         element={<AddCollaborator/>}
+                    /> */}
+                    <Route
+                        path="collaborator"
+                        element={<CollaboratorList/>}
                     />
                 </Routes>
             </Router>
