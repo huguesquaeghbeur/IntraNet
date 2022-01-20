@@ -21,12 +21,12 @@ class HolidayList extends PureComponent {
     }
 
     render() {
-        const { posts, id } = this.state
+        const { posts } = this.state
         return (
             <div>
                 <div className="flex flex-col justify-around">
                     {posts.map(post =>
-                        <Link to={`/holidays/${post.id}`}>
+                        <Link to={`/holidays/${post.id}`} key={post.id}>
                             <HolidayCard post={post}/>
                         </Link>
                     )}

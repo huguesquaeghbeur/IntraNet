@@ -16,7 +16,19 @@ class PostRequestHoliday extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
-        
+
+    }
+
+    handleCancel = () => {
+        this.setState({
+            collabId: '',
+            startDate: '',
+            startOnMorning: true,
+            endDate: '',
+            endOnMorning: true,
+            leaveType: '',
+            halfDayBreakCount: ''
+        })
     }
 
     handleSubmit = (e) => {
@@ -46,7 +58,7 @@ class PostRequestHoliday extends PureComponent {
                 <h1 className="justify-center">Demande de congés</h1>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                        <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit}>
+                        <form id="create_holiday_request" className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit}>
                             <div>
                                 <label htmlFor="collabId" className="block text-sm font-medium text-gray-700">Demandeur</label>
                                 <div>
@@ -58,7 +70,7 @@ class PostRequestHoliday extends PureComponent {
                                 <label htmlFor="leaveType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                 <div className="mt-1">
                                     <select value={leaveType} onChange={this.handleChange} name="leaveType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                    <option onChange={this.handleChange} value="">--- select ---</option>
+                                        <option onChange={this.handleChange} value="">--- select ---</option>
                                         <option onChange={this.handleChange} value="0">Congés payés</option>
                                         <option onChange={this.handleChange} value="1">Congé maladie</option>
                                         <option onChange={this.handleChange} value="2">Congé parental</option>
@@ -119,7 +131,7 @@ class PostRequestHoliday extends PureComponent {
 
                             <div className="flex flex-row justify-around">
                                 <div>
-                                    <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
+                                    <button onClick={this.handleCancel} type="button" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
                                         Annuler
                                     </button>
                                 </div>
