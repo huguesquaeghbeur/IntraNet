@@ -14,5 +14,5 @@ export const updateBillApi = (bill) => {
     return axios.patch(baseUrl, bill)
 }
 export const getBillByIdApi = (id) => {
-    return axios.get(baseUrl,id)
+    return axios.get(baseUrl+"/"+id)
 }

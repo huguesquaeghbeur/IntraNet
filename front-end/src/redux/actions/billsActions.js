@@ -16,10 +16,10 @@ export function fetchAllBills() {
     console.log("dans fetch all bills ")
 
     return (dispatch) => {
-        // dispatch({
-        //     type: IS_LOADING,
-        //     value: true
-        // })
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
         getAllBills().then(res => {
             console.log("get all bills then " + res.data)
             dispatch({
