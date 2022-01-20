@@ -31,7 +31,7 @@ namespace IntraNetAPI
             {
                 options.AddPolicy("allConnections", buider =>
                 {
-                    buider.AllowAnyOrigin().AllowAnyMethod();
+                    buider.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {

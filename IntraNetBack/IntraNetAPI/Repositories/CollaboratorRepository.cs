@@ -1,15 +1,17 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace IntraNetAPI.Repositories
 {
-    public class CollaboratorRepository : BaseRepository, IRepository<Collaborator>
+    public class collaboratorRepository : BaseRepository, IRepository<Collaborator>
     {
-        public CollaboratorRepository(DataContext dataContext) : base(dataContext)
+        public collaboratorRepository(DataContext dataContext) : base(dataContext)
         {
         }
 
@@ -35,7 +37,7 @@ namespace IntraNetAPI.Repositories
 
         public Collaborator SearchOne(Expression<Func<Collaborator, bool>> searchMethode)
         {
-            throw new NotImplementedException();
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Include(c => c.Department).Where(searchMethode).FirstOrDefault();
         }
 
         public bool Update(Collaborator element)
