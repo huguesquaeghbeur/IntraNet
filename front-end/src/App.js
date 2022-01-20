@@ -2,7 +2,6 @@ import React from "react";
 import {
     BrowserRouter as Router,
     Routes,
-    Switch,
     Route,
 } from "react-router-dom";
 import './styles/index.css';
@@ -25,8 +24,7 @@ function App() {
                     />
                     <Route
                         path="bills/:id"
-                        element={<BillById />}
-                    />
+                        element={<BillById />}/>
                     <Route
                         path="holidays"
                         element={<HolidayOverview />}

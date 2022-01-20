@@ -1,14 +1,22 @@
 import { PureComponent } from "react"
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import {getBillById} from '../redux/actions/billsActions'
 
 export class BillCard extends PureComponent {
     constructor(props) {
         super(props)
-        console.log(this.props.bill.spents.length)
         this.state = {
         }
 
     }
+
+    // handleGetBillByIdClick=()=>{
+    //     console.log("BillcARD handle get by id : "+this.props.bill.id)
+    //     this.props.getBillByIdFromApi(this.props.bill.id)
+
+    // }
+
     componentDidMount() {
         var temp = 0
         this.props.bill.spents.forEach(spent => {
@@ -35,3 +43,14 @@ export class BillCard extends PureComponent {
         )
     }
 }
+const mapActionToProps = (dispatch) => {
+    return {
+        getBillByIdFromApi : (id) => dispatch(getBillById(id)),
+    }
+}
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+
+export default connect(mapStateToProps, mapActionToProps)(BillCard)
