@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntraNetAPI.Tools;
 
 namespace IntraNetAPI
 {
@@ -25,6 +26,7 @@ namespace IntraNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddOurServices();
             services.AddControllers();
             services.AddCors(options =>
@@ -52,7 +54,8 @@ namespace IntraNetAPI
             app.UseRouting();
             app.UseCors();
 
-            app.UseCors();
+
+ 
 
             app.UseAuthorization();
 
