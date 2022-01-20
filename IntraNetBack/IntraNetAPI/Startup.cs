@@ -34,13 +34,13 @@ namespace IntraNetAPI
             
             services.AddCors(options =>
             {
-                options.AddPolicy("allConnections", buider =>
+                options.AddPolicy("allConnections", builder =>
                 {
-                    buider.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {
-                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                    builder.WithMethods("POST").WithOrigins("http://localhost:42515");
                 });
             });
         }
@@ -55,7 +55,6 @@ namespace IntraNetAPI
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors();
 
             app.UseAuthorization();
 

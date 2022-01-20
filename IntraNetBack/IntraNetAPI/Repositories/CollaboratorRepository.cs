@@ -1,12 +1,11 @@
-﻿using System;
+﻿using IntraNetAPI.Interfaces;
+using IntraNetAPI.Models;
+using IntraNetAPI.Tools;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using IntraNetAPI.Interfaces;
-using IntraNetAPI.Tools;
-using IntraNetAPI.Models;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Repositories
 {
@@ -19,11 +18,11 @@ namespace IntraNetAPI.Repositories
 
         public Collaborator FinById(int id)
         {
-            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
+           return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
         }
         public IEnumerable<Collaborator> GetAll()
         {
-            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions);
+            return _dataContext.Collaborators.Include(c => c.Missions).Include(c => c.Holidays).Include(c => c.Department).Include(c => c.Bills);
         }
         public bool Save(Collaborator element)
         {

@@ -1,14 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace IntraNetAPI.Models
 {
     public class Spent
     {
+        public Spent()
+        {
+            Proofs = new List<Proof>();
+        }
+
         private int id;
         private decimal amount;
         private string commentary;
         private bool advanceCash;
         private bool isExactAmount;
+        public int MissionId { get; set; }
+        [ForeignKey("MissionId")]
+        [JsonIgnore]
         public virtual Mission Mission { get; set; }
         public virtual List<Proof> Proofs { get; set; }
         public int Id { get => id; set => id = value; }
@@ -26,5 +36,7 @@ namespace IntraNetAPI.Models
             Valided,
         }
         public ValidationEnum Validate { get; set; }
+
+
     }
 }

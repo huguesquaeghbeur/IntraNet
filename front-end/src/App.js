@@ -13,6 +13,7 @@ import PostRequestHoliday from "./components/PostRequestHoliday";
 import HolidayList from "./components/HolidayList";
 import CollaboratorList from "./components/CollaboratorList";
 import CollaboratorPage from "./components/CollaboratorPage";
+import BillById from "./containers/BillById"
 
 function App() {
     return (
@@ -26,6 +27,9 @@ function App() {
                         path="bills"
                         element={<BillsOverview />}
                     />
+                    <Route
+                        path="bills/:id"
+                        element={<BillById />}/>
                     <Route
                         path="holidays"
                         element={<HolidayList />}
