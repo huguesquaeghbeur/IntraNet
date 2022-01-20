@@ -44,6 +44,24 @@ namespace IntraNetAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
+            int tmpHalfDayBreak = 0;
+            if (startDate == endDate)
+            {
+                if (startOnMorning == true && endOnMorning == false)
+                {
+                    tmpHalfDayBreak = 1;
+                }
+            }
+            if (startDate < endDate)
+            {
+                if (startOnMorning == true && endOnMorning == false)
+                {
+                    tmpHalfDayBreak += 1;
+                } else if (startOnMorning == false && endOnMorning == true)
+                {
+                    tmpHalfDayBreak -= 1;
+                }
+            }
             Holiday holiday = new Holiday()
             {
                 Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
@@ -51,7 +69,7 @@ namespace IntraNetAPI.Controllers
                 StartOnMorning = startOnMorning,
                 EndDate = endDate.ToLocalTime(),
                 EndOnMorning = endOnMorning,
-                HalfDayBreakCount = endDate.Day - startDate.Day,
+                HalfDayBreakCount = ((endDate.Day - startDate.Day)*2) + tmpHalfDayBreak,
                 LeaveType = (Holiday.LeaveTypeEnum)leaveType,
                 Validation = Holiday.ValidationEnum.InitialState,
             };

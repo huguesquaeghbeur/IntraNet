@@ -16,15 +16,9 @@ class PostRequestHoliday extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
-        this.delayDate(this.state.startDate, this.state.startDate)
+        
     }
 
-    delayDate = (date1, date2) => {
-        const date1Tmp = date1.Day;
-        const date2Tmp = date2.Day;
-        const diffTmp = date2Tmp - date1Tmp;
-        return diffTmp;
-    }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -35,7 +29,7 @@ class PostRequestHoliday extends PureComponent {
         formData.append('endDate', this.state.endDate);
         formData.append('endOnMorning', this.state.endOnMorning);
         formData.append('leaveType', this.state.leaveType);
-        formData.append('halfDayBreakCount', this.delayDate(this.state.startDate, this.state.endDate));
+        formData.append('halfDayBreakCount', this.state.startDate - this.state.endDate);
         console.log(this.state)
 
         postHolidayData(formData).then(res => {
@@ -78,6 +72,7 @@ class PostRequestHoliday extends PureComponent {
                                 <label htmlFor="leaveType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                 <div className="mt-1">
                                     <select value={leaveType} onChange={this.handleChange} name="leaveType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                    <option onChange={this.handleChange} value="">Selection Type de congé</option>
                                         <option onChange={this.handleChange} value="0">Congés payés</option>
                                         <option onChange={this.handleChange} value="1">Congé maladie</option>
                                         <option onChange={this.handleChange} value="2">Congé parental</option>
