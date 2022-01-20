@@ -1,12 +1,13 @@
-import {createStore,combineReducers,compose,applyMiddleware} from 'redux'
-
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import collaboratorReducer from './reducers/collaboratorReducer'
 import thunk from 'redux-thunk'
 import { InfoReducer } from './reducers/infoReducer'
 
-const composeEnhancer=compose
+const composeEnhancer = compose
 
 export default createStore(
     combineReducers({
         // user:userReducer,
         info: InfoReducer,
-    }),composeEnhancer(applyMiddleware(thunk)))
+        collaborator: collaboratorReducer,
+    }), composeEnhancer(applyMiddleware(thunk)))
