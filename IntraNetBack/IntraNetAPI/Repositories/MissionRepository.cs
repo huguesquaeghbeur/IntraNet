@@ -18,7 +18,7 @@ namespace IntraNetAPI.Repositories
 
         public Mission FinById(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Missions.Find(id);
         }
 
         public IEnumerable<Mission> GetAll()
@@ -33,7 +33,7 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Mission> Search(Expression<Func<Mission, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Missions.Where(predicate);
         }
 
         public Mission SearchOne(Expression<Func<Mission, bool>> searchMethode)

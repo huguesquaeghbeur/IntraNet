@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Controllers
 {
@@ -21,12 +15,10 @@ namespace IntraNetAPI.Controllers
         private IRepository<Mission> _missionRepository;
         private IRepository<Collaborator> _collabRepository;
 
-        public MissionController(DataContext context, IRepository<Mission> missionRepo,
-            IRepository<Collaborator> collabRepo)
+        public MissionController(DataContext context, IRepository<Mission> missionRepo)
         {
             _context = context;
             _missionRepository = missionRepo;
-            _collabRepository = collabRepo;
         }
 
 
@@ -36,24 +28,6 @@ namespace IntraNetAPI.Controllers
         {
             IEnumerable<Mission> missions = _missionRepository.GetAll();
             return Ok(missions);
-        }
-
-
-        [HttpGet]
-        [Route("/api/missions/collabs")]
-        public IActionResult GetCollabs()
-        {
-            IEnumerable<Collaborator> collaborator = _collabRepository.GetAll();
-            return Ok(collaborator);
-        }
-
-
-        [HttpGet]
-        [Route("/api/missions/managers")]
-        public IActionResult GetManager()
-        {
-            IEnumerable<Collaborator> managers = _collabRepository.Search(s => s.IsChief == true);
-            return Ok(managers);
         }
 
 
@@ -68,6 +42,21 @@ namespace IntraNetAPI.Controllers
             savedMission.EndTime = mission.EndTime;
             savedMission.Collaborators = mission.Collaborators;
             _context.Missions.Add(savedMission);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("/api/missions/update/{id?}")]
+        public async Task<ActionResult<Mission>> UpdateMission(Mission mission, int id)
+        {
+            var updatedMission = _missionRepository.FinById(id);
+            updatedMission.Name = mission.Name;
+            updatedMission.Description = mission.Description;
+            updatedMission.StartTime = mission.StartTime;
+            updatedMission.EndTime = mission.EndTime;
+            updatedMission.Collaborators = mission.Collaborators;
+            _context.Missions.Add(updatedMission);
             await _context.SaveChangesAsync();
             return Ok();
         }

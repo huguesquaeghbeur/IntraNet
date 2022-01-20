@@ -17,12 +17,12 @@ export default class AddMission extends Component {
     }
 
     componentDidMount = () => {
-        axios.get('http://localhost:5000/api/missions/collabs')
+        axios.get('http://localhost:5000/api/collaborator/all')
             .then(res => {
                 this.setState({collabs: res.data})
             })
 
-        axios.get('http://localhost:5000/api/missions/managers')
+        axios.get('http://localhost:5000/api/collaborator/managers')
             .then(res => {
                 this.setState({chiefs: res.data})
             })
@@ -33,10 +33,6 @@ export default class AddMission extends Component {
         this.setState({
             [value]: event.target.value
         })
-    }
-
-    AddCollab = () => {
-        this.setState({collab: this.refs.selectOptions})
     }
 
     CreateMission = (props) => {
@@ -58,7 +54,7 @@ export default class AddMission extends Component {
                         return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
                     })}
                 </select>
-                <button className="rounded-full hover:rounded-lg" onClick={this.AddCollab}>Ajouter un collaborateur</button>
+                <button className="rounded-full hover:rounded-lg">Ajouter un collaborateur</button>
                 <button type="submit">Valider</button>
             </form>
         )
