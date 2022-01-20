@@ -9,14 +9,12 @@ import './styles/index.css';
 import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview";
 import HolidayOverview from "./containers/HolidayOverview";
+import MissionOverview from "./containers/MissionOverview";
 
 function App() {
     return (
         <div className="App">
             <Router>
-                <header className="header">
-                    < AddMission />
-                </header>
                 <Routes>
                     <Route
                         path="bills"
@@ -25,6 +23,14 @@ function App() {
                     <Route
                         path="holidays"
                         element={<HolidayOverview />}
+                    />
+                    <Route
+                        path="missions/create"
+                        element={<AddMission/>}
+                    />
+                    <Route
+                        path="missions"
+                        element={<MissionOverview/>}
                     />
                 </Routes>
             </Router>

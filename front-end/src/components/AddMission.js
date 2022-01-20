@@ -2,8 +2,7 @@ import '../index.css';
 import axios from "axios";
 import {Component} from "react";
 
-export default class AddMission extends Component
-{
+export default class AddMission extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,11 +10,10 @@ export default class AddMission extends Component
             description: "",
             collabs: [],
             chiefs: [],
-            startTime: "",
             endTime: "",
+            startTime: "",
             userId: ""
         }
-
     }
 
     componentDidMount = () => {
@@ -39,6 +37,31 @@ export default class AddMission extends Component
 
     AddCollab = () => {
         this.setState({collab: this.refs.selectOptions})
+    }
+
+    CreateMission = (props) => {
+        return(
+            <form className="submitForm flex flex-col" onSubmit={this.HandleSubmit}>
+                <span>Chef de service</span>
+                <select className="manager">
+                    {this.state.chiefs.map((data, key) => {
+                        return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
+                    })}
+                </select>
+                <input type="text" name="name" className="missionName border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Nom de la mission"/>
+                <input type="text" name="description" className="missionDescription border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Description"/>
+                <input type="date" name="startTime" className="startTime" onChange={this.OnChange}/>
+                <input type="date" name="endTime" className="endTime" onChange={this.OnChange}/>
+                <span>Liste des collaborateurs</span>
+                <select className="collaborators" ref="selectOptions">
+                    {this.state.collabs.map((data, key) => {
+                        return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
+                    })}
+                </select>
+                <button className="rounded-full hover:rounded-lg" onClick={this.AddCollab}>Ajouter un collaborateur</button>
+                <button type="submit">Valider</button>
+            </form>
+        )
     }
 
     HandleSubmit = (event) => {
@@ -67,26 +90,7 @@ export default class AddMission extends Component
             <div className="w-full flex justify-center">
                 <div className="w-2/4">
                     <h1 className="title">Créer une mission</h1>
-                    <form className="submitForm flex flex-col" onSubmit={this.HandleSubmit}>
-                        <span>Chef de service</span>
-                        <select className="manager">
-                            {this.state.chiefs.map((data, key) => {
-                                return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
-                            })}
-                        </select>
-                        <input type="text" name="name" className="missionName border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Nom de la mission"/>
-                        <input type="text" name="description" className="missionDescription border-l-4 border-red-500 focus:outline-none" onChange={this.OnChange} placeholder="Description"/>
-                        <input type="date" name="startTime" className="startTime" onChange={this.OnChange}/>
-                        <input type="date" name="endTime" className="endTime" onChange={this.OnChange}/>
-                        <span>Liste des collaborateurs</span>
-                        <select className="collaborators" ref="selectOptions">
-                            {this.state.collabs.map((data, key) => {
-                                return <option key={key} value={data.id}>{data.firstName} {data.lastName}</option>
-                            })}
-                        </select>
-                        <button className="rounded-full hover:rounded-lg" onClick={this.AddCollab}>Ajouter un collaborateur</button>
-                        <button type="submit">Valider</button>
-                    </form>
+                    <div className="missionList">{this.CreateMission()}</div>
                 </div>
             </div>
         )
