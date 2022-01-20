@@ -19,7 +19,6 @@ class PostRequestHoliday extends PureComponent {
         
     }
 
-
     handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -37,21 +36,8 @@ class PostRequestHoliday extends PureComponent {
                 posts: res.data
             })
             console.log(res.data)
-
         })
     }
-
-    // handleTextChange = (event) => {
-    //     const {target: {collabId, value}} = event;
-    //     this.setState({ [collabId]: value});
-    //     console.log(this.state);
-    // }
-
-    // handleOnSubmit = (event) => {
-    //     event.preventDefault();
-    //     this.props.postRequestHolidayInApi(this.state);
-    //     this.setState();
-    // }
 
     render() {
         const { collabId, startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount } = this.state;
@@ -72,7 +58,7 @@ class PostRequestHoliday extends PureComponent {
                                 <label htmlFor="leaveType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                 <div className="mt-1">
                                     <select value={leaveType} onChange={this.handleChange} name="leaveType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                    <option onChange={this.handleChange} value="">Selection Type de congé</option>
+                                    <option onChange={this.handleChange} value="">--- select ---</option>
                                         <option onChange={this.handleChange} value="0">Congés payés</option>
                                         <option onChange={this.handleChange} value="1">Congé maladie</option>
                                         <option onChange={this.handleChange} value="2">Congé parental</option>
