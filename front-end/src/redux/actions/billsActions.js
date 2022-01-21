@@ -61,7 +61,10 @@ export function fetchAllBills() {
 }
 
 export function postBill(bill) {
+    console.log("post bill ")
     return (dispatch) => {
+    console.log("return bill ")
+
         dispatch({
             type: IS_LOADING,
             value: true
