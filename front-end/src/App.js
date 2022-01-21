@@ -6,14 +6,14 @@ import {
 } from "react-router-dom";
 import './index.css';
 
-import BillsOverview from "./containers/BillsOverview";
-import AddCollaborator from "./components/AddCollaboratorForm";
+import BillsOverview from "./containers/billContainers/BillsOverview";
+import AddCollaborator from "./components/collaboratorComponents/AddCollaboratorForm";
 import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
 import HolidayList from "./components/holidayComponents/HolidayList";
-import CollaboratorList from "./components/CollaboratorList";
-import CollaboratorManagement from "./components/CollaboratorManagement";
-import CollaboratorPage from "./components/CollaboratorPage";
-import BillById from "./containers/BillById"
+import CollaboratorList from "./components/collaboratorComponents/CollaboratorList";
+import CollaboratorManagement from "./components/collaboratorComponents/CollaboratorManagement";
+import CollaboratorPage from "./components/collaboratorComponents/CollaboratorPage";
+import BillById from "./containers/billContainers/BillById"
 import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
 import DepartmentList from "./components/DptNewFolder/DepartmentList";
@@ -23,7 +23,7 @@ import { DepartmentsOverview } from "./containers/DepartmentContainer/Department
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
 
-import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
+
 
 
 import InfoOverview from "./containers/InfoOverview";
