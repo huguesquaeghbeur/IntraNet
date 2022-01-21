@@ -15,6 +15,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Holiday element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Holiday FinById(int id)
         {
             return _dataContext.Holidays.Find(id);

@@ -1,8 +1,10 @@
 import { PureComponent } from "react"
 import { connect } from 'react-redux';
-import { fetchAllBills, postBill, updateBill } from '../redux/actions/billsActions'
-import {fakeBillPost} from '../datas/billData'
-import { BillCard } from "../components/BillCard";
+import { fetchAllBills, postBill, updateBill, deleteBill } from '../../redux/actions/billsActions'
+import {createBill} from '../../services/billsService'
+import {fakeBillPost} from '../../datas/billData'
+import { BillCard } from "../../components/billComponents/BillCard";
+
 export class BillsOverview extends PureComponent {
     constructor(props) {
         super(props)
@@ -45,16 +47,33 @@ export class BillsOverview extends PureComponent {
         this.props.getAllBillsFromApi()
         console.log(this.props.bills)
     }
+    handleCreateBillClick=()=>{
+        const formData = new FormData()
+        formData.append("collabId",1)
+        console.log(formData)
+        this.props.postBill(formData)
+    }
+    componentDidMount(){
+        this.props.getAllBillsFromApi()
+    }
     componentDidUpdate(){
         console.log("BillsOverview updated ")
-        console.log(this.props.bills)
+
     }
+
+    deleteBill=(id)=>{
+        this.props.deleteBill(id)
+    }
+
     render() {
         return(
             <div>
                 <h1>Je suis une liste de bills</h1>
+                <button onClick={() => this.handleCreateBillClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">Ajouter une note de frais</button>
                 {console.log("Le map suit")}
-                <div className="flex flex-wrap justify-around">{this.props.bills !== undefined ? this.props.bills.map((bill,index) => <BillCard key={index} bill={bill}/>) : null}</div>
+                {console.log(this.props.isLoading)}
+                {console.log(this.props.bills)}
+                <div className="flex flex-wrap justify-around">{ this.props.bills !== undefined  ? this.props.bills.map((bill,index) => <BillCard key={index} bill={bill} deleteBillAction={this.deleteBill}/>) : null}</div>
                 <button onClick={() => this.handleFetchClick()}> Fetch bills </button> 
                 <button onClick={() => this.handlePostClick()}> Post bills </button> 
                 <button onClick={() => this.handleUpdateClick()}> Update bills </button>
@@ -64,9 +83,9 @@ export class BillsOverview extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
-    console.log("mapstatetoprops "+state.bills.bills)
     return {
-        bills: state.bills.bills
+        bills: state.bills.bills,
+        isLoading:state.bills.isLoading
     }
 }
 
@@ -74,7 +93,8 @@ const mapActionToProps = (dispatch) => {
     return {
         getAllBillsFromApi : () => dispatch(fetchAllBills()),
         postBill : (bill) => dispatch(postBill(bill)),
-        updateBill : (bill) => dispatch(updateBill(bill))
+        updateBill : (bill) => dispatch(updateBill(bill)),
+        deleteBill : (id) => dispatch(deleteBill(id))
     }
 }
 

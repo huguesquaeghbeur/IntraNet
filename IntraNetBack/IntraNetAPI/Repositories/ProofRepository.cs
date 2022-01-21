@@ -13,6 +13,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Proof element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Proof FinById(int id)
         {
             throw new NotImplementedException();
