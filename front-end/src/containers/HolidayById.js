@@ -4,14 +4,14 @@ import HolidayCard from '../components/HolidayCard';
 import { getHolidayRequestById } from '../services/holidayData';
 
 class HolidayById extends PureComponent {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            holiday : {}
+            holiday: {}
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         getHolidayRequestById(this.props.holidayId).then(res => {
             this.setState({
                 holiday: res.data
@@ -24,18 +24,25 @@ class HolidayById extends PureComponent {
 
     render() {
         return (
-            <div>
-                {this.props.holidayId !== undefined ?
-                <HolidayCard post={this.state.holiday} />
-                 : null }
+            <div class="flex items-center justify-center bg-white">
+                <div class="flex flex-col">
+
+                    <div class="flex flex-col">
+                        <div class="text-gray-400 font-bold uppercase">
+                            Dema,nde de congés n° {this.state.holiday.id}
+                        </div>
+                        {this.props.holidayId !== undefined ?
+                            <HolidayCard post={this.state.holiday} />
+                            : null}
+                    </div>
+                </div>
             </div>
         );
     }
 }
-export default function GetId()
-{
-    const {id}  = useParams()
+export default function GetId() {
+    const { id } = useParams()
     return (
-        <HolidayById holidayId={id}/>
+        <HolidayById holidayId={id} />
     )
 }

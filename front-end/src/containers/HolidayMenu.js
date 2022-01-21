@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+import { faList, faChevronRight, faAlignLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class HolidayMenu extends PureComponent {
     constructor(props) {
@@ -8,24 +10,27 @@ class HolidayMenu extends PureComponent {
 
     render() {
         return (
-            <div className="grid justify-items-center">
-                
-                {/* <!-- Continue With --> */}
-                <div class="flex flex-col mt-8">
-                    <div class="text-gray-400 font-bold uppercase">
-                        Demande de congés
-                    </div>
+            // <!-- Page Container -->
+            <div class="flex items-center justify-center bg-white">
+                <div class="flex flex-col">
 
-                    <div class="flex flex-col items-stretch mt-5">
-                        {/* <!-- Nav Item #1 --> */}
-                        <div class="flex flex-row group px-4 py-8
+                    {/* <!-- Continue With --> */}
+                    <div class="flex flex-col">
+                        <div class="text-gray-400 font-bold uppercase">
+                            Gestion des congés
+                        </div>
+
+                        <div class="flex flex-col items-stretch mt-5">
+                            {/* <!-- Nav Item #1 --> */}
+                            <Link to="/holiday/post">
+                            <div class="flex flex-row group px-4 py-8
                     border-t hover:cursor-pointer
                     transition-all duration-200 delay-100">
-                            <Link to="/holiday/post">
+
                                 {/* <!-- Nav Icon --> */}
                                 <div class="rounded-xl bg-blue-100 px-3 py-2 md:py-4">
-                                    <i class="mdi mdi-home-outline mx-auto 
-                            text-indigo-900 text-2xl md:text-3xl"></i>
+                                    <FontAwesomeIcon icon={faAlignLeft} className="mx-auto 
+                            text-indigo-900 text-2xl md:text-3xl"/>
                                 </div>
 
                                 {/* <!-- Text --> */}
@@ -37,27 +42,26 @@ class HolidayMenu extends PureComponent {
                                     <div class="font-semibold text-sm md:text-md lg:text-lg
                             text-gray-400 group-hover:text-gray-500
                             transition-all duration-200 delay-100">
-                                        Faire une nouvelle demande de congés
+                                        Faire une nouvelle demande
                                     </div>
                                 </div>
 
                                 {/* <!-- Chevron --> */}
-                                <i class="mdi mdi-chevron-right text-gray-400 mdi-24px my-auto pr-2
-                        group-hover:text-gray-700 transition-all duration-200 delay-100"></i>
+                                <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 mdi-24px my-auto
+                        group-hover:text-gray-700 transition-all duration-200 delay-100" />
+                            </div>
                             </Link>
-                        </div>
 
-                        {/** Will be hidden for collaborator & visible for Chief or HR */}
-
-                        {/* <!-- Nav Item #2 --> */}
-                        <div class="flex flex-row group px-4 py-8
+                            {/* <!-- Nav Item #2 --> */}
+                            <Link to="/holiday/list">
+                            <div class="flex flex-row group px-4 py-8
                     border-t hover:cursor-pointer
                     transition-all duration-200 delay-100">
-                            <Link to="list">
+
                                 {/* <!-- Nav Icon --> */}
                                 <div class="rounded-xl bg-blue-100 px-3 py-2 md:py-4">
-                                    <i class="mdi mdi-home-outline mx-auto 
-                            text-indigo-900 text-2xl md:text-3xl"></i>
+                                <FontAwesomeIcon icon={faList} className="mx-auto 
+                            text-indigo-900 text-2xl md:text-3xl"/>
                                 </div>
 
                                 {/* <!-- Text --> */}
@@ -69,13 +73,14 @@ class HolidayMenu extends PureComponent {
                                     <div class="font-semibold text-sm md:text-md lg:text-lg
                             text-gray-400 group-hover:text-gray-500
                             transition-all duration-200 delay-100">
-                                        Liste des demandes en attentes de validation
+                                        Liste des congés en attente
                                     </div>
                                 </div>
 
                                 {/* <!-- Chevron --> */}
-                                <i class="mdi mdi-chevron-right text-gray-400 mdi-24px my-auto pr-2
-                        group-hover:text-gray-700 transition-all duration-200 delay-100"></i>
+                                <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 mdi-24px my-auto
+                        group-hover:text-gray-700 transition-all duration-200 delay-100" />
+                            </div>
                             </Link>
                         </div>
                     </div>
