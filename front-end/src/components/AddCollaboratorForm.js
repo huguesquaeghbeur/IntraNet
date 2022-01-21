@@ -12,7 +12,7 @@ class AddCollaborator extends PureComponent {
         department: '',
         email: '',
         password: '',
-        isChief: false,
+        status: '',
         isAdmin: false,
         isActive: false
     }
@@ -32,7 +32,7 @@ class AddCollaborator extends PureComponent {
         formdata.append('department', this.state.department);
         formdata.append('email', this.state.email);
         formdata.append('password', this.state.password);
-        formdata.append('isChief', this.state.isChief);
+        formdata.append('status', this.state.status);
         formdata.append('isAdmin', this.state.isAdmin);
         formdata.append('isActive', this.state.isActive);
         postCollaboratorData(formdata).then(response => {
@@ -86,10 +86,12 @@ class AddCollaborator extends PureComponent {
                                         <select name="department" 
                                         onChange={this.handleChange}
                                         value={this.state.department}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                                            <option value="">Comptabilité</option>
-                                            <option value="">Ressource Humaine</option>
-                                            <option value="">Direction</option>
+                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm 
+                                        focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                            <option value="" onChange={this.handleChange}>--Select--</option>
+                                            <option value="0" onChange={this.handleChange}>Comptabilité</option>
+                                            <option value="1" onChange={this.handleChange}>Ressource Humaine</option>
+                                            <option value="2" onChange={this.handleChange}>Direction</option>
                                         </select>
                                     </div>
                                 </div>
@@ -114,14 +116,26 @@ class AddCollaborator extends PureComponent {
                                         required />
                                 </div>
                                 <div>
+                                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">Service</label>
+                                    <div className="mt-1">
+                                        <select name="status" 
+                                        onChange={this.handleChange}
+                                        value={this.state.status}
+                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm 
+                                        focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                            <option value="" onChange={this.handleChange}>--Select--</option>
+                                            <option value="0" onChange={this.handleChange}>Collaborateur</option>
+                                            <option value="1" onChange={this.handleChange}>chef de projet</option>
+                                            <option value="2" onChange={this.handleChange}>Chef de service</option>
+                                            <option value="3" onChange={this.handleChange}>Directeur RH</option>
+                                            <option value="4" onChange={this.handleChange}>Directeur Financier</option>
+                                            <option value="5" onChange={this.handleChange}>Directeur Génèral</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
                                     <div className="form-check">
                                         <div>
-
-                                            <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" name="isChief" onChange={this.handleChange}
-                                                value={true} />
-                                            <label className="block text-sm font-medium text-gray-700">
-                                                Chef de service
-                                            </label>
                                             <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" name="isAdmin" onChange={this.handleChange}
                                                 value={true} />
                                             <label className="block text-sm font-medium text-gray-700">
@@ -138,12 +152,6 @@ class AddCollaborator extends PureComponent {
                                     <div className="flex flex-row justify-around">
                                         <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500">
                                             Valider
-                                        </button>
-                                        <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500">
-                                            Modifier
-                                        </button>
-                                        <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
-                                            Supprimer
                                         </button>
                                     </div>
                                 </div>

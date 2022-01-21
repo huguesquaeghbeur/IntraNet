@@ -43,15 +43,15 @@ namespace IntraNetAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromForm] string FirstName, [FromForm] string LastName, [FromForm] DateTime Birthday,[FromForm] int DepartmentId, [FromForm] bool IsChief, [FromForm] bool IsAdmin, [FromForm] bool IsActive, [FromForm] int HalfDayBreak, [FromForm] string Email, [FromForm] string Password)
+        public IActionResult Post([FromForm] string FirstName, [FromForm] string LastName, [FromForm] DateTime Birthday, [FromForm] int Department, [FromForm] int Status, [FromForm] bool IsAdmin, [FromForm] bool IsActive, [FromForm] int HalfDayBreak, [FromForm] string Email, [FromForm] string Password)
         {
             Collaborator collaborator = new Collaborator()
             {
                 FirstName = FirstName,
                 LastName = LastName,
                 Birthday = Birthday,
-                Department = _departmentRepository.SearchOne(d => d.Id == DepartmentId),
-                IsChief = IsChief,
+                Department = (Collaborator.DepartmentEnum) Department,
+                Status = (Collaborator.StatusEnum) Status,
                 IsAdmin = IsAdmin,
                 IsActive = IsActive,
                 HalfDayBreak = 60,

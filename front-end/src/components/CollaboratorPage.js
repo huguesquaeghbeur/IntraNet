@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 class ShowCollaboratorPage extends PureComponent {
     render() {
         return (
-            <div className="w-full flex justify-center">
-                <div className="w-2/4">
-                    <h1 className="title">Gestion des collaborateurs</h1>
-                    <Link to={'/collaborator/get'}><button className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500" >Liste des collaborateurs</button>
-                    </Link>
-                    <Link to={'/collaborator/post'}>
-                        <button className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500">Ajouter un collaborateur</button>
-                    </Link>
-                    <Link to={'/collaborator/update'}>
-                        <button className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500">Ajouter un collaborateur</button>
-                    </Link>
+            <div>
+                <h1 className="justify-center">Gestion des collaborateurs</h1>
+                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                    <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+                    <div className="flex flex-row justify-around">
+                        <Link to={'/collaborator/get'}><button className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500" >Liste des collaborateurs</button>
+                        </Link>
+                        <Link to={'/collaborator/post'}>
+                            <button className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500">Ajouter un collaborateur</button>
+                        </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

@@ -12,7 +12,6 @@ namespace IntraNetAPI.Models
         private string email;
         private string password;
         private DateTime birthday;
-        private bool isChief;
         private bool isAdmin;
         private bool isActive;
         private int halfDayBreak;
@@ -21,15 +20,38 @@ namespace IntraNetAPI.Models
         public string FirstName { get => firstName; set => firstName = value; }
         public string LastName { get => lastName; set => lastName = value; }
         public DateTime Birthday { get => birthday; set => birthday = value; }
-        public bool IsChief { get => isChief; set => isChief = value; }
         public bool IsAdmin { get => isAdmin; set => isAdmin = value; }
         public int HalfDayBreak { get => halfDayBreak; set => halfDayBreak = value; }
         public virtual List<Mission> Missions { get; set; }
         public virtual List<Bill> Bills { get; set; }
         public virtual List<Holiday> Holidays { get; set; }
-        public virtual Department Department { get; set;}
+        
         public string Email { get => email; set => email = value; }
         public string Password { get => password; set => password = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
+
+        public virtual DepartmentEnum Department { get; set; }
+        public virtual StatusEnum Status { get; set; }
+
+        public enum DepartmentEnum
+        {
+            Comptability,
+            Human_Ressource,
+            Direction
+        }
+
+        
+
+        public enum StatusEnum
+        {
+            Basic,
+            ProjectChief,
+            DepartmentChief,
+            DRH,
+            CFO,
+            CEO
+        }
+
+        
     }
 }
