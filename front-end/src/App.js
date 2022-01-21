@@ -18,6 +18,7 @@ import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
+import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
 import BigCalendar from 'react-big-calendar';
 import Year from './Year';
 
@@ -66,7 +67,11 @@ function App() {
                     <Route
                         path="departments/:id"
                         element={<DepartmentById/>}
-                    />                                     
+                    />    
+                    <Route
+                        path="departments/description"
+                        element={<DepartmentDescriptionUniqueId/>}
+                    />                                  
                 </Routes>
             </Router>
             <BigCalendar

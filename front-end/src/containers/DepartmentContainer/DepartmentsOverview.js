@@ -61,7 +61,10 @@ export class DepartmentsOverview extends PureComponent {
                     {console.log("Le map est fait")}
                 </div>
                 <div>
-                {/* <Link to="/departments/list" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>DepartmentsList</Link> */}
+                <Link to="/departments/list" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>DepartmentsList</Link>
+                <br/>
+                <hr/>
+                <Link to="/departments/description" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>DepartmentsDescription</Link>
                     {/* <a href="/departments/list" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>
                         DepartmentsList
                     </a> */}
