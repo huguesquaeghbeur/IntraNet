@@ -28,7 +28,6 @@ namespace IntraNetAPI.Controllers
             _collaboratorRepository = collaboratorRepository;
             _uploadService = uploadService;
         }
-
         [HttpGet]
         public IActionResult Get()
         {
@@ -39,7 +38,7 @@ namespace IntraNetAPI.Controllers
         {
             Bill bill = _billRepository.FinById(billId);
             if (bill != null)
-                return Ok(JsonConvert.SerializeObject(bill));
+                return Ok(bill);
             return NotFound(new { Message = "bill not found" });
         }
         [HttpPost]
@@ -51,7 +50,7 @@ namespace IntraNetAPI.Controllers
                 //IsSubmitted = false,
             };
             if(_billRepository.Save(bill))
-                return Ok(new { Message = "bill added", id = bill.Id });
+                return Ok(new { bill=bill, id = bill.Id });
             return NotFound(new { Message = "bill error" });
         }
         [HttpPatch]
@@ -73,6 +72,17 @@ namespace IntraNetAPI.Controllers
                 bill.Spents.Add(spent);
                 _billRepository.Update(bill);
                 return Ok(new { Message = "bill added", id = bill.Id });
+            }
+            return NotFound(new { Message = "bill not found" });
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Bill bill = _billRepository.FinById(id);
+            if (bill != null)
+            {
+                _billRepository.Delete(bill);
+                return Ok(new { Message = "bill deleted", id = bill.Id });
             }
             return NotFound(new { Message = "bill not found" });
         }

@@ -13,6 +13,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Info element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Info FinById(int id)
         {
             throw new NotImplementedException();

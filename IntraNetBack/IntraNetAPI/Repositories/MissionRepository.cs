@@ -13,6 +13,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Mission element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Mission FinById(int id)
         {
             return _dataContext.Missions.Find(id);

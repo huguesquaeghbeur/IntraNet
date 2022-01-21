@@ -4,11 +4,11 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import './styles/index.css';
-import AddMission from "./components/AddMission";
-import BillsOverview from "./containers/BillsOverview";
-import HolidayOverview from "./containers/HolidayOverview";
-import BillById from "./containers/BillById"
+import './index.css';
+import AddMission from "./components/billComponents/AddMission";
+import BillsOverview from "./containers/billContainers/BillsOverview";
+import HolidayOverview from "./containers/billContainers/HolidayOverview";
+import BillById from "./containers/billContainers/BillById"
 
 function App() {
     return (
