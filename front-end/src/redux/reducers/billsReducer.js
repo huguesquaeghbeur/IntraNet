@@ -69,10 +69,17 @@ export default function billsReducer(state = initialState, action) {
                 error: action.error
             }
         case END_DELETING_BILL:
-            return {
-                ...state,
-                bills: state.bills.filter(b => b.id!=action.res.id)
+            if(action.res.id>0){
+                return {
+                    ...state,
+                    bills: state.bills.filter(b => b.id!=action.res.id)
+                }
+            }else{
+                return {
+                    ...state
+                }
             }
+
         case ERROR_DELETING_BILL: 
             return {
                 ...state,
