@@ -31,14 +31,14 @@ namespace IntraNetAPI.Repositories
             return _dataContext.SaveChanges() > 0;
         }
 
-        public IEnumerable<Holiday> Search(Expression<Func<Holiday, bool>> predicate)
+        public IEnumerable<Holiday> Search(Expression<Func<Holiday, bool>> searchMethode)
         {
-            return _dataContext.Holidays.ToList();
+            return _dataContext.Holidays.Where(searchMethode).ToList();
         }
 
         public Holiday SearchOne(Expression<Func<Holiday, bool>> searchMethode)
         {
-            throw new NotImplementedException();
+            return _dataContext.Holidays.SingleOrDefault(searchMethode); 
         }
 
         public bool Update(Holiday entity)
