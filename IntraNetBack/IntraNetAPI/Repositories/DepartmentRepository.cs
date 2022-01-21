@@ -15,6 +15,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Department element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Department FinById(int id)
         {
             return _dataContext.Departments.Find(id);

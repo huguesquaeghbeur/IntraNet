@@ -45,5 +45,11 @@ namespace IntraNetAPI.Repositories
         {
             return _dataContext.SaveChanges() > 0;
         }
+
+        public bool Delete(Bill element)
+        {
+            _dataContext.Bills.Remove(element);
+            return _dataContext.SaveChanges() > 0;
+        }
     }
 }

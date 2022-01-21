@@ -16,6 +16,11 @@ namespace IntraNetAPI.Repositories
 
         }
 
+        public bool Delete(Collaborator element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Collaborator FinById(int id)
         {
            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
