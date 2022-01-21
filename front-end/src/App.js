@@ -16,6 +16,13 @@ import CollaboratorPage from "./components/CollaboratorPage";
 import BillById from "./containers/BillById"
 import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
+import DepartmentList from "./components/DptNewFolder/DepartmentList";
+import PostRequestDepartment from "./components/DptNewFolder/PostRequestDepartment";
+import DepartmentById from "./components/DptNewFolder/DepartmentById";
+import { DepartmentsOverview } from "./containers/DepartmentContainer/DepartmentsOverview";
+import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
+import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
+
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 
 
@@ -83,6 +90,26 @@ function App() {
                         path="collaborator/management/:id"
                         element={<CollaboratorManagement/>}
                     />
+                        <Route
+                        path="departments"
+                        element={<DepartmentsOverview/>}
+                    />                    
+                    <Route
+                        path="departments/list"
+                        element={<DepartmentList/>}
+                    />
+                    <Route
+                        path="departments/post"
+                        element={<PostRequestDepartment/>}
+                    />
+                    <Route
+                        path="departments/:id"
+                        element={<DepartmentById/>}
+                    />    
+                    <Route
+                        path="departments/description"
+                        element={<DepartmentDescriptionUniqueId/>}
+                    />                          
                                        
                 </Routes>
             </Router>
