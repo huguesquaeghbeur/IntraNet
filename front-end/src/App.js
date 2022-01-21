@@ -15,6 +15,7 @@ import CollaboratorManagement from "./components/CollaboratorManagement";
 import CollaboratorPage from "./components/CollaboratorPage";
 import BillById from "./containers/BillById"
 import HolidayById from "./containers/HolidayById";
+import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
 
 function App() {
     return (
@@ -32,15 +33,19 @@ function App() {
                         path="bills/:id"
                         element={<BillById />}/>
                     <Route
-                        path="holidays"
+                        path="holiday"
+                        element={<HolidayMenu />}
+                    />
+                    <Route
+                        path="holiday/list"
                         element={<HolidayList />}
                     />
                     <Route
-                        path="holidays/:id"
+                        path="holiday/:id"
                         element={<HolidayById />}
                     />
                     <Route
-                        path="holidays/post"
+                        path="holiday/post"
                         element={<PostRequestHoliday />}
                     />
                     <Route
