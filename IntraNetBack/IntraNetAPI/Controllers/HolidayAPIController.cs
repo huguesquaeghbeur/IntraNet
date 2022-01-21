@@ -42,15 +42,35 @@ namespace IntraNetAPI.Controllers
 
         // POST api/<HolidayAPIController>
         [HttpPost]
-        public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning)
+        public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
+            int tmpHalfDayBreak = 0;
+            if (startDate == endDate)
+            {
+                if (startOnMorning == true && endOnMorning == false)
+                {
+                    tmpHalfDayBreak = 1;
+                }
+            }
+            if (startDate < endDate)
+            {
+                if (startOnMorning == true && endOnMorning == false)
+                {
+                    tmpHalfDayBreak += 1;
+                } else if (startOnMorning == false && endOnMorning == true)
+                {
+                    tmpHalfDayBreak -= 1;
+                }
+            }
             Holiday holiday = new Holiday()
             {
                 Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
-                StartDate = startDate,
+                StartDate = startDate.ToLocalTime(),
                 StartOnMorning = startOnMorning,
-                EndDate = endDate,
+                EndDate = endDate.ToLocalTime(),
                 EndOnMorning = endOnMorning,
+                HalfDayBreakCount = ((endDate.Day - startDate.Day)*2) + tmpHalfDayBreak,
+                LeaveType = (Holiday.LeaveTypeEnum)leaveType,
                 Validation = Holiday.ValidationEnum.InitialState,
             };
             if (_holidayRepository.Save(holiday))
@@ -59,6 +79,7 @@ namespace IntraNetAPI.Controllers
             }
             else return NotFound(new { Message = "holiday error" });
         }
+
 
         //// PUT api/<HolidayAPIController>/5
         //[HttpPut("{id}")]

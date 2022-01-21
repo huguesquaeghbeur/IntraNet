@@ -19,7 +19,7 @@ namespace IntraNetAPI.Models
         public virtual Collaborator Collaborator { get; set; }
         public int Id { get => id; set => id = value; }
         public DateTime StartDate { get => startDate; set => startDate = value; }
-        public DateTime EndDate { get => endDate; set => endDate = value; }
+        public DateTime EndDate { get => endDate.ToLocalTime(); set => endDate = value; }
         public bool StartOnMorning { get => startOnMorning; set => startOnMorning = value; }
         public bool EndOnMorning { get => endOnMorning; set => endOnMorning = value; }
         public int HalfDayBreakCount { get => halfDayBreakCount; set => halfDayBreakCount = value; }
@@ -31,6 +31,14 @@ namespace IntraNetAPI.Models
             HRValidation,
             Valided,
         }
+        public enum LeaveTypeEnum
+        {
+            HolidayMaker,
+            SickLeave,
+            ParentLeave,
+            UnpaidHoliday
+        }
         public ValidationEnum Validation { get; set; }
+        public LeaveTypeEnum LeaveType { get; set; }
     }
 }

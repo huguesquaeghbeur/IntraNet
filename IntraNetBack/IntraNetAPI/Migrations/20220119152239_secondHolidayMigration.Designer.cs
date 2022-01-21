@@ -3,14 +3,16 @@ using System;
 using IntraNetAPI.Tools;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IntraNetAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220119152239_secondHolidayMigration")]
+    partial class secondHolidayMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,9 +76,6 @@ namespace IntraNetAPI.Migrations
 
                     b.Property<int>("HalfDayBreak")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("tinyint(1)");
@@ -234,7 +233,7 @@ namespace IntraNetAPI.Migrations
                     b.Property<bool>("IsExactAmount")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("MissionId")
+                    b.Property<int?>("MissionId")
                         .HasColumnType("int");
 
                     b.Property<int>("Validate")
@@ -334,9 +333,7 @@ namespace IntraNetAPI.Migrations
 
                     b.HasOne("IntraNetAPI.Models.Mission", "Mission")
                         .WithMany()
-                        .HasForeignKey("MissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MissionId");
 
                     b.Navigation("Mission");
                 });

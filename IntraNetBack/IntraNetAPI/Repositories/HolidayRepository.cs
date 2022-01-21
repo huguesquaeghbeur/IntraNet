@@ -22,7 +22,7 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Holiday> GetAll()
         {
-            return _dataContext.Holidays.Include(h=>h.Collaborator).ToList();
+            return _dataContext.Holidays.Include(h => h.Collaborator).ToList();
         }
 
         public bool Save(Holiday entity)
