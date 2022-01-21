@@ -1,5 +1,6 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
+using IntraNetAPI.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,10 +17,12 @@ namespace IntraNetAPI.Controllers
     {
         IRepository<Holiday> _holidayRepository;
         IRepository<Collaborator> _collaboratorRepository;
-        public HolidayAPIController(IRepository<Holiday> holidayRepository, IRepository<Collaborator> collaboratorRepository)
+        FormatService _formatService;
+        public HolidayAPIController(IRepository<Holiday> holidayRepository, IRepository<Collaborator> collaboratorRepository, FormatService formatService)
         {
             _holidayRepository = holidayRepository;
             _collaboratorRepository = collaboratorRepository;
+            _formatService = formatService;
         }
         // GET: api/<HolidayAPIController>
         [HttpGet]
@@ -65,9 +68,9 @@ namespace IntraNetAPI.Controllers
             Holiday holiday = new Holiday()
             {
                 Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
-                StartDate = startDate.ToLocalTime(),
+                StartDate = _formatService.FormatDate(startDate),
                 StartOnMorning = startOnMorning,
-                EndDate = endDate.ToLocalTime(),
+                EndDate = _formatService.FormatDate(endDate),
                 EndOnMorning = endOnMorning,
                 HalfDayBreakCount = ((endDate.Day - startDate.Day)*2) + tmpHalfDayBreak,
                 LeaveType = (Holiday.LeaveTypeEnum)leaveType,
@@ -81,11 +84,37 @@ namespace IntraNetAPI.Controllers
         }
 
 
-        //// PUT api/<HolidayAPIController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/<HolidayAPIController>/5
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] int validation)
+        {
+            Holiday holiday = _holidayRepository.FinById(id);
+            if(holiday == null)
+            {
+                holiday.Validation = (Holiday.ValidationEnum)validation;
+                if (validation == 0)
+                {
+                    return Ok(new { message = "holiday refused" });
+                }
+                else if(validation == 1)
+                {
+                    return Ok(new { message = "Initial state holiday" });
+                }
+                else if (validation == 2)
+                {
+                    return Ok(new { message = "holiday approved by Chief" });
+                }
+                else if (validation == 3)
+                {
+                    return Ok(new { message = "holiday approved by Human Ressources" });
+                }
+                else if (validation == 4)
+                {
+                    return Ok(new { message = "holiday approved by All" });
+                }
+            }
+            return NotFound(new { message = "error validation" });
+        }
 
         //// DELETE api/<HolidayAPIController>/5
         //[HttpDelete("{id}")]

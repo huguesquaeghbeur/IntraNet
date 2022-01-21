@@ -46,7 +46,7 @@ const HolidayCard = (props) => {
                             Fin : <b>{props.post.endDate}</b>
                         </div>
                         <div>
-                            Jours cumulés : <b>{props.post.halfDayBreakCount / 2}</b>
+                            Jours cumulés : <b>{(props.post.halfDayBreakCount / 2).toString()}</b>
                         </div>
                     </div>
                 </div>

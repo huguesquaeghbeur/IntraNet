@@ -49,6 +49,16 @@ class PostRequestHoliday extends PureComponent {
             })
             console.log(res.data)
         })
+        
+        this.setState({
+            collabId: '',
+            startDate: '',
+            startOnMorning: true,
+            endDate: '',
+            endOnMorning: true,
+            leaveType: '',
+            halfDayBreakCount: ''
+        })
     }
 
     render() {
