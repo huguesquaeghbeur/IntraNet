@@ -4,8 +4,8 @@
     "\\IntraNetBack",
     "\\IntraNetBack\\IntraNetAPI",
     "\\IntraNetBack\\IntraNetAPI\\Controllers",
-    "\\IntraNetBack\\IntraNetAPI\\Repositories"
+    "\\IntraNetBack\\IntraNetAPI\\Services"
   ],
-  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Repositories\\CollaboratorRepository.cs",
+  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\MissionController.cs",
   "PreviewInSolutionExplorer": false
 }
