@@ -7,7 +7,8 @@ using System.Linq;
 namespace IntraNetAPI.Controllers
 {
     [EnableCors("allConnections")]
-    [Route("department")]
+    [Route("intranet/v1/departments")]
+
 
     public class DepartmentController : Controller
     {

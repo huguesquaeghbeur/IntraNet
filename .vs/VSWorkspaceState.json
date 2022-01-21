@@ -6,6 +6,6 @@
     "\\IntraNetBack\\IntraNetAPI\\Controllers",
     "\\IntraNetBack\\IntraNetAPI\\Services"
   ],
-  "SelectedNode": "\\IntraNetBack\\IntraNetBack.sln",
+  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\DepartmentController.cs",
   "PreviewInSolutionExplorer": false
 }
