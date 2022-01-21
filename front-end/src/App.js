@@ -8,9 +8,15 @@ import './styles/index.css';
 import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
-import HolidayOverview from "./containers/HolidayOverview";
+
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
+import BigCalendar from 'react-big-calendar';
+import Year from './Year';
+
+const localizer = BigCalendar.momentLocalizer(moment)
+localizer.formats.yearHeaderFormats = 'YYYY'
+
 
 
 
@@ -27,10 +33,6 @@ function App() {
                         element={<BillsOverview />}
                     />
                     <Route
-                        path="holidays"
-                        element={<HolidayOverview />}
-                    />
-                    <Route
                         path="infos"
                         element={<InfoOverview />}
                     />
@@ -41,10 +43,26 @@ function App() {
                     <Route
                         path="collaborator"
                         element={<AddCollaborator/>}/>
+                    
                 </Routes>
             </Router>
+            <BigCalendar
+            localizer={localizer}
+            events={[]}
+            toolbar={true}
+            views={{
+                day: true,
+                week: true,
+                month: true,
+                year: Year
+            }}
+            messages={{year: 'Year'}}
+            />
         </div>
     );
 }
+
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App/>, rootElement)
 
 export default App;
