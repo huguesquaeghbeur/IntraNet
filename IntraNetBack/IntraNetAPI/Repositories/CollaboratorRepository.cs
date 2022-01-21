@@ -37,7 +37,7 @@ namespace IntraNetAPI.Repositories
         {
             return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Where(searchMethode).FirstOrDefault();
         }
-        public bool Update(Collaborator element)
+        public bool Update(Collaborator collaborator)
         {
             return _dataContext.SaveChanges() > 0;
         }

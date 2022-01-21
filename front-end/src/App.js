@@ -12,6 +12,7 @@ import HolidayOverview from "./containers/HolidayOverview";
 import PostRequestHoliday from "./components/PostRequestHoliday";
 import HolidayList from "./components/HolidayList";
 import CollaboratorList from "./components/CollaboratorList";
+import CollaboratorManagement from "./components/CollaboratorManagement";
 import CollaboratorPage from "./components/CollaboratorPage";
 import BillById from "./containers/BillById"
 
@@ -42,14 +43,18 @@ function App() {
                         path="collaborator"
                         element={<CollaboratorPage />}
                     />
-                    {/* <Route
-                        path="collaborator"
+                    <Route
+                        path="collaborator/post"
                         element={<AddCollaborator/>}
                     />
                     <Route
-                        path="collaborator"
+                        path="collaborator/get"
                         element={<CollaboratorList/>}
-                    /> */}
+                    />
+                    <Route
+                        path="collaborator/management/:id"
+                        element={<CollaboratorManagement/>}
+                    />
                 </Routes>
             </Router>
         </div>

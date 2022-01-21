@@ -25,7 +25,7 @@ export class BillCard extends PureComponent {
         this.setState({
             total: temp
         })
-    }
+    }z
 
     render() {
         return (

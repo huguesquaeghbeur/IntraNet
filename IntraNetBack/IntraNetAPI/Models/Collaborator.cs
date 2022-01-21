@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿//using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -14,6 +14,7 @@ namespace IntraNetAPI.Models
         private DateTime birthday;
         private bool isChief;
         private bool isAdmin;
+        private bool isActive;
         private int halfDayBreak;
 
         public int Id { get => id; set => id = value; }
@@ -26,8 +27,9 @@ namespace IntraNetAPI.Models
         public virtual List<Mission> Missions { get; set; }
         public virtual List<Bill> Bills { get; set; }
         public virtual List<Holiday> Holidays { get; set; }
-        public virtual Department Department { get; set; }
+        public virtual Department Department { get; set;}
         public string Email { get => email; set => email = value; }
         public string Password { get => password; set => password = value; }
+        public bool IsActive { get => isActive; set => isActive = value; }
     }
 }
