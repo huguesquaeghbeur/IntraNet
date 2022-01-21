@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { postHolidayData } from '../services/holidayData';
+import { postHolidayData } from '../../services/holidayData';
 
 class PostRequestHoliday extends PureComponent {
     state = {
@@ -64,11 +64,11 @@ class PostRequestHoliday extends PureComponent {
     render() {
         const { collabId, startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount } = this.state;
         return (
-            <div class="flex items-center justify-center bg-white">
-                <div class="flex flex-col">
+            <div className="flex items-center justify-center bg-white">
+                <div className="flex flex-col">
 
-                    <div class="flex flex-col">
-                        <div class="text-gray-400 font-bold uppercase">
+                    <div className="flex flex-col">
+                        <div className="text-gray-400 font-bold uppercase">
                             Nouvelle demande de congé
                         </div>
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

@@ -8,10 +8,10 @@ import './styles/index.css';
 import AddMission from "./components/AddMission";
 import BillsOverview from "./containers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
-import PostRequestHoliday from "./components/PostRequestHoliday";
-import HolidayList from "./components/HolidayList";
-import HolidayById from "./containers/HolidayById";
-import HolidayMenu from "./containers/HolidayMenu";
+import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
+import HolidayList from "./components/holidayComponents/HolidayList";
+import HolidayById from "./containers/holidayContainers/HolidayById";
+import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
 
 function App() {
     return (
@@ -25,7 +25,7 @@ function App() {
                         path="bills"
                         element={<BillsOverview />}
                     />
-                     <Route
+                    <Route
                         path="holiday"
                         element={<HolidayMenu />}
                     />

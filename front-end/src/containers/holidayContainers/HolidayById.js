@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { useParams } from 'react-router-dom';
-import HolidayCard from '../components/HolidayCard';
-import { getHolidayRequestById } from '../services/holidayData';
+import HolidayCard from '../../components/holidayComponents/HolidayCard';
+import { getHolidayRequestById } from '../../services/holidayData';
 
 class HolidayById extends PureComponent {
     constructor(props) {
