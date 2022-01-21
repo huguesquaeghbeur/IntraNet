@@ -26,9 +26,9 @@ import InfoList from "./components/InfoList";
 
 // const localizer = BigCalendar.momentLocalizer(moment)
 // localizer.formats.yearHeaderFormats = 'YYYY'
-
-
-
+import AddMission from "./components/billComponents/AddMission";
+import BillsOverview from "./containers/billContainers/BillsOverview";
+import BillById from "./containers/billContainers/BillById"
 
 function App() {
     return (
@@ -86,7 +86,6 @@ function App() {
                         path="collaborator/management/:id"
                         element={<CollaboratorManagement/>}
                     />
-                                       
                 </Routes>
             </Router>
             {/* <BigCalendar

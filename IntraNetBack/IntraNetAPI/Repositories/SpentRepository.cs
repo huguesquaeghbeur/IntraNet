@@ -15,6 +15,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Spent element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Spent FinById(int id)
         {
             return _dataContext.Spents.Include(s=>s.Mission).Include(s=>s.Proofs).FirstOrDefault(s=>s.Id == id);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -16,6 +17,8 @@ namespace IntraNetAPI.Models
         private string commentary;
         private bool advanceCash;
         private bool isExactAmount;
+        private DateTime expenseDate;
+
         public int MissionId { get; set; }
         [ForeignKey("MissionId")]
         [JsonIgnore]
@@ -26,6 +29,7 @@ namespace IntraNetAPI.Models
         public string Commentary { get => commentary; set => commentary = value; }
         public bool AdvanceCash { get => advanceCash; set => advanceCash = value; }
         public bool IsExactAmount { get => isExactAmount; set => isExactAmount = value; }
+        public DateTime ExpenseDate { get => expenseDate; set => expenseDate = value; }
 
         public enum ValidationEnum
         {
@@ -36,6 +40,14 @@ namespace IntraNetAPI.Models
             Valided,
         }
         public ValidationEnum Validate { get; set; }
+        public enum FeeTypeEnum
+        {
+            Other,
+            Transport,
+            Registration,
+            Equipment,
+        }
+        public FeeTypeEnum FeeType { get; set; }
 
 
     }
