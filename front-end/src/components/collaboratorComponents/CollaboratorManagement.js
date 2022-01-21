@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { getCollaboratorById, updateCollaboratorData } from "../services/collaboratorData";
+import { getCollaboratorById, updateCollaboratorData } from "../../services/collaboratorData";
 import { useParams } from "react-router-dom";
 
 class ManagementCollaborator extends PureComponent {

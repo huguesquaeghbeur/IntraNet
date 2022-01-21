@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { getCollaborator } from "../redux/actions/collaboratorAction";
-import { postCollaboratorData } from "../services/collaboratorData";
+import { getCollaborator } from "../../redux/actions/collaboratorAction";
+import { postCollaboratorData } from "../../services/collaboratorData";
 
 
 class AddCollaborator extends PureComponent {

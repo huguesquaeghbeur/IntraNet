@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import {Link} from "react-router-dom";
 //import { connect } from "react-redux";
-import { getAllCollaborator } from "../services/collaboratorData";
+import { getAllCollaborator } from "../../services/collaboratorData";
 
 
 export default class CollaboratorList extends PureComponent {
