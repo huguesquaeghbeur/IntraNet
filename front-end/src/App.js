@@ -7,12 +7,12 @@ import {
 import './index.css';
 
 import BillsOverview from "./containers/BillsOverview";
-import AddCollaborator from "./components/collaboratorComponents/AddCollaboratorForm";
+import AddCollaborator from "./components/AddCollaboratorForm";
 import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
 import HolidayList from "./components/holidayComponents/HolidayList";
-import CollaboratorList from "./components/collaboratorComponents/CollaboratorList";
-import CollaboratorManagement from "./components/collaboratorComponents/CollaboratorManagement";
-import CollaboratorPage from "./components/collaboratorComponents/CollaboratorPage";
+import CollaboratorList from "./components/CollaboratorList";
+import CollaboratorManagement from "./components/CollaboratorManagement";
+import CollaboratorPage from "./components/CollaboratorPage";
 import BillById from "./containers/BillById"
 import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
@@ -26,9 +26,6 @@ import InfoList from "./components/InfoList";
 
 // const localizer = BigCalendar.momentLocalizer(moment)
 // localizer.formats.yearHeaderFormats = 'YYYY'
-import AddMission from "./components/billComponents/AddMission";
-import BillsOverview from "./containers/billContainers/BillsOverview";
-import BillById from "./containers/billContainers/BillById"
 
 function App() {
     return (
@@ -86,6 +83,7 @@ function App() {
                         path="collaborator/management/:id"
                         element={<CollaboratorManagement/>}
                     />
+                                       
                 </Routes>
             </Router>
             {/* <BigCalendar

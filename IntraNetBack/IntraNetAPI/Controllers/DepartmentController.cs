@@ -1,11 +1,15 @@
 ﻿using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace IntraNetAPI.Controllers
 {
-    [Route("department")]
+    [EnableCors("allConnections")]
+    [Route("intranet/v1/departments")]
+
+
     public class DepartmentController : Controller
     {
         DataContext _data;
