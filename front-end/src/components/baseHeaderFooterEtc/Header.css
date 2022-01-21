@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* .container{
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+.txtTest{
+    height: 200px;
+    width: 650px;
+    background: url();
+} */
+
+.gifClass {
+    width: 35%;
+    height: 35%;
+    border-radius: 59%;
+}
+
+.classLienClickable{
+    font-size: 259%;
+    font-family: 'Courier New', Courier, monospace;
+}
