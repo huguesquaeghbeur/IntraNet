@@ -11,7 +11,7 @@ namespace IntraNetAPI.Tools
         {
             services.AddDbContext<DataContext>();
             services.AddScoped<IRepository<Bill>, BillRepository>();
-            services.AddScoped<IRepository<Collaborator>, CollaboratorRepository>();
+            services.AddScoped<IRepository<Collaborator>, collaboratorRepository>();
             services.AddScoped<IRepository<Department>, DepartmentRepository>();
             services.AddScoped<IRepository<Holiday>, HolidayRepository>();
             services.AddScoped<IRepository<Info>, InfoRepository>();

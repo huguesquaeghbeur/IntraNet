@@ -8,12 +8,24 @@ import './index.css';
 
 import BillsOverview from "./containers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
-import HolidayOverview from "./containers/HolidayOverview";
+
 import DepartmentList from "./components/DptNewFolder/DepartmentList";
 import PostRequestDepartment from "./components/DptNewFolder/PostRequestDepartment";
 import DepartmentById from "./components/DptNewFolder/DepartmentById";
 import { DepartmentsOverview } from "./containers/DepartmentContainer/DepartmentsOverview";
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
+// import './index.css';
+
+import InfoOverview from "./containers/InfoOverview";
+import InfoList from "./components/InfoList";
+import BigCalendar from 'react-big-calendar';
+import Year from './Year';
+
+const localizer = BigCalendar.momentLocalizer(moment)
+localizer.formats.yearHeaderFormats = 'YYYY'
+
+
+
 
 function App() {
     return (
@@ -28,8 +40,12 @@ function App() {
                         element={<BillsOverview />}
                     />
                     <Route
-                        path="holidays"
-                        element={<HolidayOverview />}
+                        path="infos"
+                        element={<InfoOverview />}
+                    />
+                    <Route
+                        path="infolist"
+                        element={<InfoList />}
                     />
                     <Route
                         path="collaborator"
@@ -50,11 +66,26 @@ function App() {
                     <Route
                         path="departments/:id"
                         element={<DepartmentById/>}
-                    />
+                    />                                     
                 </Routes>
             </Router>
+            <BigCalendar
+            localizer={localizer}
+            events={[]}
+            toolbar={true}
+            views={{
+                day: true,
+                week: true,
+                month: true,
+                year: Year
+            }}
+            messages={{year: 'Year'}}
+            />
         </div>
     );
 }
+
+const rootElement = document.getElementById('root')
+ReactDOM.render(<App/>, rootElement)
 
 export default App;

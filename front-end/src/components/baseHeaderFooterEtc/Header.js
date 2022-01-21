@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import InfinGif from "./gif2.gif"
+// import InfinGif from "./gif2.gif"
+import InfinGif from "./gif420.gif"
 import "../baseHeaderFooterEtc/Header.css"
 import { Link } from 'react-router-dom';
 
