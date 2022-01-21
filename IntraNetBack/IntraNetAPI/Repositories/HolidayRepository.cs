@@ -1,6 +1,7 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Holiday element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Holiday FinById(int id)
         {
             return _dataContext.Holidays.Find(id);
@@ -21,7 +27,7 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Holiday> GetAll()
         {
-            return _dataContext.Holidays.ToList();
+            return _dataContext.Holidays.Include(h => h.Collaborator).ToList();
         }
 
         public bool Save(Holiday entity)

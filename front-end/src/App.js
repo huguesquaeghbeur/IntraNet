@@ -22,6 +22,9 @@ import DepartmentById from "./components/DptNewFolder/DepartmentById";
 import { DepartmentsOverview } from "./containers/DepartmentContainer/DepartmentsOverview";
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
+
+import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
+
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
 // import BigCalendar from 'react-big-calendar';
@@ -90,7 +93,7 @@ function App() {
                         <Route
                         path="departments"
                         element={<DepartmentsOverview/>}
-                    />
+                    />                    
                     <Route
                         path="departments/list"
                         element={<DepartmentList/>}
@@ -107,6 +110,7 @@ function App() {
                         path="departments/description"
                         element={<DepartmentDescriptionUniqueId/>}
                     />                          
+                                       
                 </Routes>
             </Router>
             {/* <BigCalendar

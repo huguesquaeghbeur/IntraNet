@@ -1,6 +1,9 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import collaboratorReducer from './reducers/collaboratorReducer'
+// import userReducer from './reducers/userReducer'
+import billsReducer from './reducers/billsReducer'
 import thunk from 'redux-thunk'
+import { HolidayReducer } from './reducers/holidayReducer';
 import departmentReducer from './reducers/departmentReducer'
 import { InfoReducer } from './reducers/infoReducer'
 
@@ -11,5 +14,12 @@ export default createStore(
         // user:userReducer,
         info: InfoReducer,
         collaborator: collaboratorReducer,
+        holiday: HolidayReducer,
+        bills: billsReducer,
         departments: departmentReducer,
     }), composeEnhancer(applyMiddleware(thunk)))
+       
+        
+   
+   
+    
