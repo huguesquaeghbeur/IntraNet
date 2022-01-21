@@ -31,7 +31,6 @@ namespace IntraNetAPI.Models
         public bool IsExactAmount { get => isExactAmount; set => isExactAmount = value; }
         public DateTime ExpenseDate { get => expenseDate; set => expenseDate = value; }
 
-
         public enum ValidationEnum
         {
             Refused,
