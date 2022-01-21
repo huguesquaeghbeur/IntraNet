@@ -4,30 +4,28 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-// import './index.css';
+import './index.css';
 
 import BillsOverview from "./containers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
-import PostRequestHoliday from "./components/PostRequestHoliday";
-import HolidayList from "./components/HolidayList";
+import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
+import HolidayList from "./components/holidayComponents/HolidayList";
 import CollaboratorList from "./components/CollaboratorList";
 import CollaboratorManagement from "./components/CollaboratorManagement";
 import CollaboratorPage from "./components/CollaboratorPage";
 import BillById from "./containers/BillById"
-import HolidayById from "./containers/HolidayById";
+import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
 
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
-import BigCalendar from 'react-big-calendar';
-import Year from './Year';
+// import BigCalendar from 'react-big-calendar';
+// import Year from './Year';
 
-const localizer = BigCalendar.momentLocalizer(moment)
-localizer.formats.yearHeaderFormats = 'YYYY'
-
-
+// const localizer = BigCalendar.momentLocalizer(moment)
+// localizer.formats.yearHeaderFormats = 'YYYY'
 
 
 function App() {
@@ -89,7 +87,7 @@ function App() {
                                        
                 </Routes>
             </Router>
-            <BigCalendar
+            {/* <BigCalendar
             localizer={localizer}
             events={[]}
             toolbar={true}
@@ -100,12 +98,12 @@ function App() {
                 year: Year
             }}
             messages={{year: 'Year'}}
-            />
+            /> */}
         </div>
     );
 }
 
-const rootElement = document.getElementById('root')
-ReactDOM.render(<App/>, rootElement)
+// const rootElement = document.getElementById('root')
+// ReactDOM.render(<App/>, rootElement)
 
 export default App;

@@ -50,7 +50,7 @@ namespace IntraNetAPI.Controllers
                 FirstName = FirstName,
                 LastName = LastName,
                 Birthday = Birthday,
-                Department = (Collaborator.DepartmentEnum) Department,
+                Department = _data.Departments.Find(Department),
                 Status = (Collaborator.StatusEnum) Status,
                 IsAdmin = IsAdmin,
                 IsActive = IsActive,

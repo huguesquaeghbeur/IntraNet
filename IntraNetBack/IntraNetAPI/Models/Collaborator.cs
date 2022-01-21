@@ -25,33 +25,22 @@ namespace IntraNetAPI.Models
         public virtual List<Mission> Missions { get; set; }
         public virtual List<Bill> Bills { get; set; }
         public virtual List<Holiday> Holidays { get; set; }
+        public virtual Department Department { get; set; }
         
         public string Email { get => email; set => email = value; }
         public string Password { get => password; set => password = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
-
-        public virtual DepartmentEnum Department { get; set; }
         public virtual StatusEnum Status { get; set; }
-
-        public enum DepartmentEnum
-        {
-            Comptability,
-            Human_Ressource,
-            Direction
-        }
-
-        
 
         public enum StatusEnum
         {
             Basic,
             ProjectChief,
             DepartmentChief,
-            DRH,
+            HRM,
             CFO,
             CEO
         }
 
-        
     }
 }
