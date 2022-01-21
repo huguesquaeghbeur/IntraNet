@@ -4,19 +4,20 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import './styles/index.css';
-import AddMission from "./components/AddMission";
+// import './index.css';
+
 import BillsOverview from "./containers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
 import HolidayOverview from "./containers/HolidayOverview";
+import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 
 function App() {
     return (
         <div className="App">
             <Router>
-                <header className="header">
-                    < AddMission />
-                </header>
+                <div>
+                    <HeaderBanner/>
+                </div>
                 <Routes>
                     <Route
                         path="bills"
@@ -29,7 +30,7 @@ function App() {
                     <Route
                         path="collaborator"
                         element={<AddCollaborator/>}
-                    />
+                    />                    
                 </Routes>
             </Router>
         </div>
