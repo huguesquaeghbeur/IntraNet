@@ -11,7 +11,7 @@ export const ERROR_DELETING_BILL = "ERROR_DELETING_BILL"
 
 const initialState = {
     isLoading: false,
-    bills: undefined,
+    bills: [],
     bill: undefined,
     error: undefined
 }
