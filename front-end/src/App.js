@@ -23,7 +23,7 @@ import { DepartmentsOverview } from "./containers/DepartmentContainer/Department
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
 
-import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
+
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
