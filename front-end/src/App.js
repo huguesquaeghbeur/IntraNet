@@ -6,14 +6,14 @@ import {
 } from "react-router-dom";
 import './index.css';
 
-import BillsOverview from "./containers/BillsOverview";
+import BillsOverview from "./containers/billContainers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
 import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
 import HolidayList from "./components/holidayComponents/HolidayList";
 import CollaboratorList from "./components/CollaboratorList";
 import CollaboratorManagement from "./components/CollaboratorManagement";
 import CollaboratorPage from "./components/CollaboratorPage";
-import BillById from "./containers/BillById"
+import BillById from "./containers/billContainers/BillById";
 import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
 import DepartmentList from "./components/DptNewFolder/DepartmentList";
