@@ -31,6 +31,7 @@ export default function billsReducer(state = initialState, action) {
             return {
                 ...state,
                 bills: action.bills,
+                isLoading: false,
                 error: undefined
             }
         case ERROR_GETTING_ALL_BILLS:
@@ -72,6 +73,7 @@ export default function billsReducer(state = initialState, action) {
             if(action.res.id>0){
                 return {
                     ...state,
+                    isLoading:false,
                     bills: state.bills.filter(b => b.id!=action.res.id)
                 }
             }else{
