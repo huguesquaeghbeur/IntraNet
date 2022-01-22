@@ -6,16 +6,24 @@ import {
 } from "react-router-dom";
 import './index.css';
 
+import BillsOverview from "./containers/billContainers/BillsOverview";
 import AddCollaborator from "./components/AddCollaboratorForm";
 import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
 import HolidayList from "./components/holidayComponents/HolidayList";
 import CollaboratorList from "./components/CollaboratorList";
 import CollaboratorManagement from "./components/CollaboratorManagement";
 import CollaboratorPage from "./components/CollaboratorPage";
+import BillById from "./containers/billContainers/BillById";
 import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
-
+import DepartmentList from "./components/DptNewFolder/DepartmentList";
+import PostRequestDepartment from "./components/DptNewFolder/PostRequestDepartment";
+import DepartmentById from "./components/DptNewFolder/DepartmentById";
+import { DepartmentsOverview } from "./containers/DepartmentContainer/DepartmentsOverview";
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
+import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
+
+
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
@@ -25,9 +33,6 @@ import InfoList from "./components/InfoList";
 // const localizer = BigCalendar.momentLocalizer(moment)
 // localizer.formats.yearHeaderFormats = 'YYYY'
 
-import AddMission from "./components/billComponents/AddMission";
-import BillsOverview from "./containers/billContainers/BillsOverview";
-import BillById from "./containers/billContainers/BillById"
 
 function App() {
     return (
@@ -85,6 +90,27 @@ function App() {
                         path="collaborator/management/:id"
                         element={<CollaboratorManagement/>}
                     />
+                        <Route
+                        path="departments"
+                        element={<DepartmentsOverview/>}
+                    />                    
+                    <Route
+                        path="departments/list"
+                        element={<DepartmentList/>}
+                    />
+                    <Route
+                        path="departments/post"
+                        element={<PostRequestDepartment/>}
+                    />
+                    <Route
+                        path="departments/:id"
+                        element={<DepartmentById/>}
+                    />    
+                    <Route
+                        path="departments/description"
+                        element={<DepartmentDescriptionUniqueId/>}
+                    />                          
+                                       
                 </Routes>
             </Router>
             {/* <BigCalendar
