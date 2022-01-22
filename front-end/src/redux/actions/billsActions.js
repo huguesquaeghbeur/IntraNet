@@ -40,6 +40,7 @@ export const deleteBill = (id) => {
 }
 
 export function fetchAllBills() {
+    console.log("dans fetch all bill")
 
     return (dispatch) => {
         dispatch({
@@ -47,11 +48,16 @@ export function fetchAllBills() {
             value: true
         })
         getAllBills().then(res => {
+        console.log("dans le then")
+
             dispatch({
                 type: END_GETTING_ALL_BILLS,
                 bills: res.data
             })
         }).catch(error => {
+        console.log("dans l'erreur")
+        console.log(error)
+
             dispatch({
                 type: ERROR_GETTING_ALL_BILLS,
                 error: error

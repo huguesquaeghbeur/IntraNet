@@ -26,7 +26,7 @@ export default function billsReducer(state = initialState, action) {
                 isLoading: action.value
             }
         case END_GETTING_ALL_BILLS:
-            console.log("end getting data reducer " + action.bills[0].spents[0].commentary)
+            // console.log("end getting data reducer " + action.bills[0].spents[0].commentary)
 
             return {
                 ...state,
