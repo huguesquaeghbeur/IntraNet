@@ -13,6 +13,20 @@ export const createBill = (bill) => {
 }
 
 export const updateBillApi = (bill) => {
+    console.log("update bill service collabid : ")
+    console.log(bill.getAll("billId"))
+    console.log(bill.getAll("expenseDate"))
+    console.log(bill.getAll("advanceCash"))
+    console.log(bill.getAll("feeType"))
+    console.log(bill.getAll("isExactAmount"))
+    console.log(bill.getAll("proof"))
+    console.log(bill.getAll("missionId"))
+    console.log(bill.getAll("validateLevel"))
+    console.log(bill.getAll("amount"))
+    console.log(bill.getAll("commentary"))
+
+
+
     return axios.patch(baseUrl, bill)
 }
 export const getBillByIdApi = (id) => {

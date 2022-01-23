@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import { getBillByIdApi } from '../../services/billsService'
 import { FeeLine } from '../../components/billComponents/FeeLine'
 import AddFeeLineModalWindow from '../../components/billComponents/AddFeeLineModalWindow'
+import {getCollaboratorById} from "../../services/collaboratorData"
+import {updateBillApi} from '../../services/billsService'
+
 class BillByIdComponent extends PureComponent {
     constructor(props) {
         super(props)
@@ -13,6 +16,7 @@ class BillByIdComponent extends PureComponent {
     }
 
     componentDidMount() {
+        console.log("get bill")
         getBillByIdApi(this.props.billId).then(res => {
             console.log("JE suis dans le then")
             this.setState({
@@ -20,6 +24,17 @@ class BillByIdComponent extends PureComponent {
             })
         }).catch(err => {
             console.log(err)
+        }).then(res=>{
+            console.log("get collab")
+            getCollaboratorById(this.state.bill.collaboratorId).then(res => {
+                this.setState({
+                    collaborator: res.data
+                })
+                console.log("dans le then ")
+                console.log(res.data)
+            }).catch(err => {
+                console.log(err)
+            })
         })
     }
 
@@ -33,6 +48,11 @@ class BillByIdComponent extends PureComponent {
             isShowingForm: false
         })
     }
+    handleSaveFeeLine=(feeLine)=>{
+        console.log("formDATA de bill by id")
+        console.log(feeLine)
+        updateBillApi(feeLine)
+    }
 
     render() {
         return (
@@ -41,6 +61,8 @@ class BillByIdComponent extends PureComponent {
                     <AddFeeLineModalWindow
                         closeForm={this.handleCloseFeeLineForm}
                         bill={this.state.bill}
+                        collaborator={this.state.collaborator}
+                        handleSave={this.handleSaveFeeLine}
                     /> : null}
                 <h4>Collaborateur id : {this.state.bill.collaboratorId !== null ? this.state.bill.collaboratorId : null}</h4>
                 <h4>Bill id : {this.state.bill.id !== null ? this.state.bill.id : null}</h4>
@@ -60,4 +82,5 @@ export default function GetId() {
             billId={id}
         />)
 }
+
 

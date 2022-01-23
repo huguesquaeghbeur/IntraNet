@@ -35,6 +35,8 @@ export default class AddFeeLineModalWindow extends PureComponent {
                         <div className="relative p-4 flex-auto">
                             <FeeLineForm
                                 bill={this.props.bill}
+                                collaborator={this.props.collaborator}
+                                handleSave={this.props.handleSave}
                             />
                         </div>
                         {/*footer*/}
