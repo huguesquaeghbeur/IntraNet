@@ -5,3 +5,7 @@ export const feeType = {
     equipment: "Matériel",
 }
 
+export function GetId(){
+    const { id } = useParams()
+    return id
+}

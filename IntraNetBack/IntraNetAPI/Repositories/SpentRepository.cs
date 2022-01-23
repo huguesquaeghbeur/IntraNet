@@ -17,7 +17,8 @@ namespace IntraNetAPI.Repositories
 
         public bool Delete(Spent element)
         {
-            throw new NotImplementedException();
+            _dataContext.Spents.Remove(element);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public Spent FinById(int id)

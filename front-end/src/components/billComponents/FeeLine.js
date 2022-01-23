@@ -1,4 +1,5 @@
 import { PureComponent } from "react";
+import { deleteSpent } from "../../services/billsService";
 
 
 export class FeeLine extends PureComponent {
@@ -22,7 +23,8 @@ export class FeeLine extends PureComponent {
 
     }
     handleDeleteClick(){
-
+        console.log("feeline")
+        this.props.delete(this.props.FeeLine.id)
     }
 
     render() {

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IntraNetAPI.Controllers
 {
-    [EnableCors("specialOrigin")]
+    [EnableCors("allConnections")]
     [Route("intranet/v1/spent")]
     [ApiController]
     public class SpentController : ControllerBase
@@ -57,6 +57,18 @@ namespace IntraNetAPI.Controllers
             if (spent != null)
                 return Ok(spent);
             return NotFound(new { Message = "spent not found"});
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Spent spent = _spentRepository.FinById(id);
+            if (spent != null)
+            {
+                _spentRepository.Delete(spent);
+                return Ok(new { message = "spent deleted", id = id }) ;
+            }
+            return NotFound(new { Message = "spent not found" });
         }
 
     }
