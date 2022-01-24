@@ -121,10 +121,16 @@ namespace IntraNetAPI.Controllers
             return NotFound(new { Message = "error holiday not found" });
         }
 
-        //// DELETE api/<HolidayAPIController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete]
+        public IActionResult Delete([FromForm] int id)
+        {
+            Holiday holiday = _holidayRepository.FinById(id);
+            if(holiday != null)
+            {
+                _holidayRepository.Delete(holiday);
+                return Ok(new { Message = "holiday deleted", Id = holiday.Id });
+            }
+            return NotFound(new { Message = "holiday not found" });
+        }
     }
 }

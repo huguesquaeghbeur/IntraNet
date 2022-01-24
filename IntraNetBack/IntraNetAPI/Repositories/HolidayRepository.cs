@@ -17,7 +17,8 @@ namespace IntraNetAPI.Repositories
 
         public bool Delete(Holiday element)
         {
-            throw new NotImplementedException();
+            _dataContext.Holidays.Remove(element);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public Holiday FinById(int id)
