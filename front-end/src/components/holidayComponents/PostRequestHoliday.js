@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { postHolidayData } from '../../services/holidayData';
+import AlertComponent from '../toolComponents/AlertComponent';
+import { faCheckCircle, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
 class PostRequestHoliday extends PureComponent {
     state = {
@@ -10,7 +12,8 @@ class PostRequestHoliday extends PureComponent {
         endDate: '',
         endOnMorning: true,
         leaveType: '',
-        halfDayBreakCount: ''
+        halfDayBreakCount: '',
+        alertC: 0
     }
     handleChange = (e) => {
         this.setState({
@@ -27,7 +30,8 @@ class PostRequestHoliday extends PureComponent {
             endDate: '',
             endOnMorning: true,
             leaveType: '',
-            halfDayBreakCount: ''
+            halfDayBreakCount: '',
+            alertC: 1
         })
     }
 
@@ -57,18 +61,32 @@ class PostRequestHoliday extends PureComponent {
             endDate: '',
             endOnMorning: true,
             leaveType: '',
-            halfDayBreakCount: ''
+            halfDayBreakCount: '',
+            alertC: 2
         })
     }
 
     render() {
-        const { collabId, startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount } = this.state;
+        const { collabId, startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount, alertC } = this.state;
         return (
             <div className="flex items-center justify-center bg-white">
                 <div className="flex flex-col">
-
+                    {alertC === 1 ?
+                        <AlertComponent
+                            color="red"
+                            logo={faWindowClose}
+                            title="Demande de congé annulée"
+                            body="Vous pouvez effectuer une nouvelle demande"
+                        /> : null}
+                    {alertC === 2 ?
+                        <AlertComponent
+                            color="green"
+                            logo={faCheckCircle}
+                            title="Demande de congé effectuée"
+                            body="Vous pouvez toujours la modifier depuis ..."
+                        /> : null}
                     <div className="flex flex-col">
-                        <div className="text-gray-400 font-bold uppercase">
+                        <div className="text-gray-400 font-bold uppercase" id="top">
                             Nouvelle demande de congé
                         </div>
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -84,7 +102,7 @@ class PostRequestHoliday extends PureComponent {
                                     <div>
                                         <label htmlFor="leaveType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                         <div className="mt-1">
-                                            <select value={leaveType} onChange={this.handleChange} name="leaveType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                            <select required value={leaveType} onChange={this.handleChange} name="leaveType" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                                 <option onChange={this.handleChange} value="">--- select ---</option>
                                                 <option onChange={this.handleChange} value="0">Congés payés</option>
                                                 <option onChange={this.handleChange} value="1">Congé maladie</option>
@@ -98,13 +116,13 @@ class PostRequestHoliday extends PureComponent {
                                     <div>
                                         <label htmlFor="startDate" className="block text-sm font-medium text-gray-700">Date de début</label>
                                         <div>
-                                            <input value={startDate} name="startDate" onChange={this.handleChange} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                            <input required value={startDate} name="startDate" onChange={this.handleChange} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                         </div>
                                     </div>
                                     <div>
                                         <label htmlFor="startOnMorning" className="block text-sm font-medium text-gray-700">Heure de début</label>
                                         <div className="mt-1">
-                                            <select value={startOnMorning} name="startOnMorning" onChange={this.handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                            <select required value={startOnMorning} name="startOnMorning" onChange={this.handleChange} className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                                 <option onChange={this.handleChange} value="true">Matin</option>
                                                 <option onChange={this.handleChange} value="false">Après-midi</option>
                                             </select>
@@ -115,13 +133,13 @@ class PostRequestHoliday extends PureComponent {
                                     <div>
                                         <label htmlFor="endDate" className="block text-sm font-medium text-gray-700">Date de fin</label>
                                         <div>
-                                            <input value={endDate} name="endDate" onChange={this.handleChange} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                            <input required value={endDate} name="endDate" onChange={this.handleChange} type="date" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                         </div>
                                     </div>
                                     <div>
                                         <label htmlFor="endOnMorning" className="block text-sm font-medium text-gray-700">Heure de fin</label>
                                         <div className="mt-1">
-                                            <select value={endOnMorning} onChange={this.handleChange} name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                            <select required value={endOnMorning} onChange={this.handleChange} name="endOnMorning" className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
                                                 <option onChange={this.handleChange} value="true">Matin</option>
                                                 <option onChange={this.handleChange} value="false">Après-midi</option>
                                             </select>
@@ -129,44 +147,46 @@ class PostRequestHoliday extends PureComponent {
                                     </div>
 
                                     {/* Will be calculated automatically with input form */}
-                                    <div>
+                                    {/* <div>
                                         <label htmlFor="halfDayBreakCount" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
                                         <div>
                                             <input value={halfDayBreakCount} onChange={this.handleChange} id="halfDayBreakCount" name="halfDayBreakCount" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
                                         </div>
-                                    </div>
+                                    </div> */}
 
-                                    <div>
+                                    {/* <div>
                                         <label htmlFor="commentary" className="block text-sm font-medium text-gray-700">Commentaires</label>
                                         <div>
                                             <textarea id="commentary" name="commentary" className="w-full border border-gray-300 px-3 py-20 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"></textarea>
                                         </div>
-                                    </div>
+                                    </div> */}
 
 
-                                    <div className="flex flex-row justify-around">
-                                        <div>
-                                            <button onClick={this.handleCancel} type="button" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
-                                                Annuler
-                                            </button>
+                                    <a href="#top">
+                                        <div className="flex flex-row justify-around">
+                                            <div>
+                                                <button onClick={this.handleCancel} type="button" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
+                                                    Annuler
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="submit" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500">
+                                                    Sauvegarder
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button type="submit" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500">
+                                                    Soumettre
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <button type="submit" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500">
-                                                Sauvegarder
-                                            </button>
-                                        </div>
-                                        <div>
-                                            <button type="submit" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500">
-                                                Soumettre
-                                            </button>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }
