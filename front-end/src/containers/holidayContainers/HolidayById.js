@@ -1,13 +1,16 @@
 import React, { PureComponent } from 'react';
 import { useParams } from 'react-router-dom';
 import HolidayCard from '../../components/holidayComponents/HolidayCard';
-import { getHolidayRequestById } from '../../services/holidayData';
+import ButtonComponent from '../../components/toolComponents/ButtonComponent';
+import { getHolidayRequestById, deleteHolidayApi } from '../../services/holidayData';
+import { faBan } from "@fortawesome/free-solid-svg-icons";
 
 class HolidayById extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            holiday: {}
+            holiday: {},
+            deleted: false
         }
     }
 
@@ -22,19 +25,44 @@ class HolidayById extends PureComponent {
         })
     }
 
+    handleDelete = (e) => {
+        e.preventDefault();
+
+        deleteHolidayApi(this.props.holidayId).then(res => {
+            this.setState({
+                posts: res.data,
+                deleted: true
+            })
+        })
+    }
+
     render() {
         return (
-            <div class="flex items-center justify-center bg-white">
-                <div class="flex flex-col">
-
-                    <div class="flex flex-col">
-                        <div class="text-gray-400 font-bold uppercase">
-                            Dema,nde de congés n° {this.state.holiday.id}
+            <div className="flex items-center justify-center bg-white">
+                <div className="flex flex-col">
+                {!this.state.deleted ? (
+                    <div className="flex flex-col">
+                        <div className="text-gray-400 font-bold uppercase">
+                            Demande de congés n° {this.state.holiday.id}
                         </div>
-                        {this.props.holidayId !== undefined ?
-                            <HolidayCard post={this.state.holiday} />
-                            : null}
-                    </div>
+                        {this.state.holiday ?
+                            <div>
+                                <HolidayCard post={this.state.holiday} />
+                                <div className="flex justify-center">
+                                    <ButtonComponent
+                                        type="button"
+                                        color="red"
+                                        colorText="white"
+                                        body="Supprimer"
+                                        logo={faBan}
+                                        onClickMethod={this.handleDelete}
+                                    />
+                                </div>
+                            </div>
+                            :
+                            <div>
+                            </div>}
+                    </div>) : null}
                 </div>
             </div>
         );

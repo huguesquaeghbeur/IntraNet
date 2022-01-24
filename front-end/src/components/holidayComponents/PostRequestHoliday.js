@@ -163,41 +163,45 @@ class PostRequestHoliday extends PureComponent {
                                     </div> */}
 
 
-                                    <a href="#top">
-                                        <div className="flex flex-row justify-around">
-                                            <div>
+                                    <div className="flex flex-row justify-around">
+                                        <div>
+                                            <a href="#top">
                                                 {/* <button onClick={this.handleCancel} type="button" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
                                                     Annuler
                                                 </button> */}
-                                                 <ButtonComponent
-                                                type = "button"
-                                                color = "red"
-                                                colorText = "white"
-                                                body = "Annuler"
-                                                logo = {faBan}
-                                                onClickMethod = {this.handleCancel}
-                                                />
-                                            </div>
-                                            <div>
                                                 <ButtonComponent
-                                                type = "button"
-                                                color = "indigo"
-                                                colorText = "white"
-                                                body = "Sauvegarder"
-                                                logo = {faSave}
+                                                    type="button"
+                                                    color="red"
+                                                    colorText="white"
+                                                    body="Annuler"
+                                                    logo={faBan}
+                                                    onClickMethod={this.handleCancel}
                                                 />
-                                            </div>
-                                            <div>
-                                            <ButtonComponent
-                                                type = "submit"
-                                                color = "green"
-                                                colorText = "white"
-                                                body = "Soumettre"
-                                                logo = {faPaperPlane}
-                                                />
-                                            </div>
+                                            </a>
                                         </div>
-                                    </a>
+                                        <div>
+                                            <a href="#top">
+                                                <ButtonComponent
+                                                    type="button"
+                                                    color="indigo"
+                                                    colorText="white"
+                                                    body="Sauvegarder"
+                                                    logo={faSave}
+                                                />
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="#top">
+                                                <ButtonComponent
+                                                    type="submit"
+                                                    color="green"
+                                                    colorText="white"
+                                                    body="Soumettre"
+                                                    logo={faPaperPlane}
+                                                />
+                                            </a>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
