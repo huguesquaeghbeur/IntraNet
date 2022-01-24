@@ -85,35 +85,40 @@ namespace IntraNetAPI.Controllers
 
 
         // PUT api/<HolidayAPIController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] int validation)
+        [HttpPatch]
+        public IActionResult Patch([FromForm] int id, [FromForm] int validation)
         {
+            string msg = "";
             Holiday holiday = _holidayRepository.FinById(id);
-            if(holiday == null)
+            if(holiday != null)
             {
                 holiday.Validation = (Holiday.ValidationEnum)validation;
                 if (validation == 0)
                 {
-                    return Ok(new { message = "holiday refused" });
+                   msg = "holiday refused";
                 }
                 else if(validation == 1)
                 {
-                    return Ok(new { message = "Initial state holiday" });
+                    msg = "Initial state holiday";
                 }
                 else if (validation == 2)
                 {
-                    return Ok(new { message = "holiday approved by Chief" });
+                    msg = "holiday approved by Chief";
                 }
                 else if (validation == 3)
                 {
-                    return Ok(new { message = "holiday approved by Human Ressources" });
+                    msg = "holiday approved by Human Ressources";
                 }
                 else if (validation == 4)
                 {
-                    return Ok(new { message = "holiday approved by All" });
+                    msg = "holiday approved by All";
                 }
+                if (_holidayRepository.Update(holiday))
+                {
+                    return Ok(new { Message = msg, Id = holiday.Id, validation = holiday.Validation });
+                };
             }
-            return NotFound(new { message = "error validation" });
+            return NotFound(new { Message = "error holiday not found" });
         }
 
         //// DELETE api/<HolidayAPIController>/5
