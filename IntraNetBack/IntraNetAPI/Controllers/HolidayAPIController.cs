@@ -36,11 +36,11 @@ namespace IntraNetAPI.Controllers
         public IActionResult Get(int holidayId)
         {
             Holiday h = _holidayRepository.FinById(holidayId);
-            if(h != null)
+            if (h != null)
             {
                 return Ok(h);
             }
-            return NotFound(new { Message = "holiday not found"});
+            return NotFound(new { Message = "holiday not found" });
         }
 
         // POST api/<HolidayAPIController>
@@ -72,7 +72,7 @@ namespace IntraNetAPI.Controllers
                 StartOnMorning = startOnMorning,
                 EndDate = _formatService.FormatDate(endDate),
                 EndOnMorning = endOnMorning,
-                HalfDayBreakCount = ((endDate.Day - startDate.Day)*2) + tmpHalfDayBreak,
+                HalfDayBreakCount = ((endDate.Day - startDate.Day) * 2) + tmpHalfDayBreak,
                 LeaveType = (Holiday.LeaveTypeEnum)leaveType,
                 Validation = Holiday.ValidationEnum.InitialState,
             };
@@ -90,14 +90,14 @@ namespace IntraNetAPI.Controllers
         {
             string msg = "";
             Holiday holiday = _holidayRepository.FinById(id);
-            if(holiday != null)
+            if (holiday != null)
             {
                 holiday.Validation = (Holiday.ValidationEnum)validation;
                 if (validation == 0)
                 {
-                   msg = "holiday refused";
+                    msg = "holiday refused";
                 }
-                else if(validation == 1)
+                else if (validation == 1)
                 {
                     msg = "Initial state holiday";
                 }
@@ -119,6 +119,44 @@ namespace IntraNetAPI.Controllers
                 };
             }
             return NotFound(new { Message = "error holiday not found" });
+        }
+        [HttpPut]
+        public IActionResult Put([FromForm] int id, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
+        {
+            int tmpHalfDayBreak = 0;
+            if (startDate == endDate)
+            {
+                if (startOnMorning == true && endOnMorning == false)
+                {
+                    tmpHalfDayBreak = 1;
+                }
+            }
+            if (startDate < endDate)
+            {
+                if (startOnMorning == true && endOnMorning == false)
+                {
+                    tmpHalfDayBreak += 1;
+                }
+                else if (startOnMorning == false && endOnMorning == true)
+                {
+                    tmpHalfDayBreak -= 1;
+                }
+            }
+            Holiday holiday = _holidayRepository.FinById(id);
+            if(holiday != null)
+            {
+                holiday.StartDate = startDate;
+                holiday.StartOnMorning = startOnMorning;
+                holiday.EndDate = endDate;
+                holiday.EndOnMorning = endOnMorning;
+                holiday.HalfDayBreakCount = ((endDate.Day - startDate.Day) * 2) + tmpHalfDayBreak;
+                holiday.LeaveType = (Holiday.LeaveTypeEnum)leaveType;
+            }
+            if (_holidayRepository.Update(holiday))
+            {
+                return Ok(new { Message = "Holiday updated", Id = holiday.Id });
+            }
+            return NotFound(new { Message = "error holiday updating" });
         }
 
         [HttpDelete]
