@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
     BrowserRouter as Router,
     Routes,
@@ -11,16 +12,14 @@ import AddCollaborator from "./components/AddCollaboratorForm";
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
-import BigCalendar from 'react-big-calendar';
-import Year from './Year';
-
-const localizer = BigCalendar.momentLocalizer(moment)
-localizer.formats.yearHeaderFormats = 'YYYY'
+import Calendar from "./components/Calendar";
 
 
 
 
 function App() {
+    
+    
     return (
         <div className="App">
             <Router>
@@ -42,27 +41,21 @@ function App() {
                     />
                     <Route
                         path="collaborator"
-                        element={<AddCollaborator/>}/>
+                        element={<AddCollaborator />} />
+                    <Route
+                        path="calendar"
+                        element={<Calendar />} />
                     
+                    
+                   
+
                 </Routes>
             </Router>
-            <BigCalendar
-            localizer={localizer}
-            events={[]}
-            toolbar={true}
-            views={{
-                day: true,
-                week: true,
-                month: true,
-                year: Year
-            }}
-            messages={{year: 'Year'}}
-            />
+            
+            
         </div>
+
     );
 }
-
-const rootElement = document.getElementById('root')
-ReactDOM.render(<App/>, rootElement)
 
 export default App;

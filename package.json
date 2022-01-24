@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "react-calendar": "^3.6.0"
+    "@fullcalendar/daygrid": "^5.10.1",
+    "@fullcalendar/react": "^5.10.1",
+    "axios": "^0.25.0",
+    "react-calendar": "^3.6.0",
+    "react-native-calendars": "^1.1276.0"
   }
 }
