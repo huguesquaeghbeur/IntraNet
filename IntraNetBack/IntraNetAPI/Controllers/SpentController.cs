@@ -71,5 +71,23 @@ namespace IntraNetAPI.Controllers
             return NotFound(new { Message = "spent not found" });
         }
 
+        [HttpPatch]
+        public IActionResult Patch( [FromForm] int id, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
+        {
+            Spent spent = _spentRepository.FinById(id);
+            if (spent != null)
+            {
+                spent.MissionId = missionId == default ? spent.MissionId : missionId;   
+                spent.Amount = amount == default ? spent.Amount : amount;
+                spent.Commentary = commentary == default ? spent.Commentary : commentary; 
+                spent.AdvanceCash = advanceCash == default ? advanceCash : spent.AdvanceCash;
+                spent.IsExactAmount = isExactAmount == default ? isExactAmount : spent.IsExactAmount;
+                spent.Validate = Spent.ValidationEnum.InitialState;
+                _spentRepository.Update(spent);
+                return Ok(new { message = "spent updated", id = id, spent = spent });
+            }
+            return NotFound(new { Message = "spent not found" });
+        }
+
     }
 }

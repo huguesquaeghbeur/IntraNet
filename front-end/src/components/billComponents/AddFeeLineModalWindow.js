@@ -4,12 +4,13 @@ import FeeLineForm from "./FeeLineForm";
 export default class AddFeeLineModalWindow extends PureComponent {
     constructor(props) {
         super(props)
+        console.log("props modal bill id "+this.props.billId)
     }
     state = {}
     handleClose(){
         this.props.closeForm()
     }
-
+    
 
     render() {
         return (
@@ -36,7 +37,9 @@ export default class AddFeeLineModalWindow extends PureComponent {
                             <FeeLineForm
                                 bill={this.props.bill}
                                 collaborator={this.props.collaborator}
-                                handleSave={this.props.handleSave}
+                                SaveFeeLine={this.props.SaveFeeLine}
+                                UpdateFeeLine = {this.props.UpdateFeeLine}
+                                spentId={this.props.spentId}
                             />
                         </div>
                         {/*footer*/}

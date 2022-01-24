@@ -38,3 +38,9 @@ export const deleteBillFromApi = (id) => {
 export const deleteSpentFromApi=(id)=>{
     return axios.delete(baseUrl+"/spent/"+id)
 }
+
+export const updateSpentFromApi=(formData)=>{
+    console.log("service ")
+    console.log("id spent : "+formData.get("id"))
+    return axios.patch(baseUrl+"/spent",formData)
+}

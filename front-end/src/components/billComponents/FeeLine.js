@@ -20,7 +20,7 @@ export class FeeLine extends PureComponent {
 
     }
     handleModifyClick(){
-
+        this.props.modifyClick(this.props.FeeLine.id)
     }
     handleDeleteClick(){
         console.log("feeline")
