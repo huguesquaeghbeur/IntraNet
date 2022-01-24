@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { postHolidayData } from '../../services/holidayData';
 import AlertComponent from '../toolComponents/AlertComponent';
-import { faCheckCircle, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faBan, faCheckCircle, faPaperPlane, faSave, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import ButtonComponent from '../toolComponents/ButtonComponent';
 
 class PostRequestHoliday extends PureComponent {
     state = {
@@ -70,7 +71,7 @@ class PostRequestHoliday extends PureComponent {
         const { collabId, startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount, alertC } = this.state;
         return (
             <div className="flex items-center justify-center bg-white">
-                <div className="flex flex-col">
+                <div className="flex flex-col" id="top">
                     {alertC === 1 ?
                         <AlertComponent
                             color="red"
@@ -86,7 +87,7 @@ class PostRequestHoliday extends PureComponent {
                             body="Vous pouvez toujours la modifier depuis ..."
                         /> : null}
                     <div className="flex flex-col">
-                        <div className="text-gray-400 font-bold uppercase" id="top">
+                        <div className="text-gray-400 font-bold uppercase">
                             Nouvelle demande de congé
                         </div>
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -165,19 +166,35 @@ class PostRequestHoliday extends PureComponent {
                                     <a href="#top">
                                         <div className="flex flex-row justify-around">
                                             <div>
-                                                <button onClick={this.handleCancel} type="button" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
+                                                {/* <button onClick={this.handleCancel} type="button" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
                                                     Annuler
-                                                </button>
+                                                </button> */}
+                                                 <ButtonComponent
+                                                type = "button"
+                                                color = "red"
+                                                colorText = "white"
+                                                body = "Annuler"
+                                                logo = {faBan}
+                                                onClickMethod = {this.handleCancel}
+                                                />
                                             </div>
                                             <div>
-                                                <button type="submit" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500">
-                                                    Sauvegarder
-                                                </button>
+                                                <ButtonComponent
+                                                type = "button"
+                                                color = "indigo"
+                                                colorText = "white"
+                                                body = "Sauvegarder"
+                                                logo = {faSave}
+                                                />
                                             </div>
                                             <div>
-                                                <button type="submit" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500">
-                                                    Soumettre
-                                                </button>
+                                            <ButtonComponent
+                                                type = "submit"
+                                                color = "green"
+                                                colorText = "white"
+                                                body = "Soumettre"
+                                                logo = {faPaperPlane}
+                                                />
                                             </div>
                                         </div>
                                     </a>
