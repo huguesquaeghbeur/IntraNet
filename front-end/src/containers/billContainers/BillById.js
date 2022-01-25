@@ -18,45 +18,15 @@ class BillByIdComponent extends PureComponent {
             isShowingForm: false
         }
     }
-    componentDidMount() {
-        console.log("dans le mount")
 
+    componentDidMount() {
         getBillByIdApi(this.props.billId).then((res) => {
             this.setState({
                 bill: res.data,
                 billId: res.data.id,
                 spents: res.data.spents
-            }, () => {
-                console.log(this.state)
             })
         })
-    }
-    componentDidUpdate() {
-        console.log("dans le up")
-        console.log(this.state.spents)
-        // console.log(this.props.bill)
-        // console.log(this.props.getBill(this.props.billId))
-        // this.setState({
-        //     bill: this.props.bill
-        // })
-        // this.setState({
-        //     bill: this.props.bill
-        // })
-        // if(this.state.bill!={}){
-        //     this.setState({
-        //         bill: this.props.bill
-        //     },()=>{
-        //         console.log("dans le if")
-        //     console.log(this.state.bill)
-        //     })
-
-        // }
-        // this.setState({
-        //     bill: this.props.bill,
-        //     billId: this.props.billId
-        // })
-        // this.props.getBill(this.props.billId)
-
     }
 
     handleAddFeeLineClick = () => {
@@ -64,24 +34,23 @@ class BillByIdComponent extends PureComponent {
             isShowingForm: true
         })
     }
+
     handleCloseFeeLineForm = () => {
         this.setState({
             isShowingForm: false,
             spentId: undefined
         })
     }
+
     SaveFeeLine = (feeLine) => {
-        console.log("formDATA de bill by id")
-        console.log(feeLine)
         updateBillApi(feeLine).then(() => {
             getBillByIdApi(this.props.billId).then((res) => {
                 this.setState({
                     bill: res.data,
                     billId: res.data.id,
                     spents: res.data.spents,
-                    spentId: undefined
-                }, () => {
-                    console.log(this.state)
+                    spentId: undefined,
+                    isShowingForm: false
                 })
             })
         })
@@ -94,24 +63,21 @@ class BillByIdComponent extends PureComponent {
                     bill: res.data,
                     billId: res.data.id,
                     spents: res.data.spents,
-                    spentId: undefined
-
-                }, () => {
-                    console.log(this.state)
+                    isShowingForm: false
                 })
             })
         })
     }
 
     handleDelete = (i) => {
-        const spent = this.state.spents.filter(s => s.id != i)
+        const spents = this.state.spents.filter(s => s.id != i)
         deleteSpentFromApi(i).then(res => {
             this.setState({
                 spents: undefined,
             })
-        }).then(res => {
+        }).then(() => {
             this.setState({
-                spents:spent
+                spents: spents
             })
         })
     }
@@ -119,46 +85,45 @@ class BillByIdComponent extends PureComponent {
     handleModifyClick = (i) => {
         this.setState({
             isShowingForm: true,
-            spentId: i
-        }, () => {
-
+            spentId: i,
         })
     }
 
     UpdateFeeLine = (formData) => {
-        console.log("dans lupdate")
-        console.log(formData.get("id"))
-        console.log(formData.get("commentary"))
+        const spents = this.state.spents.map(s => s.id != formData.get("id") ? s : {
+            commentary: formData.get("commentary"),
+            feeType: formData.get("feeType"),
+            expenseDate: formData.get("expenseDate"),
+            missionId: formData.get("missionId"),
+            isExactAmount: formData.get("isExactAmount"),
+            advanceCash: formData.get("advanceCash"),
+            amount: formData.get("amount"),
+            id: formData.get("id")
+        })
         updateSpentFromApi(formData).then(res => {
+            const bill ={
+                collaboratorId:this.state.bill.collaboratorId,
+                spents: spents,
+                id:this.state.bill.id,
+                isSubmitted:this.state.bill.isSubmitted,
+                submissionDate:this.state.bill.submissionDate
+            } 
             this.setState({
-                bill: undefined,
-                billId: res.data.id,
                 spents: undefined,
-                spentId: undefined
-            })
-        }).then(res => {
-            console.log("dans res ")
-            console.log(res)
-            getBillByIdApi(this.props.billId).then((res) => {
-                console.log("aget bill après uptdate")
-                console.log(res.data)
+                spentId: undefined,
+                bill:undefined
+            }, () => {
                 this.setState({
+                    spents: spents,
                     isShowingForm: false,
-                    bill: res.data,
-                    billId: res.data.id,
-                    spents: res.data.spents,
-                    spentId: undefined
-
-                }, () => {
-                    console.log("dans le setstate apré update")
-                    console.log(this.state)
+                    bill:bill
                 })
             })
         })
     }
+
     render() {
         return (
-
             <section className="m-3.5">
                 <h1 className="italic text-3xl mb-5 text-center">Note de frais</h1>
                 <div className="text-center m-2 ">
@@ -178,7 +143,7 @@ class BillByIdComponent extends PureComponent {
                             UpdateFeeLine={this.UpdateFeeLine}
                             spentId={this.state.spentId}
                         /> : null}
-                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} delete={this.handleDelete} modifyClick={this.handleModifyClick} />) : null}</div>
+                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} delete={this.handleDelete} modifyClick={this.handleModifyClick} />) : null}</div>
                 </div>
             </section>
         )

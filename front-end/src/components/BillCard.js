@@ -2,6 +2,7 @@ import { PureComponent } from "react"
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import {getBillById} from '../redux/actions/billsActions'
+import {dateFormat} from '../services/formatService'
 
 export class BillCard extends PureComponent {
     constructor(props) {
@@ -11,11 +12,6 @@ export class BillCard extends PureComponent {
 
     }
 
-    // handleGetBillByIdClick=()=>{
-    //     console.log("BillcARD handle get by id : "+this.props.bill.id)
-    //     this.props.getBillByIdFromApi(this.props.bill.id)
-
-    // }
 
     componentDidMount() {
         var temp = 0

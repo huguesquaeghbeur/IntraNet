@@ -10,13 +10,10 @@ export default class FeeLineForm extends PureComponent {
             advanceCash: "false",
             spent: this.props.bill.spents.filter(s => s.id == this.props.spentId)
         }
-        console.log('form constructor ' + this.props.spentId)
     }
 
     componentDidMount() {
-        let tab = []
-        console.log("obje")
-        console.log()
+        let tab = []       
 
         Object.keys(feeType).map((key, index) => {
             tab = [...tab, {
@@ -25,17 +22,12 @@ export default class FeeLineForm extends PureComponent {
                 name: "feeType"
             }]
         })
-        console.log("dans le mount")
-        console.log(this.props.spentId)
         if (this.state.spent[0] == undefined) {
             this.setState({
                 options: tab
             })
         }
         else {
-            console.log("dans le else")
-            console.log(this.state.spent)
-            console.log(this.state.spent[0].commentary)
             this.setState({
                 options: tab,
                 commentary: this.state.spent[0].commentary,
@@ -45,13 +37,6 @@ export default class FeeLineForm extends PureComponent {
                 isExactAmount: this.state.spent[0].isExactAmount,
                 advanceCash: this.state.spent[0].advanceCash,
                 amount: this.state.spent[0].amount
-            }, () => {
-                console.log("dans le setstate")
-                console.log(this.state.feeType)
-                console.log(Object.values(feeType)[this.state.feeType])
-
-                console.log(this.state.expenseDate.slice(0, 10))
-                console.log(this.state.commentary)
             })
         }
 
@@ -59,18 +44,15 @@ export default class FeeLineForm extends PureComponent {
 
         this.setState({
             options: tab,
-            // commentary: this.props.spentId != undefined ? "blavla" :"bloblo"
         })
         console.log("did mount fee for ")
         console.log(this.props.spentId)
     }
 
-    handleSaveAction() {
-        console.log("dans le save acation   ")
+    handleConfirmAction() {
         const formData = new FormData()
-        console.log("fee line form " + this.props.bill.id)
         formData.append("billId", this.props.bill.id)
-            formData.append("proof", this.state.file)
+        formData.append("proof", this.state.file)
         formData.append("missionId", 1)
         formData.append("advanceCash", this.state.advanceCash)
         formData.append("commentary", this.state.commentary)
@@ -79,23 +61,20 @@ export default class FeeLineForm extends PureComponent {
         formData.append("expenseDate", this.state.expenseDate)
         formData.append("feeType", this.state.feeType)
         formData.append("amount", this.state.amount)
-
         if (this.state.spent[0] != undefined) {
             formData.append("id", this.state.spent[0].id)
-            this.props.UpdateFeeLine(formData)
+            this.props.UpdateFeeLine(formData, this.state)
         }
-        else
+        else{
             this.props.SaveFeeLine(formData)
+        }
+
 
     }
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(e.target.name)
-        console.log(this.state)
-
-
     }
     handleSelectChange = (e) => {
         this.setState({
@@ -133,8 +112,15 @@ export default class FeeLineForm extends PureComponent {
                     <div>
                         {/* advance y/n */}
                         <legend>Avance sur frais ?</legend>
-
-                        {this.state.advanceCash == "0" ?
+                        <span className="flex items-baseline">
+                                    <input onChange={(e) => this.handleChange(e)} className="mr-2" type="radio" name="advanceCash" value="false" />
+                                    <label htmlFor="advanceCash" className="block text-gray-600 mb-2 text-sm font-medium text-gray-900 " >Non</label>
+                                </span>
+                                <span className="flex items-baseline">
+                                    <input onChange={(e) => this.handleChange(e)} className="mr-2" type="radio" name="advanceCash" value="true" />
+                                    <label htmlFor="advanceCash" className="block text-gray-600 mb-2 text-sm font-medium text-gray-900 ">Oui</label>
+                                </span>
+                        {/* {this.state.advanceCash == "0" ?
                             <span >
                                 <span className="flex items-baseline">
                                     <input checked onChange={(e) => this.handleChange(e)} className="mr-2" type="radio" name="advanceCash" value="false" />
@@ -156,14 +142,22 @@ export default class FeeLineForm extends PureComponent {
                                     <label htmlFor="advanceCash" className="block text-gray-600 mb-2 text-sm font-medium text-gray-900 ">Oui</label>
                                 </span>
                             </span>
-                        }
+                        } */}
 
                     </div>
 
                     <div>
                         {/* exact amount y/n */}
                         <legend>Montant exact ?</legend>
-                        {this.state.isExactAmount == "0" ?
+                        <span className="flex items-baseline">
+                                    <input onChange={(e) => this.handleChange(e)} className="mr-2" type="radio" name="isExactAmount" value="false" />
+                                    <label htmlFor="isExactAmount" className="block text-gray-600 mb-2 text-sm font-medium text-gray-900 " >Non</label>
+                                </span>
+                                <span className="flex items-baseline">
+                                    <input onChange={(e) => this.handleChange(e)} className="mr-2" type="radio" name="isExactAmount" value="true" />
+                                    <label htmlFor="isExactAmount" className="block text-gray-600 mb-2 text-sm font-medium text-gray-900 ">Oui</label>
+                                </span>
+                        {/* {this.state.isExactAmount == "0" ?
                             <span >
                                 <span className="flex items-baseline">
                                     <input onChange={(e) => this.handleChange(e)} className="mr-2" type="radio" name="isExactAmount" value="false" checked />
@@ -186,7 +180,7 @@ export default class FeeLineForm extends PureComponent {
                                     <label htmlFor="isExactAmount" className="block text-gray-600 mb-2 text-sm font-medium text-gray-900 ">Oui</label>
                                 </span>
                             </span>
-                        }
+                        } */}
                     </div>
                 </div>
                 {/* files input */}
@@ -206,7 +200,7 @@ export default class FeeLineForm extends PureComponent {
                         className="text-gray-700 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         
                         type="button"
-                        onClick={() => this.handleSaveAction()}
+                        onClick={() => this.handleConfirmAction()}
 
                     >
                         Sauvegarder

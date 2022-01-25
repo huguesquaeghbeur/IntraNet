@@ -4,13 +4,36 @@ import FeeLineForm from "./FeeLineForm";
 export default class AddFeeLineModalWindow extends PureComponent {
     constructor(props) {
         super(props)
-        console.log("props modal bill id "+this.props.billId)
+        this.state={
+            spentId:this.props.spentId
+        }
+        // console.log("props modal bill id "+this.props.billId)
     }
-    state = {}
     handleClose(){
         this.props.closeForm()
     }
-    
+    // handleSave(feeLine){
+    //     console.log("save")
+    //     console.log(feeLine)
+    //     // console.log(this.state.spentId)
+
+    //     // this.setState({
+    //     //     spentId:undefined
+    //     // })
+    //     this.props.SaveFeeLine(feeLine);
+    // }
+    // handleSubmit(feeLine){
+    //     // this.setState({
+    //     //     spentId:undefined
+    //     // })
+    //     this.props.SubmitFeeLine(feeLine);
+    // }
+    // handleUpdate(formData, feeLine){
+    //     // this.setState({
+    //     //     spentId:undefined
+    //     // })
+    //     this.props.UpdateFeeLine(formData, feeLine);
+    // }
 
     render() {
         return (
@@ -33,12 +56,13 @@ export default class AddFeeLineModalWindow extends PureComponent {
 
                         </div>
                         {/*body*/}
-                        <div className="relative p-4 flex-auto">
+                        <div className="relative p-4 flex-auto ">
                             <FeeLineForm
                                 bill={this.props.bill}
                                 collaborator={this.props.collaborator}
                                 SaveFeeLine={this.props.SaveFeeLine}
                                 UpdateFeeLine = {this.props.UpdateFeeLine}
+                                SubmitFeeLine = {this.props.SubmitFeeLine}
                                 spentId={this.props.spentId}
                             />
                         </div>

@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import {deleteBill} from '../../redux/actions/billsActions'
 import {deleteBillFromApi} from "../../services/billsService"
+import {dateFormat} from '../../services/formatService'
 
 export class BillCard extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
         }
+
     }
 
     componentDidMount() {
@@ -27,7 +29,7 @@ export class BillCard extends PureComponent {
             <div className="max-w-xs overflow-hidden rounded-lg shadow-lg ">
                 <div className="px-6 py-4">
                 Bill id : {this.props.bill.id}
-                    <h5 className="mb-3 text-xl font-semibold tracking-tight text-gray-800">{!this.props.bill.isSubmitted ? "En rédaction" : this.props.bill.submissionDate}</h5>
+                    <h5 className="mb-3 text-xl font-semibold tracking-tight text-gray-800">{!this.props.bill.isSubmitted ? "En rédaction" : dateFormat(this.props.bill.submissionDate)}</h5>
                     <hr />
                     <p className="leading-normal text-gray-700">{this.props.bill.spents !== null ? this.props.bill.spents.length > 1 ? `${this.props.bill.spents.length} lignes` : `${this.props.bill.spents.length} ligne` : null} de frais.</p>
                     <p className="leading-normal text-gray-700">Total : {this.state.total}€</p>
