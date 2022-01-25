@@ -48,17 +48,17 @@ const HolidayCard = (props) => {
                         </b>
                     </div>
                     <div className="flex flex-col justify-around">
-                        <div className="pl-8 pt-2">
-                            Début : <b>{props.post.startDate}</b>
+                        <div className="pt-2 flex justify-center">
+                            Début : <b className="pl-1">{props.post.startDate}</b>
                         </div>
-                        <div className="pl-8">
-                            <b>{props.post.startOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="pl-32 text-orange-500">Après-midi</div>}</b>
+                        <div className="flex justify-center">
+                            <b>{props.post.startOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="text-orange-500">Après-midi</div>}</b>
                         </div>
-                        <div className="pl-8">
-                            Fin : <b>{props.post.endDate}</b>
+                        <div className="flex justify-center">
+                            Fin : <b className="pl-1">{props.post.endDate}</b>
                         </div>
-                        <div className="pl-8 pb-2">
-                            <b>{props.post.endOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="pl-32 text-orange-500">Après-midi</div>}</b>
+                        <div className="flex justify-center pb-2">
+                            <b>{props.post.endOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="text-orange-500">Après-midi</div>}</b>
                         </div>
                         <div className="rounded-xl bg-indigo-200 flex justify-center mt-4">
                             Jours cumulés : <b>{(props.post.halfDayBreakCount / 2).toString()}</b>

@@ -54,7 +54,7 @@ class HolidayById extends PureComponent {
         return (
             <div>
                 <div>
-                    <Link to="/holiday/list"><ButtonComponent type="button" color="indigo" colorText="white" body="Retour" logo={faBackspace} /></Link>
+                    <Link to="/holiday/list"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} /></Link>
                 </div>
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
@@ -69,7 +69,7 @@ class HolidayById extends PureComponent {
                                         <div className="flex justify-center">
                                             <ButtonComponent
                                                 type="button"
-                                                color="red"
+                                                color="bg-red-500"
                                                 colorText="white"
                                                 body="Supprimer"
                                                 logo={faBan}
@@ -77,7 +77,7 @@ class HolidayById extends PureComponent {
                                             />
                                             <ButtonComponent
                                                 type="button"
-                                                color="indigo"
+                                                color="bg-indigo-400"
                                                 colorText="white"
                                                 body="Renvoyer au collaborateur"
                                                 logo={faBan}
@@ -86,16 +86,16 @@ class HolidayById extends PureComponent {
                                             
                                              <ButtonComponent
                                                 type="button"
-                                                color="green"
+                                                color="bg-yellow-400"
                                                 colorText="white"
                                                 body="Valider (CDS)"
                                                 logo={faCheck}
                                                 onClickMethod={() => this.handleValidate(2)}
                                             />
-                                           
+
                                              <ButtonComponent
                                                 type="button"
-                                                color="green"
+                                                color="bg-green-500"
                                                 colorText="white"
                                                 body="Valider (RH)"
                                                 logo={faCheck}
@@ -104,7 +104,7 @@ class HolidayById extends PureComponent {
                                             
                                             <ButtonComponent
                                                 type="button"
-                                                color="red"
+                                                color="bg-red-600"
                                                 colorText="white"
                                                 body="Refuser"
                                                 logo={faBan}

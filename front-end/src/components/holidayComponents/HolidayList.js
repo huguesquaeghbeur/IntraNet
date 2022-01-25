@@ -27,7 +27,7 @@ class HolidayList extends PureComponent {
         return (
             <div>
                 <div>
-                    <Link to="/holiday"><ButtonComponent type="button" color="indigo" colorText="white" body="Retour" logo={faBackspace} onClickMethod={console.log("back")} /></Link>
+                    <Link to="/holiday"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} onClickMethod={console.log("back")} /></Link>
                 </div>
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
