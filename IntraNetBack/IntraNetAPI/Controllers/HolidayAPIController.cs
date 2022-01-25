@@ -85,8 +85,8 @@ namespace IntraNetAPI.Controllers
 
 
         // PUT api/<HolidayAPIController>/5
-        [HttpPatch]
-        public IActionResult Patch([FromForm] int id, [FromForm] int validation)
+        [HttpPatch("{id}")]
+        public IActionResult Patch(int id, [FromForm] int validation)
         {
             string msg = "";
             Holiday holiday = _holidayRepository.FinById(id);
@@ -159,8 +159,8 @@ namespace IntraNetAPI.Controllers
             return NotFound(new { Message = "error holiday updating" });
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromForm] int id)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
             Holiday holiday = _holidayRepository.FinById(id);
             if(holiday != null)

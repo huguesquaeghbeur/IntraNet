@@ -10,8 +10,8 @@ export const getHolidayRequestById = (id) => {
 export const postHolidayData = (data) => {
     return axios.post(baseUrl + '/holidays', data)
 }
-export const validateHolidayApi = (validation) => {
-    return axios.patch(baseUrl + '/holidays/', validation)
+export const validateHolidayApi = (id, validation) => {
+    return axios.patch(baseUrl + '/holidays/' + id, validation)
 }
 export const changeHolidayApi = (holiday) => {
     return axios.put(baseUrl, holiday)
