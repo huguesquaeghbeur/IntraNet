@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { fetchAllBills, postBill, updateBill, deleteBill } from '../../redux/actions/billsActions'
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class BillsOverview extends PureComponent {
     constructor(props) {
@@ -62,17 +64,17 @@ export class BillsOverview extends PureComponent {
         return (
             <section>
                 <h1 className="italic text-3xl mb-5 text-center">Gestion des notes de frais</h1>
-                    <div className="text-center m-2 ">
-                        {/* <button onClick={() => this.handleCreateBillClick()} className="h-10 px-5 mb-5 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">Ajouter une note de frais</button> */}
-                        <button onClick={() => this.handleCreateBillClick()} class="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-indigo-800">
-                            <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
-                        </button>
-                    </div>
-                    <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
-                        <svg className="animate-spin h-5 w-5 mr-3 text-indigo-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                    </div>
+                <div className="text-center m-2 ">
+                    {/* <button onClick={() => this.handleCreateBillClick()} className="h-10 px-5 mb-5 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">Ajouter une note de frais</button> */}
+                    <button onClick={() => this.handleCreateBillClick()} class="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-indigo-800">
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                </div>
+                <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
+                    <svg className="animate-spin h-5 w-5 mr-3 text-indigo-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </div>
                 <div>
                     {this.state.showConfirmation ? <ConfirmationModalWindow
                         deleteBillAction={this.deleteBill}
