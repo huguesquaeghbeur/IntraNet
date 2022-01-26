@@ -2,14 +2,18 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 // import { getCollaborator } from "../redux/actions/collaboratorAction";
 // import { postCollaboratorData } from "../services/collaboratorData";
-import {getDepartmentById} from "../../redux/actions/departmentAction"
+import { getDepartmentById } from "../../redux/actions/departmentAction"
 import { postDepartmentData } from "../../services/departmentData"
+import alertAddedDpt from "./alertAddedDpt";
+
 
 
 class FormuDpt extends PureComponent {
     state = {
         title: ''
     }
+
+
 
     handleChange = (e) => {
         this.setState({
@@ -22,11 +26,16 @@ class FormuDpt extends PureComponent {
         const formdata = new FormData();
         formdata.append('title', this.state.title);
 
+
         postDepartmentData(formdata).then(response => {
             this.setState({
                 departments: response.data
             })
             console.log(response.data)
+        })
+        //// pour erase la saisie
+        this.setState({
+            title: ''
         })
     }
     render() {
@@ -35,7 +44,7 @@ class FormuDpt extends PureComponent {
                 <h1 className="justify-center">Ajouter un dpt</h1>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                        <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit} >
+                        <form className="mb-0 space-y-6" method="POST" onLoad={alertAddedDpt} onSubmit={this.handleSubmit} >
                             <div>
                                 <div>
                                     <label htmlFor="title"
@@ -73,7 +82,7 @@ const mapStateToProps = (state) => {
 }
 const mapActionToProps = (dispatch) => {
     return {
-       getDepartmentById : (data) => dispatch(getDepartmentById(data))
+        getDepartmentById: (data) => dispatch(getDepartmentById(data))
     }
 }
 
