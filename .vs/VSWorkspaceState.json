@@ -1,15 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\IntraNetBack",
-    "\\IntraNetBack\\IntraNetAPI",
-    "\\IntraNetBack\\IntraNetAPI\\Controllers",
-    "\\IntraNetBack\\IntraNetAPI\\Services"
+    "\\IntraNetBack"
   ],
-<<<<<<< HEAD
-  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\MissionController.cs",
-=======
-  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\DepartmentController.cs",
->>>>>>> DevFlo
+  "SelectedNode": "\\IntraNetBack\\IntraNetBack.sln",
   "PreviewInSolutionExplorer": false
 }
