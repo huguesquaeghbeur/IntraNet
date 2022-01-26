@@ -1,29 +1,42 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllHolidays } from '../../services/holidayData';
+
 import HolidayCard from './HolidayCard';
 import ButtonComponent from '../toolComponents/ButtonComponent';
-import { faBackspace } from "@fortawesome/free-solid-svg-icons";
+import { faBackspace, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { connect } from 'react-redux';
+import { getHolidaysFromApi } from '../../redux/actions/holidayAction';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getAllCollaborator } from '../../services/collaboratorData';
 
 class HolidayList extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            posts: []
+            // posts: [],
+            collabs: []
         }
     }
 
-    componentDidMount() {
-        getAllHolidays().then(res => {
+    componentDidMount = () => {
+        // getAllHolidays().then(res => {
+        //     this.setState({
+        //         posts: res.data
+        //     })
+        //     console.log(res.data)
+        // })
+        this.props.getAllHolidaysFromApi();
+        getAllCollaborator().then(res => {
             this.setState({
-                posts: res.data
+                collabs: res.data
             })
-            console.log(res.data)
         })
     }
 
     render() {
-        const { posts } = this.state
+        // const { posts } = this.state
+        console.log(this.props.holidays)
+        console.log(this.props.collabs)
         return (
             <div>
                 <div>
@@ -31,17 +44,19 @@ class HolidayList extends PureComponent {
                 </div>
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
-
+                        <div className={`flex flex-wrap justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
+                            <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
+                        </div>
                         {/* <!-- Continue With --> */}
                         <div className="flex flex-col">
                             <div className="text-gray-400 font-bold uppercase">
                                 Gestion des congés
                             </div>
                             <div className="flex flex-row flex-wrap justify-around">
-                                {posts.map(post =>
-                                            <Link to={`/holiday/${post.id}`} key={post.id}>
-                                                <HolidayCard post={post}/>
-                                            </Link>
+                                {this.props.holidays.map(post =>
+                                    <Link to={`/holiday/${post.id}`} key={post.id}>
+                                        <HolidayCard post={post} />
+                                    </Link>
                                 )}
                             </div>
                         </div>
@@ -52,4 +67,15 @@ class HolidayList extends PureComponent {
     }
 }
 
-export default HolidayList;
+const mapStateToProps = (state) => {
+    return {
+        holidays: state.holidayState.holidays,
+        isLoading: state.holidayState.isLoading,
+    }
+}
+const mapActionToProps = (dispatch) => {
+    return {
+        getAllHolidaysFromApi: () => dispatch(getHolidaysFromApi()),
+    }
+}
+export default connect(mapStateToProps, mapActionToProps)(HolidayList);

@@ -19,30 +19,44 @@ class HolidayById extends PureComponent {
     componentDidMount = () => {
         getHolidayRequestById(this.props.holidayId).then(res => {
             this.setState({
-                post: res.data
+                post: res.data,
+                postId: res.data.id,
+                collab: res.data.collaboratorId
             })
-        }).then(() => {
-            getCollaboratorById(this.state.post.collaboratorId).then(res => {
-                this.setState({
-                    collab: res.data
-                })
-            })
-        }).catch(error => {
+            console.log(this.state)
+        })
+        // .then(() => {
+        //     getCollaboratorById(this.state.collab).then(r => {
+        //         this.setState({
+        //             collab: r.data
+        //         })
+        //     })
+        //     console.log(this.state.collab)
+        // })
+        .catch(error => {
             console.log(error)
         })
     }
 
     handleDelete = (e) => {
         e.preventDefault();
-        
+
         deleteHolidayApi(this.props.holidayId).then(res => {
             this.setState({
-                post: res.data,
+                post: "",
                 deleted: true
             })
         })
-        window.location.assign("http://localhost:3000/holiday/list");
+        // window.location.assign("http://localhost:3000/holiday/list");
     }
+
+    handleSave = () => {
+        const formData = new FormData();
+        formData.append('id', this.state.post.id)
+        formData.append('collaboratorId', this.state.post.collaboratorId)
+        formData.append('')
+    }
+
     handleValidate = async (number) => {
         console.log(number)
         const formData = new FormData();
@@ -58,7 +72,7 @@ class HolidayById extends PureComponent {
     }
 
     render() {
-        
+        console.log(this.state.collab)
         return (
             <div>
                 <div>
@@ -71,59 +85,60 @@ class HolidayById extends PureComponent {
                                 <div className="text-gray-400 font-bold uppercase">
                                     Demande de congés n° {this.state.post.id}
                                 </div>
-                                
-                                    <div className="flex flex-col justify-center">
-                                        <HolidayCard post={this.state.post} collab ={this.state.collab} />
-                                        <div className="flex justify-center">
-                                            <ButtonComponent
-                                                type="button"
-                                                color="bg-red-500"
-                                                colorText="white"
-                                                body="Supprimer"
-                                                logo={faTrashAlt}
-                                                onClickMethod={this.handleDelete}
-                                            />
-                                            <ButtonComponent
-                                                type="button"
-                                                color="bg-indigo-400"
-                                                colorText="white"
-                                                body="Renvoyer au collaborateur"
-                                                logo={faUndoAlt}
-                                                onClickMethod={() => this.handleValidate(1)}
-                                            />
-                                            
-                                             <ButtonComponent
-                                                type="button"
-                                                color="bg-yellow-400"
-                                                colorText="white"
-                                                body="Valider (CDS)"
-                                                logo={faCheck}
-                                                onClickMethod={() => this.handleValidate(2)}
-                                            />
 
-                                             <ButtonComponent
-                                                type="button"
-                                                color="bg-green-500"
-                                                colorText="white"
-                                                body="Valider (RH)"
-                                                logo={faCalendarCheck}
-                                                onClickMethod={() => this.handleValidate(3)}
-                                            />
-                                            
-                                            <ButtonComponent
-                                                type="button"
-                                                color="bg-red-600"
-                                                colorText="white"
-                                                body="Refuser"
-                                                logo={faBan}
-                                                onClickMethod={() => this.handleValidate(0)}
-                                            />
-                                            
-                                        </div>
+                                <div className="flex flex-col justify-center">
+                                    <HolidayCard post={this.state.post} />
+                                    <div className="flex justify-center">
+                                        <ButtonComponent
+                                            type="button"
+                                            color="bg-red-500"
+                                            colorText="white"
+                                            body="Supprimer"
+                                            logo={faTrashAlt}
+                                            onClickMethod={this.handleDelete}
+                                        />
+                                        <ButtonComponent
+                                            type="button"
+                                            color="bg-indigo-400"
+                                            colorText="white"
+                                            body="Renvoyer au collaborateur"
+                                            logo={faUndoAlt}
+                                            onClickMethod={() => this.handleValidate(1)}
+                                        />
+
+                                        <ButtonComponent
+                                            type="button"
+                                            color="bg-yellow-400"
+                                            colorText="white"
+                                            body="Valider (CDS)"
+                                            logo={faCheck}
+                                            onClickMethod={() => this.handleValidate(2)}
+                                        />
+
+                                        <ButtonComponent
+                                            type="button"
+                                            color="bg-green-500"
+                                            colorText="white"
+                                            body="Valider (RH)"
+                                            logo={faCalendarCheck}
+                                            onClickMethod={() => this.handleValidate(3)}
+                                        />
+
+                                        <ButtonComponent
+                                            type="button"
+                                            color="bg-red-600"
+                                            colorText="white"
+                                            body="Refuser"
+                                            logo={faBan}
+                                            onClickMethod={() => this.handleValidate(0)}
+                                        />
+
                                     </div>
-                                    {this.state.deleted === true ?
-                                    <div className="bg-red-400">Aucune demande avec cet id</div> : null }
-                            </div>) : null}
+                                </div>
+                            </div>) :
+                            <div className="bg-red-400 text-white">
+                                Aucune demande de congés correspondante
+                            </div>}
                     </div>
                 </div>
             </div>
