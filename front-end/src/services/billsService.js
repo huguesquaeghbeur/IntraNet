@@ -42,5 +42,25 @@ export const deleteSpentFromApi=(id)=>{
 export const updateSpentFromApi=(formData)=>{
     console.log("service ")
     console.log("id spent : "+formData.get("id"))
+    console.log("id spent : "+formData.get("validate"))
+
     return axios.patch(baseUrl+"/spent",formData)
+}
+
+export const generateFormDataFromFeeLine = (feeLine) =>{
+    const formData = new FormData()
+    if(feeLine.billId !== undefined){
+        formData.append("billId",feeLine.billId)
+    }
+    formData.append("proofs", feeLine.proofs)
+    formData.append("missionId", 1)
+    formData.append("advanceCash", feeLine.advanceCash)
+    formData.append("commentary", feeLine.commentary)
+    formData.append("isExactAmount", feeLine.isExactAmount)
+    formData.append("validate", feeLine.validate)
+    formData.append("expenseDate", feeLine.expenseDate)
+    formData.append("feeType", feeLine.feeType)
+    formData.append("amount", feeLine.amount)
+    formData.append("id", feeLine.id)
+    return formData
 }

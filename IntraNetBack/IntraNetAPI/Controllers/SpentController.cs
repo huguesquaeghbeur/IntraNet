@@ -58,7 +58,7 @@ namespace IntraNetAPI.Controllers
             Spent spent = _spentRepository.FinById(spentId);
             if (spent != null)
                 return Ok(spent);
-            return NotFound(new { Message = "spent not found"});
+            return NotFound(new { Message = "spent not found" });
         }
 
         [HttpDelete("{id}")]
@@ -68,13 +68,13 @@ namespace IntraNetAPI.Controllers
             if (spent != null)
             {
                 _spentRepository.Delete(spent);
-                return Ok(new { message = "spent deleted", id = id }) ;
+                return Ok(new { message = "spent deleted", id = id });
             }
             return NotFound(new { Message = "spent not found" });
         }
 
         [HttpPatch]
-        public IActionResult Patch([FromForm] DateTime expenseDate, [FromForm] int id, [FromForm] int feeType, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
+        public IActionResult Patch([FromForm]int validate,[FromForm] DateTime expenseDate, [FromForm] int id, [FromForm] int feeType, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
         {
             Spent spent = _spentRepository.FinById(id);
             if (spent != null)
@@ -84,7 +84,7 @@ namespace IntraNetAPI.Controllers
                 spent.Commentary = commentary == default ? spent.Commentary : commentary; 
                 spent.AdvanceCash = advanceCash == default ? spent.AdvanceCash : advanceCash;
                 spent.IsExactAmount = isExactAmount == default ? spent.IsExactAmount : isExactAmount;
-                spent.Validate = Spent.ValidationEnum.InitialState;
+                spent.Validate = (Spent.ValidationEnum)validate;
                 spent.FeeType = feeType == default ? spent.FeeType : (Spent.FeeTypeEnum)feeType;
                 spent.ExpenseDate = _formatService.FormatDate(expenseDate);
 

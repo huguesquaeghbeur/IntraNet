@@ -30,14 +30,22 @@ export default class FeeLineForm extends PureComponent {
         else {
             this.setState({
                 options: tab,
+                id: this.state.spent[0].id,
                 commentary: this.state.spent[0].commentary,
                 feeType: this.state.spent[0].feeType,
-                expenseDate: this.state.spent[0].expenseDate.slice(0, 10),
+                expenseDate: this.state.spent[0].expenseDate.slice(0,10),
                 missionId: 1,
                 isExactAmount: this.state.spent[0].isExactAmount,
                 advanceCash: this.state.spent[0].advanceCash,
-                amount: this.state.spent[0].amount
-            })
+                amount: this.state.spent[0].amount,
+                validate: this.state.spent[0].validate,
+                proofs:this.state.spent[0].proofs,
+            }, ()=>{
+                console.log("dans le feeline form")
+                console.log(this.state.spent[0].expenseDate)
+            }
+ 
+            )
         }
 
 
@@ -45,28 +53,16 @@ export default class FeeLineForm extends PureComponent {
         this.setState({
             options: tab,
         })
-        console.log("did mount fee for ")
-        console.log(this.props.spentId)
+
     }
 
+
     handleConfirmAction() {
-        const formData = new FormData()
-        formData.append("billId", this.props.bill.id)
-        formData.append("proof", this.state.file)
-        formData.append("missionId", 1)
-        formData.append("advanceCash", this.state.advanceCash)
-        formData.append("commentary", this.state.commentary)
-        formData.append("isExactAmount", this.state.isExactAmount)
-        formData.append("validateLevel", 1)
-        formData.append("expenseDate", this.state.expenseDate)
-        formData.append("feeType", this.state.feeType)
-        formData.append("amount", this.state.amount)
         if (this.state.spent[0] != undefined) {
-            formData.append("id", this.state.spent[0].id)
-            this.props.UpdateFeeLine(formData, this.state)
+            this.props.UpdateFeeLine(this.state)
         }
         else{
-            this.props.SaveFeeLine(formData)
+            this.props.SaveFeeLine(this.state)
         }
 
 

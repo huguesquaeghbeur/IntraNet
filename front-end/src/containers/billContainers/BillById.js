@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FeeLine } from '../../components/billComponents/FeeLine'
 import AddFeeLineModalWindow from '../../components/billComponents/AddFeeLineModalWindow'
 import { getCollaboratorById } from "../../services/collaboratorData"
-import { updateBillApi } from '../../services/billsService'
+import { generateFormDataFromFeeLine, updateBillApi } from '../../services/billsService'
 import { connect } from 'react-redux';
 import { deleteSpent, getBillById } from '../../redux/actions/billsActions'
 import { get } from "react-hook-form";
@@ -43,7 +43,14 @@ class BillByIdComponent extends PureComponent {
     }
 
     SaveFeeLine = (feeLine) => {
-        updateBillApi(feeLine).then(() => {
+        feeLine={
+            ...feeLine,
+            billId:this.props.billId
+        }
+        console.log("feeline billId added----")
+        const formData = generateFormDataFromFeeLine(feeLine)
+
+        updateBillApi(formData).then(() => {
             getBillByIdApi(this.props.billId).then((res) => {
                 this.setState({
                     bill: res.data,
@@ -57,17 +64,17 @@ class BillByIdComponent extends PureComponent {
     }
 
     SubmitFeeLine = (feeLine) => {
-        updateBillApi(feeLine).then(() => {
-            getBillByIdApi(this.props.billId).then((res) => {
-                this.setState({
-                    bill: res.data,
-                    billId: res.data.id,
-                    spents: res.data.spents,
-                    isShowingForm: false
-                })
+
+        const formData = generateFormDataFromFeeLine(feeLine)
+        console.log("dans le submit feeline dans billbyId : ")
+        console.log(formData.get("id"))
+        console.log(formData.get("validate"))
+
+        updateSpentFromApi(formData).then(() => {
+            console.log("dans lupdate then")
             })
-        })
-    }
+        }
+    
 
     handleDelete = (i) => {
         const spents = this.state.spents.filter(s => s.id != i)
@@ -89,9 +96,11 @@ class BillByIdComponent extends PureComponent {
         })
     }
 
-    UpdateFeeLine = (formData) => {
+    UpdateFeeLine = (feeLine) => {
+        const formData = generateFormDataFromFeeLine(feeLine)
         const spents = this.state.spents.map(s => s.id != formData.get("id") ? s : {
             commentary: formData.get("commentary"),
+            proofs: formData.get("proofs"),
             feeType: formData.get("feeType"),
             expenseDate: formData.get("expenseDate"),
             missionId: formData.get("missionId"),
@@ -143,7 +152,7 @@ class BillByIdComponent extends PureComponent {
                             UpdateFeeLine={this.UpdateFeeLine}
                             spentId={this.state.spentId}
                         /> : null}
-                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} delete={this.handleDelete} modifyClick={this.handleModifyClick} />) : null}</div>
+                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} deleteClick={this.handleDelete} modifyClick={this.handleModifyClick} submitClick={this.SubmitFeeLine} />) : null}</div>
                 </div>
             </section>
         )
@@ -151,7 +160,6 @@ class BillByIdComponent extends PureComponent {
 }
 
 export default function GetId() {
-    console.log("dans le get")
     const { id } = useParams()
     return (
         <BillByIdComponent
