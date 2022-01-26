@@ -22,7 +22,7 @@ import DepartmentById from "./components/DptNewFolder/DepartmentById";
 import { DepartmentsOverview } from "./containers/DepartmentContainer/DepartmentsOverview";
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
-
+import FormuDpt from "./components/dptAddDelete/formDpt"
 
 
 import InfoOverview from "./containers/InfoOverview";
@@ -109,6 +109,10 @@ function App() {
                     <Route
                         path="departments/description"
                         element={<DepartmentDescriptionUniqueId/>}
+                    /> 
+                    <Route
+                        path="departments/form"
+                        element={<FormuDpt/>}
                     />                          
                                        
                 </Routes>

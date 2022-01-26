@@ -65,6 +65,9 @@ export class DepartmentsOverview extends PureComponent {
                 <br/>
                 <hr/>
                 <Link to="/departments/description" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>DepartmentsDescription</Link>
+                <br/>
+                <hr/>
+                <Link to="/departments/form" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>DptForm</Link>
                     {/* <a href="/departments/list" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>
                         DepartmentsList
                     </a> */}

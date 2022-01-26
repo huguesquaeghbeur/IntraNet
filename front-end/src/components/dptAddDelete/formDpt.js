@@ -1,10 +1,12 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { getDepartmentById } from "../../redux/actions/departmentAction";
-import { postDepartmentData } from "../../services/departmentData";
+// import { getCollaborator } from "../redux/actions/collaboratorAction";
+// import { postCollaboratorData } from "../services/collaboratorData";
+import {getDepartmentById} from "../../redux/actions/departmentAction"
+import { postDepartmentData } from "../../services/departmentData"
 
 
-class AddDepartmentByForm extends PureComponent {
+class FormuDpt extends PureComponent {
     state = {
         title: ''
     }
@@ -38,7 +40,7 @@ class AddDepartmentByForm extends PureComponent {
                                 <div>
                                     <label htmlFor="title"
                                         className="block text-sm font-medium text-gray-700">
-                                        Titre
+                                        titre dpt
                                     </label>
                                     <input type="text"
                                         name="title"
@@ -47,7 +49,6 @@ class AddDepartmentByForm extends PureComponent {
                                         className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                                         required />
                                 </div>
-
 
 
                                 <div className="flex flex-row justify-around">
@@ -67,15 +68,15 @@ class AddDepartmentByForm extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-        title: state.department.title
+        title: state.departments.title
     }
 }
 const mapActionToProps = (dispatch) => {
     return {
-        getDepartmentById: (data) => dispatch(getDepartmentById(data))
+       getDepartmentById : (data) => dispatch(getDepartmentById(data))
     }
 }
 
-export default connect(mapStateToProps, mapActionToProps)(AddDepartmentByForm);
+export default connect(mapStateToProps, mapActionToProps)(FormuDpt);
 
 
