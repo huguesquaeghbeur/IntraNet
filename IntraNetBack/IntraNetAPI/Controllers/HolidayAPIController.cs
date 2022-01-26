@@ -48,14 +48,14 @@ namespace IntraNetAPI.Controllers
         public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
             int tmpHalfDayBreak = 0;
-            if (startDate == endDate)
+            if (startDate.DayOfYear == endDate.DayOfYear)
             {
                 if (startOnMorning == true && endOnMorning == false)
                 {
                     tmpHalfDayBreak = 1;
                 }
             }
-            if (startDate < endDate)
+            if (startDate.DayOfYear < endDate.DayOfYear)
             {
                 if (startOnMorning == true && endOnMorning == false)
                 {
@@ -72,7 +72,7 @@ namespace IntraNetAPI.Controllers
                 StartOnMorning = startOnMorning,
                 EndDate = _formatService.FormatDate(endDate),
                 EndOnMorning = endOnMorning,
-                HalfDayBreakCount = ((endDate.Day - startDate.Day) * 2) + tmpHalfDayBreak,
+                HalfDayBreakCount = ((endDate.DayOfYear - startDate.DayOfYear) * 2) + tmpHalfDayBreak,
                 LeaveType = (Holiday.LeaveTypeEnum)leaveType,
                 Validation = Holiday.ValidationEnum.InitialState,
             };

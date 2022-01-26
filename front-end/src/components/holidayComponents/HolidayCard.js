@@ -11,7 +11,7 @@ class HolidayCard extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         getCollaboratorById(this.props.post.collaboratorId).then(res => {
             this.setState({
                 collab: res.data
@@ -49,9 +49,14 @@ class HolidayCard extends Component {
                                 # {this.props.post.id}
                             </div>
                         </div>
-                        <div className="flex justify-center">
-                            Collaborateur : <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
-                        </div>
+                        {this.props.collab !== undefined ?
+                            <div className="flex justify-center">
+                                Collaborateur : <b>{this.props.collab.firstName} {this.props.collab.lastName}</b>
+                            </div>
+                            :
+                            <div className="flex justify-center">
+                                Collaborateur : <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
+                            </div>}
                         <div className="text-blue-500 pl-8 pt-2">
                             <b>
                                 {this.props.post.leaveType === 0 ? (

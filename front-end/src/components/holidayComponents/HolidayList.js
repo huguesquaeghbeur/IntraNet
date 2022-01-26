@@ -4,14 +4,12 @@ import { getAllHolidays } from '../../services/holidayData';
 import HolidayCard from './HolidayCard';
 import ButtonComponent from '../toolComponents/ButtonComponent';
 import { faBackspace } from "@fortawesome/free-solid-svg-icons";
-import { getAllCollaborator } from '../../services/collaboratorData';
 
 class HolidayList extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            posts: [],
-            collabList: []
+            posts: []
         }
     }
 
@@ -19,12 +17,6 @@ class HolidayList extends PureComponent {
         getAllHolidays().then(res => {
             this.setState({
                 posts: res.data
-            })
-            console.log(res.data)
-        })
-        getAllCollaborator().then(res => {
-            this.setState({
-                collabList: res.data
             })
             console.log(res.data)
         })

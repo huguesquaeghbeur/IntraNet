@@ -4,22 +4,29 @@ import HolidayCard from '../../components/holidayComponents/HolidayCard';
 import ButtonComponent from '../../components/toolComponents/ButtonComponent';
 import { getHolidayRequestById, deleteHolidayApi, validateHolidayApi } from '../../services/holidayData';
 import { faBackspace, faBan, faCheck, faCalendarCheck, faUndoAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { getCollaboratorById } from '../../services/collaboratorData';
 
 class HolidayById extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            holiday: {},
+            post: {},
             deleted: false,
+            collab: {}
         }
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         getHolidayRequestById(this.props.holidayId).then(res => {
             this.setState({
-                holiday: res.data
+                post: res.data
             })
-            console.log(this.state.holiday)
+        }).then(() => {
+            getCollaboratorById(this.state.post.collaboratorId).then(res => {
+                this.setState({
+                    collab: res.data
+                })
+            })
         }).catch(error => {
             console.log(error)
         })
@@ -30,11 +37,11 @@ class HolidayById extends PureComponent {
         
         deleteHolidayApi(this.props.holidayId).then(res => {
             this.setState({
-                posts: res.data,
+                post: res.data,
                 deleted: true
             })
         })
-        window.location.assign("http://localhost:3000/holiday");
+        window.location.assign("http://localhost:3000/holiday/list");
     }
     handleValidate = async (number) => {
         console.log(number)
@@ -59,14 +66,14 @@ class HolidayById extends PureComponent {
                 </div>
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
-                        {!this.state.deleted || !this.state.holiday ? (
+                        {this.state.post ? (
                             <div className="flex flex-col">
                                 <div className="text-gray-400 font-bold uppercase">
-                                    Demande de congés n° {this.state.holiday.id}
+                                    Demande de congés n° {this.state.post.id}
                                 </div>
-                                {this.state.holiday ?
+                                
                                     <div className="flex flex-col justify-center">
-                                        <HolidayCard post={this.state.holiday} />
+                                        <HolidayCard post={this.state.post} collab ={this.state.collab} />
                                         <div className="flex justify-center">
                                             <ButtonComponent
                                                 type="button"
@@ -114,10 +121,8 @@ class HolidayById extends PureComponent {
                                             
                                         </div>
                                     </div>
-                                    :
-                                    <div className='bg-red-300 text-red-600'>
-                                        Aucune demande avec cet id
-                                    </div>}
+                                    {this.state.deleted === true ?
+                                    <div className="bg-red-400">Aucune demande avec cet id</div> : null }
                             </div>) : null}
                     </div>
                 </div>
