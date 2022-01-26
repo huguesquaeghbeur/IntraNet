@@ -10,7 +10,7 @@ class AlertComponent extends PureComponent {
     render() {
         return (
             <div>
-                <div className={"bg-" + this.props.color + "-300 border-t-4 border-" + this.props.color + "-500 rounded-b text-" + this.props.color + "-900 px-4 py-3 shadow-md"} role="alert">
+                <div className={this.props.color + " border-t-4 " + this.props.borderColor + " rounded-b " + this.props.textColor + " px-4 py-3 shadow-md"} role="alert">
                     <div className="flex">
                         <div className="py-1 px-4">
                             <FontAwesomeIcon icon={this.props.logo} />

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import HolidayCard from '../../components/holidayComponents/HolidayCard';
 import ButtonComponent from '../../components/toolComponents/ButtonComponent';
 import { getHolidayRequestById, deleteHolidayApi, validateHolidayApi } from '../../services/holidayData';
-import { faBackspace, faBan, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faBackspace, faBan, faCheck, faCalendarCheck, faUndoAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 class HolidayById extends PureComponent {
     constructor(props) {
@@ -34,6 +34,7 @@ class HolidayById extends PureComponent {
                 deleted: true
             })
         })
+        window.location.assign("http://localhost:3000/holiday");
     }
     handleValidate = async (number) => {
         console.log(number)
@@ -58,7 +59,7 @@ class HolidayById extends PureComponent {
                 </div>
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
-                        {!this.state.deleted ? (
+                        {!this.state.deleted || !this.state.holiday ? (
                             <div className="flex flex-col">
                                 <div className="text-gray-400 font-bold uppercase">
                                     Demande de congés n° {this.state.holiday.id}
@@ -72,15 +73,15 @@ class HolidayById extends PureComponent {
                                                 color="bg-red-500"
                                                 colorText="white"
                                                 body="Supprimer"
-                                                logo={faBan}
-                                                onClickMethod={() => this.handleDelete}
+                                                logo={faTrashAlt}
+                                                onClickMethod={this.handleDelete}
                                             />
                                             <ButtonComponent
                                                 type="button"
                                                 color="bg-indigo-400"
                                                 colorText="white"
                                                 body="Renvoyer au collaborateur"
-                                                logo={faBan}
+                                                logo={faUndoAlt}
                                                 onClickMethod={() => this.handleValidate(1)}
                                             />
                                             
@@ -98,7 +99,7 @@ class HolidayById extends PureComponent {
                                                 color="bg-green-500"
                                                 colorText="white"
                                                 body="Valider (RH)"
-                                                logo={faCheck}
+                                                logo={faCalendarCheck}
                                                 onClickMethod={() => this.handleValidate(3)}
                                             />
                                             
@@ -114,7 +115,8 @@ class HolidayById extends PureComponent {
                                         </div>
                                     </div>
                                     :
-                                    <div>
+                                    <div className='bg-red-300 text-red-600'>
+                                        Aucune demande avec cet id
                                     </div>}
                             </div>) : null}
                     </div>

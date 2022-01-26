@@ -4,12 +4,14 @@ import { getAllHolidays } from '../../services/holidayData';
 import HolidayCard from './HolidayCard';
 import ButtonComponent from '../toolComponents/ButtonComponent';
 import { faBackspace } from "@fortawesome/free-solid-svg-icons";
+import { getAllCollaborator } from '../../services/collaboratorData';
 
 class HolidayList extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            posts: []
+            posts: [],
+            collabList: []
         }
     }
 
@@ -20,6 +22,12 @@ class HolidayList extends PureComponent {
             })
             console.log(res.data)
         })
+        getAllCollaborator().then(res => {
+            this.setState({
+                collabList: res.data
+            })
+            console.log(res.data)
+        })
     }
 
     render() {
@@ -27,7 +35,7 @@ class HolidayList extends PureComponent {
         return (
             <div>
                 <div>
-                    <Link to="/holiday"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} onClickMethod={console.log("back")} /></Link>
+                    <Link to="/holiday"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} /></Link>
                 </div>
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
@@ -39,9 +47,9 @@ class HolidayList extends PureComponent {
                             </div>
                             <div className="flex flex-row flex-wrap justify-around">
                                 {posts.map(post =>
-                                    <Link to={`/holiday/${post.id}`} key={post.id}>
-                                        <HolidayCard post={post} />
-                                    </Link>
+                                            <Link to={`/holiday/${post.id}`} key={post.id}>
+                                                <HolidayCard post={post}/>
+                                            </Link>
                                 )}
                             </div>
                         </div>

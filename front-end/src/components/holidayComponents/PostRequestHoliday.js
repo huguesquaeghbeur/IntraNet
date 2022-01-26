@@ -7,6 +7,10 @@ import { faBan, faCheckCircle, faPaperPlane, faSave, faWindowClose, faBackspace 
 import ButtonComponent from '../toolComponents/ButtonComponent';
 
 class PostRequestHoliday extends PureComponent {
+    constructor(props) {
+        super(props)
+        this.handleChange = this.handleChange.bind(this)
+    }
     state = {
         collabId: '',
         startDate: '',
@@ -15,13 +19,12 @@ class PostRequestHoliday extends PureComponent {
         endOnMorning: true,
         leaveType: '',
         halfDayBreakCount: '',
-        alertC: 0
+        alertC: 0,
     }
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
-
     }
 
     handleCancel = () => {
@@ -33,12 +36,13 @@ class PostRequestHoliday extends PureComponent {
             endOnMorning: true,
             leaveType: '',
             halfDayBreakCount: '',
-            alertC: 1
+            alertC: 1,
         })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
+
         const formData = new FormData();
         formData.append('collabId', this.state.collabId);
         formData.append('startDate', this.state.startDate);
@@ -64,7 +68,7 @@ class PostRequestHoliday extends PureComponent {
             endOnMorning: true,
             leaveType: '',
             halfDayBreakCount: '',
-            alertC: 2
+            alertC: 2,
         })
     }
 
@@ -73,20 +77,24 @@ class PostRequestHoliday extends PureComponent {
         return (
             <div>
                 <div>
-                    <Link to="/holiday"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} onClickMethod={console.log("back")} /></Link>
+                    <Link to="/holiday"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} /></Link>
                 </div>
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col" id="top">
                         {alertC === 1 ?
                             <AlertComponent
-                                color="red"
+                                color="bg-red-400"
+                                borderColor="border-red-500"
+                                textColor="text-white"
                                 logo={faWindowClose}
                                 title="Demande de congé annulée"
                                 body="Vous pouvez effectuer une nouvelle demande"
                             /> : null}
                         {alertC === 2 ?
                             <AlertComponent
-                                color="green"
+                                color="bg-green-400"
+                                borderColor="border-green-500"
+                                textColor="text-black"
                                 logo={faCheckCircle}
                                 title="Demande de congé effectuée"
                                 body="Vous pouvez toujours la modifier depuis ..."
@@ -153,12 +161,12 @@ class PostRequestHoliday extends PureComponent {
                                         </div>
 
                                         {/* Will be calculated automatically with input form */}
-                                        {/* <div>
-                                        <label htmlFor="halfDayBreakCount" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
                                         <div>
-                                            <input value={halfDayBreakCount} onChange={this.handleChange} id="halfDayBreakCount" name="halfDayBreakCount" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                            <label htmlFor="halfDayBreakCount" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
+                                            <div>
+                                                <input type="text" value={halfDayBreakCount} id="halfDayBreakCount" name="halfDayBreakCount" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                            </div>
                                         </div>
-                                    </div> */}
 
                                         {/* <div>
                                         <label htmlFor="commentary" className="block text-sm font-medium text-gray-700">Commentaires</label>
@@ -171,12 +179,9 @@ class PostRequestHoliday extends PureComponent {
                                         <div className="flex flex-row justify-around">
                                             <div>
                                                 <a href="#top">
-                                                    {/* <button onClick={this.handleCancel} type="button" className="m-2 w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
-                                                    Annuler
-                                                </button> */}
                                                     <ButtonComponent
                                                         type="button"
-                                                        color="red"
+                                                        color="bg-red-400"
                                                         colorText="white"
                                                         body="Annuler"
                                                         logo={faBan}
@@ -188,7 +193,7 @@ class PostRequestHoliday extends PureComponent {
                                                 <a href="#top">
                                                     <ButtonComponent
                                                         type="button"
-                                                        color="indigo"
+                                                        color="bg-indigo-500"
                                                         colorText="white"
                                                         body="Sauvegarder"
                                                         logo={faSave}
@@ -199,7 +204,7 @@ class PostRequestHoliday extends PureComponent {
                                                 <a href="#top">
                                                     <ButtonComponent
                                                         type="submit"
-                                                        color="green"
+                                                        color="bg-green-500"
                                                         colorText="white"
                                                         body="Soumettre"
                                                         logo={faPaperPlane}
