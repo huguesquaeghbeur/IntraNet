@@ -1,5 +1,6 @@
 import React from "react";
 
+
 import {
     BrowserRouter as Router,
     Routes,
@@ -12,7 +13,8 @@ import AddCollaborator from "./components/AddCollaboratorForm";
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
-import Calendar from "./components/Calendar";
+import Calendar from "react-calendar";
+
 
 
 
@@ -22,6 +24,7 @@ function App() {
     
     return (
         <div className="App">
+            
             <Router>
                 <header className="header">
                     < AddMission />
@@ -47,11 +50,9 @@ function App() {
                         element={<Calendar />} />
                     
                     
-                   
-
-                </Routes>
+                    </Routes>
             </Router>
-            
+           
             
         </div>
 
