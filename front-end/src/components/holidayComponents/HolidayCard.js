@@ -2,7 +2,7 @@ import { faBaby, faCheck, faClock, faDollarSign, faFileMedical, faNotEqual, faTi
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCollaboratorById } from '../../services/collaboratorData';
+import { getAllCollaborator } from '../../services/collaboratorData';
 
 class HolidayCard extends Component {
     constructor(props) {
@@ -22,14 +22,15 @@ class HolidayCard extends Component {
     //     })
     //         getCollaboratorById(this.props.post.collaboratorId)
     //         console.log(this.props.collab)
-        
+
     // }
     componentDidMount = () => {
         // this.props.getCollaboratorById(this.state.collaboratorNeed).then(res => {
         //     this.setState({
         //         collab: res.data
         //     }, [])
-            console.log(this.props)
+
+        console.log(this.props)
         // })
     }
 
@@ -61,11 +62,11 @@ class HolidayCard extends Component {
                                 # {this.props.post.id}
                             </div>
                         </div>
-                        {/* {this.state.collab !== undefined ?
-                            <div className="flex justify-center">
-                                Collaborateur : <b>{this.props.collab.firstName} {this.props.collab.lastName}</b>
-                            </div>
-                            :
+                        {/* {this.state.collab !== undefined ? */}
+                        <div className="flex justify-center">
+                            Collaborateur : <b>{this.props.post.collaboratorId} {this.props.post.collaborator}</b>
+                        </div>
+                        {/* :
                             <div className="flex justify-center">
                                 Collaborateur : <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
                             </div>
@@ -110,12 +111,12 @@ class HolidayCard extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        holiday: state.holidayState.holidays,
+        // holiday: state.holidayState.holidays,
     }
 }
 const mapActionToProps = (dispatch) => {
     return {
-       
+        // getAllCollaborator: () => dispatch(getAllCollaborator()),
     }
 }
 
