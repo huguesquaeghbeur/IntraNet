@@ -35,7 +35,11 @@ export class FeeLine extends PureComponent {
         return (
             <div className="w-96  rounded-lg shadow-lg mb-6">
                 <div className="px-6 py-4 ">
-                    <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800"><b>{dateFormat(this.state.FeeLine.expenseDate) !== undefined ? dateFormat(this.state.FeeLine.expenseDate) : "Date à binder"}</b></p>
+                    <div className="flex justify-between">
+                        <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800"><b>{dateFormat(this.state.FeeLine.expenseDate) !== undefined ? dateFormat(this.state.FeeLine.expenseDate) : "Date à binder"}</b></p>
+                        <p><b>{this.state.FeeLine.validate > 1 ? "En cours de validation" : ""}</b></p>
+                        <p><b>{this.state.FeeLine.validate == 0 ? "Demande refusée" : ""}</b></p>
+                    </div>
                     <hr />
                     <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800">{this.state.FeeLine.missionId !== undefined ? `Mission id : ${this.props.FeeLine.missionId}` : null} </p>
                     <p className="leading-normal text-xl text-gray-700"> {this.state.FeeLine.amount !== undefined ? this.state.FeeLine.amount : null}€ {this.state.FeeLine.advanceCash !== undefined ? this.state.FeeLine.advanceCash === true ? "de frais anticipé." : "de frais réel." : null} </p>

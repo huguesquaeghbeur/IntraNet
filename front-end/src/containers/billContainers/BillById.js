@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FeeLine } from '../../components/billComponents/FeeLine'
 import AddFeeLineModalWindow from '../../components/billComponents/AddFeeLineModalWindow'
 import { getCollaboratorById } from "../../services/collaboratorData"
-import { generateFormDataFromFeeLine, updateBillApi } from '../../services/billsService'
+import { generateFormDataFromFeeLine, addFeeLineToBillApi } from '../../services/billsService'
 import { connect } from 'react-redux';
 import { deleteSpent, getBillById } from '../../redux/actions/billsActions'
 import { get } from "react-hook-form";
@@ -44,7 +44,7 @@ class BillByIdComponent extends PureComponent {
     }
     SaveFeeLine = (feeLine) => {
         const formData = generateFormDataFromFeeLine(feeLine)
-        updateBillApi(formData).then((res) => {
+        addFeeLineToBillApi(formData).then((res) => {
             this.updateState(res.data, false)
         })
     }

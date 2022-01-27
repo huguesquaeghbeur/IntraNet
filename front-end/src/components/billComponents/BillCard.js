@@ -5,17 +5,18 @@ import { deleteBill } from '../../redux/actions/billsActions'
 import { deleteBillFromApi } from "../../services/billsService"
 import { dateFormat } from '../../services/formatService'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faListUl, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faListUl, faTrashAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+
+// parent component : billContainers/BillsOverview
 
 export class BillCard extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
         }
-
     }
 
-    componentDidMount() {
+    getTotal(){
         var temp = 0
         if (this.props.bill.spents !== null)
             this.props.bill.spents.forEach(spent => {
@@ -24,6 +25,14 @@ export class BillCard extends PureComponent {
         this.setState({
             total: temp
         })
+    }
+
+    componentDidMount() {
+        this.getTotal()
+    }
+
+    componentDidUpdate() {
+        this.getTotal()
     }
 
     render() {
@@ -35,14 +44,25 @@ export class BillCard extends PureComponent {
                     <p className="leading-normal text-gray-700 ">{this.props.bill.spents !== null ? this.props.bill.spents.length > 1 ? `${this.props.bill.spents.length} lignes` : `${this.props.bill.spents.length} ligne` : null} de frais.</p>
                     <p className="leading-normal text-gray-700">Total : {this.state.total}€</p>
                     <div className="text-center">
+
+                        {!this.props.bill.isSubmitted ?
+                            <button onClick={() => this.props.sendBill(this.props.bill)} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                <FontAwesomeIcon icon={faPaperPlane} />
+                            </button> : null
+                        }
+
                         <Link to={`/bills/${this.props.bill.id}`}>
                             <button className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                 <FontAwesomeIcon icon={faListUl} />
                             </button>
                         </Link>
-                        <button onClick={() => this.props.showConfirmation(this.props.bill.id)} className=" h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                        </button>
+
+                        {/* {!this.props.bill.isSubmitted ? */}
+                        {true ?
+                            <button onClick={() => this.props.showConfirmation(this.props.bill.id)} className=" h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                <FontAwesomeIcon icon={faTrashAlt} />
+                            </button> : null
+                        }
                     </div>
                 </div>
             </div>

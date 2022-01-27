@@ -12,7 +12,7 @@ export const createBill = (bill) => {
     return axios.post(baseUrl+"/bill", bill)
 }
 
-export const updateBillApi = (formData) => {
+export const addFeeLineToBillApi = (formData) => {
     console.log("update bill service collabid : ")
     console.log(formData.getAll("billId"))
     console.log(formData.getAll("expenseDate"))
@@ -25,6 +25,15 @@ export const updateBillApi = (formData) => {
     console.log(formData.getAll("amount"))
     console.log(formData.getAll("commentary"))
     return axios.patch(baseUrl+"/bill", formData)
+}
+export const updateBillApi = (formData) => {
+    console.log(typeof formData)
+    console.log("update bill service : ")
+    console.log(formData.getAll("id"))
+    console.log(formData.getAll("isSubmitted"))
+    console.log(formData.getAll("submissionDate"))
+    console.log(formData.getAll("collaboratorId"))
+    return axios.patch(baseUrl+"/bill/"+formData.getAll("id"),formData)
 }
 export const getBillByIdApi = (id) => {
     return axios.get(baseUrl+"/bill/"+id)
@@ -43,17 +52,15 @@ export const updateSpentFromApi=(formData)=>{
     return axios.patch(baseUrl+"/spent",formData)
 } 
 
+
 export const generateFormDataFromFeeLine = (feeLine) =>{
     const formData = new FormData()
-    console.log("dans generate formdata")
-    console.log(feeLine)
     if(feeLine.billId !== undefined){
         formData.append("billId",feeLine.billId)
     }
     if(feeLine.proofs!==undefined){
         for(let i =0; i<feeLine.proofs.length;i++)
             formData.append("proofs", feeLine.proofs[i])
-       console.log(formData.get("proofs"))
     }
     formData.append("missionId", 1)
     formData.append("advanceCash", feeLine.advanceCash)
@@ -64,12 +71,14 @@ export const generateFormDataFromFeeLine = (feeLine) =>{
     formData.append("feeType", feeLine.feeType)
     formData.append("amount", feeLine.amount)
     formData.append("id", feeLine.id)
-    console.log("dans le service")
-    console.log(feeLine)
+    return formData
+}
 
-    console.log(formData.get("proof"))
-    console.log(feeLine.files)
-
-
+export const generateFormDataFromBill = bill =>{
+    const formData = new FormData()
+    formData.append("id",bill.id)
+    formData.append("isSubmitted",bill.isSubmitted)
+    formData.append("submissionDate",bill.submissionDate)
+    formData.append("collaboratorId",bill.collaboratorId)
     return formData
 }

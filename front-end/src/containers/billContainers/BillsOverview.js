@@ -1,10 +1,12 @@
 import { PureComponent } from "react"
 import { connect } from 'react-redux';
-import { fetchAllBills, postBill, updateBill, deleteBill } from '../../redux/actions/billsActions'
+import { fetchAllBills, postBill, sendBill, deleteBill } from '../../redux/actions/billsActions'
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getDateNowForBdd,dateFormat } from '../../services/formatService'
+
 
 export class BillsOverview extends PureComponent {
     constructor(props) {
@@ -18,20 +20,6 @@ export class BillsOverview extends PureComponent {
         this.props.getAllBillsFromApi()
     }
 
-    // handleUpdateClick = () => {
-    //     const formdata = new FormData()
-    //     formdata.append('billId', 7)
-    //     formdata.append('amount', 66)
-    //     formdata.append('commentary', "Ca à l'air de marcher")
-    //     formdata.append('advanceCash', false)
-    //     formdata.append('isExactAmount', false)
-    //     formdata.append('missionId', 1)
-    //     formdata.append('collabId', 1)
-
-    //     console.log("formdata " + formdata)
-
-    //     this.props.updateBill(formdata)
-    // }
     handleCreateBillClick = () => {
         const formData = new FormData()
         formData.append("collabId", 1)
@@ -39,13 +27,31 @@ export class BillsOverview extends PureComponent {
     }
 
     deleteBill = () => {
-        console.log("dans le delete apres modal")
-        console.log(this.state.idBillToDelete)
         this.props.deleteBill(this.state.idBillToDelete)
         this.setState({
             showConfirmation: false,
             idBillToDelete: undefined
         })
+    }
+    sendBill = (bill) => {
+
+        console.log("dans le send bill overview")
+        console.log(this.props.bills[this.props.bills.length - 1])
+        const b = this.props.bills.filter(b => b.submissionDate == getDateNowForBdd())
+        console.log(b > 0)
+        console.log(dateFormat(this.props.bills[5].submissionDate))
+        console.log(dateFormat(getDateNowForBdd()))
+
+
+        console.log(bill.id)
+        console.log(this.props.bills.filter(b => b.submissionDate == getDateNowForBdd()))
+        if (this.props.bills.filter(b => dateFormat(b.submissionDate) == dateFormat(getDateNowForBdd())).length == 0){
+            bill.submissionDate = getDateNowForBdd()
+            bill.isSubmitted = true
+            this.props.sendBill(bill)
+        }
+        else
+            console.log("dans le else")
     }
     closeConfirmationModalWindow = () => {
         this.setState({
@@ -71,7 +77,7 @@ export class BillsOverview extends PureComponent {
                     </button>
                 </div>
                 <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
-                    <svg className="animate-spin h-5 w-5 mr-3 text-indigo-300"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="animate-spin h-5 w-5 mr-3 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                 </div>
@@ -82,7 +88,7 @@ export class BillsOverview extends PureComponent {
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                     /> : null}
 
-                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} showConfirmation={this.showConfirmationModalWindow} /></div>) : null}</div>
+                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} /></div>) : null}</div>
                 </div>
             </section>
         )
@@ -100,7 +106,7 @@ const mapActionToProps = (dispatch) => {
     return {
         getAllBillsFromApi: () => dispatch(fetchAllBills()),
         postBill: (bill) => dispatch(postBill(bill)),
-        updateBill: (bill) => dispatch(updateBill(bill)),
+        sendBill: (bill) => dispatch(sendBill(bill)),
         deleteBill: (id) => dispatch(deleteBill(id))
     }
 }

@@ -2,10 +2,11 @@ import { type } from "@testing-library/user-event/dist/type";
 import {
     getAllBills,
     createBill,
-    updateBillApi,
     getBillByIdApi,
     deleteBillFromApi,
-    deleteSpentFromApi
+    deleteSpentFromApi,
+    updateBillApi,
+    generateFormDataFromBill
 } from "../../services/billsService";
 import {
     IS_LOADING,
@@ -18,7 +19,9 @@ import {
     END_DELETING_BILL,
     ERROR_DELETING_BILL,
     END_DELETING_SPENT,
-    ERROR_DELETING_SPENT
+    ERROR_DELETING_SPENT,
+    END_SENDING_BILL,
+    ERROR_SENDING_BILL
 } from "../reducers/billsReducer"
 
 export const deleteSpent = (spentId, billId) => {
@@ -39,12 +42,12 @@ export const deleteSpent = (spentId, billId) => {
                 type: END_DELETING_SPENT,
                 res: { spentId: res.data.id, billId: billId }
             })
-        }).catch(err=>{
+        }).catch(err => {
             console.log("dans le err")
             console.log(err)
             dispatch({
                 type: ERROR_DELETING_SPENT,
-                error:err
+                error: err
             })
         })
     }
@@ -123,10 +126,30 @@ export function postBill(bill) {
 
 }
 
-export function updateBill(bill) {
-    updateBillApi(bill).then(res => {
-    }).catch(error => {
-    })
+export function sendBill(bill) {
+    const formData = generateFormDataFromBill(bill)
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        updateBillApi(formData).then(res => {
+            dispatch({
+                type: END_SENDING_BILL,
+                bill: res.data.bill
+            })
+            console.log("dans le res")
+            console.log(res.data.bill)
+        }).catch(error => {
+            console.log("dans le err")
+            console.log(error)
+            dispatch({
+                type:ERROR_SENDING_BILL,
+                error: error
+            })
+        })
+    }
+
 }
 
 export const getBillById = (id) => {

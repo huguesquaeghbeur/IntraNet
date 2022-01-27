@@ -86,7 +86,7 @@ namespace IntraNetAPI.Controllers
                 spent.IsExactAmount = isExactAmount == default ? spent.IsExactAmount : isExactAmount;
                 spent.Validate = (Spent.ValidationEnum)validate;
                 spent.FeeType = (Spent.FeeTypeEnum)feeType;
-                spent.ExpenseDate = _formatService.FormatDate(expenseDate);
+                spent.ExpenseDate = expenseDate;
                 if (proofs != null)
                 {
                     foreach (IFormFile proof in proofs)

@@ -36,7 +36,7 @@ export default class FeeLineForm extends PureComponent {
             this.setState({
                 options: tab,
                 id: this.state.spent[0].id,
-                commentary: this.state.spent[0].commentary,
+                commentary: this.state.commentary !== undefined ? this.state.spent[0].commentary : "",
                 feeType: this.state.spent[0].feeType,
                 expenseDate: this.state.spent[0].expenseDate.slice(0, 10),
                 missionId: 1,
@@ -74,6 +74,7 @@ export default class FeeLineForm extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
+        console.log(e.target.value)
     }
     handleSelectChange = (e) => {
         this.setState({

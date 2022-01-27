@@ -68,7 +68,7 @@ namespace IntraNetAPI.Controllers
                     AdvanceCash = advanceCash,
                     IsExactAmount = isExactAmount,
                     Validate = (Spent.ValidationEnum)validate,
-                    ExpenseDate = _formatService.FormatDate(expenseDate),
+                    ExpenseDate = expenseDate,
                     FeeType = (Spent.FeeTypeEnum)feeType
                 };
                     if (proofs != null)
@@ -84,6 +84,21 @@ namespace IntraNetAPI.Controllers
             }
             return NotFound(new { Message = "bill not found" });
         }
+        [HttpPatch("{id}")]
+        public IActionResult Patch(int id, [FromForm] bool isSubmitted, [FromForm] DateTime submissionDate, [FromForm] int collaboratorId)
+        {
+            Bill bill = _billRepository.FinById(id);
+            if(bill != null)
+            {
+                bill.CollaboratorId = collaboratorId;
+                bill.IsSubmitted = isSubmitted;
+                bill.SubmissionDate = submissionDate;
+                _billRepository.Update(bill);
+                return Ok(new { message = "bill updates", bill = bill });
+            }
+            return NotFound(new { message = "bill not found", bill = bill });
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
