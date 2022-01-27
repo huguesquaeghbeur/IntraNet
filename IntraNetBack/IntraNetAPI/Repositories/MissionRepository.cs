@@ -13,9 +13,14 @@ namespace IntraNetAPI.Repositories
         {
         }
 
-        public Mission FinById(int id)
+        public bool Delete(Mission element)
         {
             throw new NotImplementedException();
+        }
+
+        public Mission FindById(int id)
+        {
+            return _dataContext.Missions.Find(id);
         }
 
         public IEnumerable<Mission> GetAll()

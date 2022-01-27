@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace IntraNetAPI.Models
 {
@@ -9,12 +11,18 @@ namespace IntraNetAPI.Models
         private DateTime startDate;
         private DateTime endDate;
         private bool startOnMorning;
+        private bool endOnMorning;
+        private int halfDayBreakCount;
+        public int CollaboratorId { get; set; }
+        [ForeignKey("CollaboratorId")]
+        [JsonIgnore]
         public virtual Collaborator Collaborator { get; set; }
         public int Id { get => id; set => id = value; }
         public DateTime StartDate { get => startDate; set => startDate = value; }
-        public DateTime EndDate { get => endDate; set => endDate = value; }
+        public DateTime EndDate { get => endDate.ToLocalTime(); set => endDate = value; }
         public bool StartOnMorning { get => startOnMorning; set => startOnMorning = value; }
-        
+        public bool EndOnMorning { get => endOnMorning; set => endOnMorning = value; }
+        public int HalfDayBreakCount { get => halfDayBreakCount; set => halfDayBreakCount = value; }
         public enum ValidationEnum
         {
             Refused,
@@ -23,6 +31,14 @@ namespace IntraNetAPI.Models
             HRValidation,
             Valided,
         }
+        public enum LeaveTypeEnum
+        {
+            HolidayMaker,
+            SickLeave,
+            ParentLeave,
+            UnpaidHoliday
+        }
         public ValidationEnum Validation { get; set; }
+        public LeaveTypeEnum LeaveType { get; set; }
     }
 }

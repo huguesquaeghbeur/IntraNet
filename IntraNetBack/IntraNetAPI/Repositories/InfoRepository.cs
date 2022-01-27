@@ -1,8 +1,10 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace IntraNetAPI.Repositories
@@ -13,24 +15,30 @@ namespace IntraNetAPI.Repositories
         {
         }
 
-        public Info FinById(int id)
+        public bool Delete(Info element)
         {
             throw new NotImplementedException();
+        }
+
+        public Info FindById(int id)
+        {
+            return _dataContext.Infos.Find(id);
         }
 
         public IEnumerable<Info> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Infos.Include(i => i.Collaborator).ToList();
         }
 
         public bool Save(Info element)
         {
-            throw new NotImplementedException();
+            _dataContext.Infos.Add(element);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public IEnumerable<Info> Search(Expression<Func<Info, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Infos.ToList();
         }
 
         public Info SearchOne(Expression<Func<Info, bool>> searchMethode)
@@ -40,7 +48,8 @@ namespace IntraNetAPI.Repositories
 
         public bool Update(Info element)
         {
-            throw new NotImplementedException();
+            _dataContext.Infos.Update(element);
+            return _dataContext.SaveChanges() > 0;
         }
     }
 }

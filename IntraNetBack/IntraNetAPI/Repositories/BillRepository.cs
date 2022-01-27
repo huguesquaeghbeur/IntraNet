@@ -1,8 +1,10 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace IntraNetAPI.Repositories
@@ -13,34 +15,41 @@ namespace IntraNetAPI.Repositories
         {
         }
 
-        public Bill FinById(int id)
+        public Bill FindById(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).FirstOrDefault(b=>b.Id==id);
         }
 
         public IEnumerable<Bill> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Bills.Include(b=>b.Collaborator).Include(b=>b.Spents).ThenInclude(s=>s.Mission).Include(b=>b.Spents).ThenInclude(s=>s.Proofs);
         }
 
         public bool Save(Bill element)
         {
-            throw new NotImplementedException();
+            _dataContext.Bills.Add(element);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public IEnumerable<Bill> Search(Expression<Func<Bill, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(predicate);
         }
 
         public Bill SearchOne(Expression<Func<Bill, bool>> searchMethode)
         {
-            throw new NotImplementedException();
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(searchMethode).FirstOrDefault();
         }
 
         public bool Update(Bill element)
         {
-            throw new NotImplementedException();
+            return _dataContext.SaveChanges() > 0;
+        }
+
+        public bool Delete(Bill element)
+        {
+            _dataContext.Bills.Remove(element);
+            return _dataContext.SaveChanges() > 0;
         }
     }
 }

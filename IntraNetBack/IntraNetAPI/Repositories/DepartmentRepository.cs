@@ -1,9 +1,11 @@
-﻿using IntraNetAPI.Interfaces;
-using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using IntraNetAPI.Interfaces;
+using IntraNetAPI.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
 
 namespace IntraNetAPI.Repositories
 {
@@ -13,34 +15,40 @@ namespace IntraNetAPI.Repositories
         {
         }
 
-        public Department FinById(int id)
+        public bool Delete(Department element)
         {
             throw new NotImplementedException();
+        }
+
+        public Department FindById(int id)
+        {
+            return _dataContext.Departments.Find(id);
         }
 
         public IEnumerable<Department> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Departments.ToList();
         }
 
-        public bool Save(Department element)
+        public bool Save(Department department)
         {
-            throw new NotImplementedException();
+            _dataContext.Departments.Add(department);
+            return _dataContext.SaveChanges() > 0;
         }
 
-        public IEnumerable<Department> Search(Expression<Func<Department, bool>> predicate)
+        public IEnumerable<Department> Search(Expression<Func<Department, bool>> searchMethod)
         {
-            throw new NotImplementedException();
+            return _dataContext.Departments.Where(searchMethod).ToList();
         }
 
-        public Department SearchOne(Expression<Func<Department, bool>> searchMethode)
+        public Department SearchOne(Expression<Func<Department, bool>> searchOneMethod)
         {
-            throw new NotImplementedException();
+            return _dataContext.Departments.SingleOrDefault(searchOneMethod);
         }
 
         public bool Update(Department element)
         {
-            throw new NotImplementedException();
+            return _dataContext.SaveChanges() > 0;
         }
     }
 }
