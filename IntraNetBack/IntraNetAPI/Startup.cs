@@ -1,3 +1,4 @@
+using IntraNetAPI.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,12 +27,17 @@ namespace IntraNetAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>();
+            services.AddOurServices();
+            services.AddControllers();
             services.AddCors(options =>
             {
-                options.AddPolicy("allAllowd", builder =>
+                options.AddPolicy("allConnections", buider =>
                 {
-                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    buider.AllowAnyOrigin().AllowAnyMethod();
+                });
+                options.AddPolicy("specialOrigin", builder =>
+                {
+                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
                 });
             });
         }
@@ -43,9 +49,13 @@ namespace IntraNetAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
 
             app.UseRouting();
             app.UseCors();
+
+
+ 
 
             app.UseAuthorization();
 
