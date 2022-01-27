@@ -35,7 +35,7 @@ namespace IntraNetAPI.Controllers
         [HttpGet("{holidayId}")]
         public IActionResult Get(int holidayId)
         {
-            Holiday h = _holidayRepository.FinById(holidayId);
+            Holiday h = _holidayRepository.FindById(holidayId);
             if(h != null)
             {
                 return Ok(h);
@@ -88,7 +88,7 @@ namespace IntraNetAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] int validation)
         {
-            Holiday holiday = _holidayRepository.FinById(id);
+            Holiday holiday = _holidayRepository.FindById(id);
             if(holiday == null)
             {
                 holiday.Validation = (Holiday.ValidationEnum)validation;

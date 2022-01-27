@@ -7,12 +7,12 @@ import {
 import './index.css';
 
 import BillsOverview from "./containers/billContainers/BillsOverview";
-import AddCollaborator from "./components/AddCollaboratorForm";
+import AddCollaborator from "./components/collaboratorComponents/AddCollaboratorForm";
 import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
 import HolidayList from "./components/holidayComponents/HolidayList";
-import CollaboratorList from "./components/CollaboratorList";
-import CollaboratorManagement from "./components/CollaboratorManagement";
-import CollaboratorPage from "./components/CollaboratorPage";
+import CollaboratorList from "./components/collaboratorComponents/CollaboratorList";
+import CollaboratorManagement from "./components/collaboratorComponents/CollaboratorManagement";
+import CollaboratorPage from "./components/collaboratorComponents/CollaboratorPage";
 import BillById from "./containers/billContainers/BillById";
 import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
@@ -22,7 +22,7 @@ import DepartmentById from "./components/DptNewFolder/DepartmentById";
 import { DepartmentsOverview } from "./containers/DepartmentContainer/DepartmentsOverview";
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
-
+import UserLogin from "./components/userPage";
 
 
 import InfoOverview from "./containers/InfoOverview";
@@ -34,6 +34,7 @@ import InfoList from "./components/InfoList";
 // localizer.formats.yearHeaderFormats = 'YYYY'
 
 function App() {
+    
     return (
         <div className="App">
             <Router>
@@ -108,7 +109,11 @@ function App() {
                     <Route
                         path="departments/description"
                         element={<DepartmentDescriptionUniqueId/>}
-                    />                          
+                    />
+                    <Route
+                        path=""
+                        element={<UserLogin />}
+                    />                                                    
                                        
                 </Routes>
             </Router>

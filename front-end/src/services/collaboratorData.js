@@ -16,3 +16,16 @@ export const getCollaboratorById = (id) => {
 export const updateCollaboratorData = (id, data) => {
     return axios.put(baseUrl + '/collaborator/' + id, data)
 }
+
+export const loginUser = (data) => {
+    return axios.post(baseUrl + '/login', data)
+}
+
+export const getUser = () => {
+    return localStorage.getItem("token")
+}
+
+export const deconnect = () => {
+    return localStorage.removeItem("token")
+}
+

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
 using IntraNetAPI.Interfaces;
+using IntraNetAPI.Services;
 using Microsoft.AspNetCore.Cors;
 
 
@@ -18,11 +19,15 @@ namespace IntraNetAPI.Controllers
     {
         DataContext _data;
         IRepository<Department> _departmentRepository;
+        IRepository<Collaborator> _collaboratorRepository;
+        LoginService _loginService;
 
-        public CollaboratorController(DataContext data, IRepository<Department> departmentRepository)
+        public CollaboratorController(DataContext data, IRepository<Department> departmentRepository, IRepository<Collaborator> collaboratorRepository, LoginService loginService)
         {
             _data = data;
             _departmentRepository = departmentRepository;
+            _collaboratorRepository = collaboratorRepository;
+            _loginService = loginService;
         }
 
         [HttpGet]
@@ -51,7 +56,7 @@ namespace IntraNetAPI.Controllers
                 LastName = LastName,
                 Birthday = Birthday,
                 Department = _data.Departments.Find(Department),
-                Status = (Collaborator.StatusEnum) Status,
+                Status = (Collaborator.StatusEnum)Status,
                 IsAdmin = IsAdmin,
                 IsActive = IsActive,
                 HalfDayBreak = 60,
@@ -104,6 +109,6 @@ namespace IntraNetAPI.Controllers
             }
             return NotFound();
         }
-
+       
     }
 }

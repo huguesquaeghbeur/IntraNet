@@ -20,7 +20,7 @@ namespace IntraNetAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public Holiday FinById(int id)
+        public Holiday FindById(int id)
         {
             return _dataContext.Holidays.Find(id);
         }

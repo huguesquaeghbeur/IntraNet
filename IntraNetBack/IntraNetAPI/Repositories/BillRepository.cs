@@ -15,7 +15,7 @@ namespace IntraNetAPI.Repositories
         {
         }
 
-        public Bill FinById(int id)
+        public Bill FindById(int id)
         {
             return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).FirstOrDefault(b=>b.Id==id);
         }

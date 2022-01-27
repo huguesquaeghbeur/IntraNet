@@ -18,7 +18,7 @@ namespace IntraNetAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public Proof FinById(int id)
+        public Proof FindById(int id)
         {
             throw new NotImplementedException();
         }

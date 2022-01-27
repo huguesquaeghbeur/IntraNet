@@ -18,7 +18,7 @@ namespace IntraNetAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public Mission FinById(int id)
+        public Mission FindById(int id)
         {
             return _dataContext.Missions.Find(id);
         }

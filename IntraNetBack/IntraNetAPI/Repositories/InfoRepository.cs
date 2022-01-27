@@ -20,7 +20,7 @@ namespace IntraNetAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public Info FinById(int id)
+        public Info FindById(int id)
         {
             return _dataContext.Infos.Find(id);
         }

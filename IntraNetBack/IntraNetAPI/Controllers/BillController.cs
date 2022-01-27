@@ -36,7 +36,7 @@ namespace IntraNetAPI.Controllers
         [HttpGet("{billId}")]
         public IActionResult Get(int billId)
         {
-            Bill bill = _billRepository.FinById(billId);
+            Bill bill = _billRepository.FindById(billId);
             if (bill != null)
                 return Ok(bill);
             return NotFound(new { Message = "bill not found" });
@@ -46,7 +46,7 @@ namespace IntraNetAPI.Controllers
             {
             Bill bill = new Bill()
             {
-                Collaborator = _collaboratorRepository.FinById(collabId),
+                Collaborator = _collaboratorRepository.FindById(collabId),
                 //IsSubmitted = false,
             };
             if(_billRepository.Save(bill))
@@ -56,11 +56,11 @@ namespace IntraNetAPI.Controllers
         [HttpPatch]
         public IActionResult Patch([FromForm] int billId, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
         {
-            Bill bill = _billRepository.FinById(billId);
+            Bill bill = _billRepository.FindById(billId);
             if(bill != null) {
                 Spent spent = new Spent()
                 {   
-                    Mission = _missionRepository.FinById(missionId),
+                    Mission = _missionRepository.FindById(missionId),
                     Amount = amount,
                     Commentary = commentary,
                     AdvanceCash = advanceCash,
@@ -78,7 +78,7 @@ namespace IntraNetAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            Bill bill = _billRepository.FinById(id);
+            Bill bill = _billRepository.FindById(id);
             if (bill != null)
             {
                 _billRepository.Delete(bill);

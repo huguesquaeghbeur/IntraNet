@@ -20,7 +20,7 @@ namespace IntraNetAPI.Repositories
             throw new NotImplementedException();
         }
 
-        public Spent FinById(int id)
+        public Spent FindById(int id)
         {
             return _dataContext.Spents.Include(s=>s.Mission).Include(s=>s.Proofs).FirstOrDefault(s=>s.Id == id);
         }

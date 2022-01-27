@@ -38,7 +38,7 @@ namespace IntraNetAPI.Controllers
         [HttpGet("{infoId}")]
         public IActionResult Get(int infoId)
         {
-            Info i = _inforepostory.FinById(infoId);
+            Info i = _inforepostory.FindById(infoId);
             if(i != null)
             {
                 return Ok(i);

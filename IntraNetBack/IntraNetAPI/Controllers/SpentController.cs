@@ -32,7 +32,7 @@ namespace IntraNetAPI.Controllers
         {
             Spent spent = new Spent()
             {
-                Mission = _missionRepository.FinById(missionId),
+                Mission = _missionRepository.FindById(missionId),
                 Amount = amount,
                 Commentary = commentary,
                 AdvanceCash = advanceCash,
@@ -53,7 +53,7 @@ namespace IntraNetAPI.Controllers
         [HttpGet("{spentId}")]
         public IActionResult Get(int spentId)
         {
-            Spent spent = _spentRepository.FinById(spentId);
+            Spent spent = _spentRepository.FindById(spentId);
             if (spent != null)
                 return Ok(spent);
             return NotFound(new { Message = "spent not found"});
