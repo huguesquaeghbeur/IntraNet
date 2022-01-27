@@ -11,6 +11,9 @@ import { deleteSpent, getBillById } from '../../redux/actions/billsActions'
 import { get } from "react-hook-form";
 import { deleteSpentFromApi, getBillByIdApi, updateSpentFromApi } from "../../services/billsService"
 
+
+// childs component : billComponent/FeeLineForm & billComponent/AddFeeLineModalWindow
+
 class BillByIdComponent extends PureComponent {
     constructor(props) {
         super(props)
@@ -28,55 +31,36 @@ class BillByIdComponent extends PureComponent {
             })
         })
     }
-
     handleAddFeeLineClick = () => {
         this.setState({
             isShowingForm: true
         })
     }
-
     handleCloseFeeLineForm = () => {
         this.setState({
             isShowingForm: false,
             spentId: undefined
         })
     }
-
     SaveFeeLine = (feeLine) => {
-        feeLine={
-            ...feeLine,
-            billId:this.props.billId
-        }
-        console.log("feeline billId added----")
         const formData = generateFormDataFromFeeLine(feeLine)
-
-        updateBillApi(formData).then(() => {
-            getBillByIdApi(this.props.billId).then((res) => {
-                this.setState({
-                    bill: res.data,
-                    billId: res.data.id,
-                    spents: res.data.spents,
-                    spentId: undefined,
-                    isShowingForm: false
-                })
-            })
+        updateBillApi(formData).then((res) => {
+            this.updateState(res.data, false)
         })
     }
-
     SubmitFeeLine = (feeLine) => {
-
         const formData = generateFormDataFromFeeLine(feeLine)
-        console.log("dans le submit feeline dans billbyId : ")
-        console.log(formData.get("id"))
-        console.log(formData.get("validate"))
-
-        updateSpentFromApi(formData).then(() => {
-            console.log("dans lupdate then")
-            })
-        }
-    
-
-    handleDelete = (i) => {
+        updateSpentFromApi(formData).then(res => {
+            this.updateState(res.data, true)
+        })
+    }
+    UpdateFeeLine = (feeLine) => {
+        const formData = generateFormDataFromFeeLine(feeLine)
+        updateSpentFromApi(formData).then(res => {
+            this.updateState(res.data, true)
+        })
+    }
+    handleDeleteClick = (i) => {
         const spents = this.state.spents.filter(s => s.id != i)
         deleteSpentFromApi(i).then(res => {
             this.setState({
@@ -88,7 +72,6 @@ class BillByIdComponent extends PureComponent {
             })
         })
     }
-
     handleModifyClick = (i) => {
         this.setState({
             isShowingForm: true,
@@ -96,39 +79,33 @@ class BillByIdComponent extends PureComponent {
         })
     }
 
-    UpdateFeeLine = (feeLine) => {
-        const formData = generateFormDataFromFeeLine(feeLine)
-        const spents = this.state.spents.map(s => s.id != formData.get("id") ? s : {
-            commentary: formData.get("commentary"),
-            proofs: formData.get("proofs"),
-            feeType: formData.get("feeType"),
-            expenseDate: formData.get("expenseDate"),
-            missionId: formData.get("missionId"),
-            isExactAmount: formData.get("isExactAmount"),
-            advanceCash: formData.get("advanceCash"),
-            amount: formData.get("amount"),
-            id: formData.get("id")
-        })
-        updateSpentFromApi(formData).then(res => {
-            const bill ={
-                collaboratorId:this.state.bill.collaboratorId,
-                spents: spents,
-                id:this.state.bill.id,
-                isSubmitted:this.state.bill.isSubmitted,
-                submissionDate:this.state.bill.submissionDate
-            } 
+    updateState(apiRes, isFeeLineExist) {
+        let spents = undefined
+
+        if (isFeeLineExist) {
+            spents = this.state.spents.map(s => s.id != apiRes.spent.id ? s : apiRes.spent)
+        } else {
+            spents = this.state.spents
+            spents.unshift(apiRes.spent)
+        }
+
+        const bill = {
+            ...this.state.bill,
+            spents: spents
+        }
+        
+        this.setState({
+            spents: undefined,
+            spentId: undefined,
+            bill: undefined
+        }, () => {
             this.setState({
-                spents: undefined,
-                spentId: undefined,
-                bill:undefined
-            }, () => {
-                this.setState({
-                    spents: spents,
-                    isShowingForm: false,
-                    bill:bill
-                })
+                spents: spents,
+                isShowingForm: false,
+                bill: bill
             })
-        })
+        }
+        )
     }
 
     render() {
@@ -152,7 +129,7 @@ class BillByIdComponent extends PureComponent {
                             UpdateFeeLine={this.UpdateFeeLine}
                             spentId={this.state.spentId}
                         /> : null}
-                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} deleteClick={this.handleDelete} modifyClick={this.handleModifyClick} submitClick={this.SubmitFeeLine} />) : null}</div>
+                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} handleDeleteClick={this.handleDeleteClick} modifyClick={this.handleModifyClick} submitClick={this.SubmitFeeLine} />) : null}</div>
                 </div>
             </section>
         )

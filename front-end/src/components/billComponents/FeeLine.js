@@ -4,6 +4,7 @@ import { PureComponent } from "react";
 import { deleteSpent } from "../../services/billsService";
 import { dateFormat } from "../../services/formatService"
 
+// parent component : billContainerBillByid
 
 export class FeeLine extends PureComponent {
     constructor(props) {
@@ -20,14 +21,14 @@ export class FeeLine extends PureComponent {
     }
 
     handleSubmitClick() {
-        this.state.FeeLine.validate += 1
+        this.state.FeeLine.validate++
         this.props.submitClick(this.state.FeeLine)
     }
     handleModifyClick() {
         this.props.modifyClick(this.props.FeeLine.id)
     }
     handleDeleteClick() {
-        this.props.deleteClick(this.props.FeeLine.id)
+        this.props.handleDeleteClick(this.props.FeeLine.id)
     }
 
     render() {

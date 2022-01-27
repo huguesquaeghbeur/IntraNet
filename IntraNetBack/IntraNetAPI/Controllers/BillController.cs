@@ -56,7 +56,7 @@ namespace IntraNetAPI.Controllers
             return NotFound(new { Message = "bill error" });
         }
         [HttpPatch]
-        public IActionResult Patch([FromForm] int feeType, [FromForm] DateTime expenseDate, [FromForm] int billId, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount, [FromForm] int validateLevel)
+        public IActionResult Patch([FromForm] int feeType, [FromForm] DateTime expenseDate, [FromForm] int billId, [FromForm] IFormFile[] proofs, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount, [FromForm] int validate)
         {
             Bill bill = _billRepository.FinById(billId);
             if(bill != null) {
@@ -67,15 +67,20 @@ namespace IntraNetAPI.Controllers
                     Commentary = commentary,
                     AdvanceCash = advanceCash,
                     IsExactAmount = isExactAmount,
-                    Validate = (Spent.ValidationEnum)validateLevel,
+                    Validate = (Spent.ValidationEnum)validate,
                     ExpenseDate = _formatService.FormatDate(expenseDate),
                     FeeType = (Spent.FeeTypeEnum)feeType
                 };
-                if(proof != null)
-                    spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
-                bill.Spents.Add(spent);
+                    if (proofs != null)
+                {
+                    foreach (IFormFile proof in proofs)
+                    {
+                        spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
+                    }
+                }
+                    bill.Spents.Add(spent);
                 _billRepository.Update(bill);
-                return Ok(new { Message = "bill updated", id = bill.Id });
+                return Ok(new { Message = "bill updated", id = bill.Id, spent = spent });
             }
             return NotFound(new { Message = "bill not found" });
         }

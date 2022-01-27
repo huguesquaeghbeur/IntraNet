@@ -74,7 +74,7 @@ namespace IntraNetAPI.Controllers
         }
 
         [HttpPatch]
-        public IActionResult Patch([FromForm]int validate,[FromForm] DateTime expenseDate, [FromForm] int id, [FromForm] int feeType, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
+        public IActionResult Patch([FromForm] int validate, [FromForm] DateTime expenseDate, [FromForm] int id, [FromForm] int feeType, [FromForm] IFormFile[] proofs, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
         {
             Spent spent = _spentRepository.FinById(id);
             if (spent != null)
@@ -85,11 +85,17 @@ namespace IntraNetAPI.Controllers
                 spent.AdvanceCash = advanceCash == default ? spent.AdvanceCash : advanceCash;
                 spent.IsExactAmount = isExactAmount == default ? spent.IsExactAmount : isExactAmount;
                 spent.Validate = (Spent.ValidationEnum)validate;
-                spent.FeeType = feeType == default ? spent.FeeType : (Spent.FeeTypeEnum)feeType;
+                spent.FeeType = (Spent.FeeTypeEnum)feeType;
                 spent.ExpenseDate = _formatService.FormatDate(expenseDate);
-
+                if (proofs != null)
+                {
+                    foreach (IFormFile proof in proofs)
+                    {
+                        spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
+                    }
+                }
                 _spentRepository.Update(spent);
-                return Ok(new { message = "spent updated", id = id, spent = spent });
+                return Ok(new { Message = "spent updated", id = id, Spent = spent });
             }
             return NotFound(new { Message = "spent not found" });
         }

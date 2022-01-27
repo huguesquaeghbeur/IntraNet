@@ -17,12 +17,12 @@ namespace IntraNetAPI.Repositories
 
         public Bill FinById(int id)
         {
-            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).FirstOrDefault(b=>b.Id==id);
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents.OrderByDescending(s =>s.ExpenseDate)).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).FirstOrDefault(b=>b.Id==id);
         }
 
         public IEnumerable<Bill> GetAll()
         {
-            return _dataContext.Bills.Include(b=>b.Collaborator).Include(b=>b.Spents).ThenInclude(s=>s.Mission).Include(b=>b.Spents).ThenInclude(s=>s.Proofs);
+            return _dataContext.Bills.Include(b=>b.Collaborator).Include(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s=>s.Mission).Include(b=>b.Spents).ThenInclude(s=>s.Proofs);
         }
 
         public bool Save(Bill element)
@@ -33,12 +33,12 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Bill> Search(Expression<Func<Bill, bool>> predicate)
         {
-            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(predicate);
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(predicate);
         }
 
         public Bill SearchOne(Expression<Func<Bill, bool>> searchMethode)
         {
-            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(searchMethode).FirstOrDefault();
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).Where(searchMethode).FirstOrDefault();
         }
 
         public bool Update(Bill element)
