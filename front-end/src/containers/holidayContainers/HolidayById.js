@@ -189,7 +189,7 @@ class HolidayById extends PureComponent {
                                     }
                                 </div>
                                 :
-                                this.state.post && (this.state.role === "chief" && this.state.post.validation == 1) && this.state.post.collaboratorId != this.state.idCollab ?
+                                this.state.post && (this.state.role == "chief" && this.state.post.validation == 1) && this.state.post.collaboratorId != this.state.idCollab ?
                                     <div>
                                         <div className="text-gray-400 font-bold uppercase">
                                             Demande de congés n° {this.state.post.id}
@@ -226,7 +226,7 @@ class HolidayById extends PureComponent {
                                         </div>
                                     </div>
                                     :
-                                    this.state.post && (this.state.role === "basic" && this.state.department == "Ressources Humaines" && this.state.post.validation == 2) && this.state.post.collaboratorId != this.state.idCollab ?
+                                    this.state.post && (this.state.role == "basic" && this.state.department == "Ressources Humaines" && this.state.post.validation == 2) && this.state.post.collaboratorId != this.state.idCollab ?
                                         <div>
                                             <div className="text-gray-400 font-bold uppercase">
                                                 Demande de congés n° {this.state.post.id}
@@ -262,7 +262,7 @@ class HolidayById extends PureComponent {
                                                 </div>
                                             </div>
                                         </div> :
-                                        this.state.post && (this.state.role == "chief" && this.state.department === "Ressources Humaines" && this.state.post.validation == 3) && this.state.post.collaboratorId != this.state.idCollab ?
+                                        this.state.post && (this.state.role == "chief" && this.state.department == "Ressources Humaines" && this.state.post.validation == 3) && this.state.post.collaboratorId != this.state.idCollab ?
                                             <div>
                                                 <div className="text-gray-400 font-bold uppercase">
                                                     Demande de congés n° {this.state.post.id}
