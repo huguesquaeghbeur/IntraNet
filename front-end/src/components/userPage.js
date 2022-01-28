@@ -1,18 +1,12 @@
 import React, { PureComponent } from "react";
-import {loginUser} from "../services/collaboratorData";
+import { loginUser } from "../services/collaboratorData";
 
 class UserLogin extends PureComponent {
     state = {
         email: '',
-        password: ''
+        password: '',
+        status: ''
     }
-
-
-c4f80fe188659d69e8dab4dff3b4e8e80e90679c
-    
-
-
-
 
     handleChange = (e) => {
         this.setState({
@@ -25,6 +19,7 @@ c4f80fe188659d69e8dab4dff3b4e8e80e90679c
         const formdata = new FormData();
         formdata.append('email', this.state.email);
         formdata.append('password', this.state.password);
+        formdata.append('status', this.state.status);
         loginUser(formdata).then(response => {
             this.setState({
                 collaborators: response.data
@@ -62,6 +57,23 @@ c4f80fe188659d69e8dab4dff3b4e8e80e90679c
                             value={this.state.password}
                             className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                             required />
+                        <div>
+                            <label htmlFor="status" className="block text-sm font-medium text-gray-700">Fonction au sein de l'entreprise</label>
+                            <div className="mt-1">
+                                <select name="status"
+                                    onChange={this.handleChange}
+                                    value={this.state.status}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="" onChange={this.handleChange}>--Select--</option>
+                                    <option value="0" onChange={this.handleChange}>Collaborateur</option>
+                                    <option value="1" onChange={this.handleChange}>chef de projet</option>
+                                    <option value="2" onChange={this.handleChange}>Chef de service</option>
+                                    <option value="3" onChange={this.handleChange}>Directeur RH</option>
+                                    <option value="4" onChange={this.handleChange}>Directeur Financier</option>
+                                    <option value="5" onChange={this.handleChange}>Directeur Génèral</option>
+                                </select>
+                            </div>
+                        </div>
                         <div className="flex flex-row justify-around">
                             <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500" onClick={this.refreshPage}>
                                 Valider

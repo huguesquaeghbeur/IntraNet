@@ -115,7 +115,7 @@ class AddCollaborator extends PureComponent {
                                         required />
                                 </div>
                                 <div>
-                                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">Service</label>
+                                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">Fonction au sein de l'entreprise</label>
                                     <div className="mt-1">
                                         <select name="status" 
                                         onChange={this.handleChange}

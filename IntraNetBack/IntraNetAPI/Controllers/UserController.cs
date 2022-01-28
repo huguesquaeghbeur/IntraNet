@@ -8,6 +8,7 @@ using IntraNetAPI.Tools;
 using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using Microsoft.AspNetCore.Cors;
+using static IntraNetAPI.Models.Collaborator;
 
 namespace IntraNetAPI.Controllers
 {
@@ -25,10 +26,10 @@ namespace IntraNetAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitFormLogin([FromForm] string email, [FromForm] string password)
+        public IActionResult SubmitFormLogin([FromForm] string email, [FromForm] string password, [FromForm] StatusEnum status)
         {
             //Collaborator collaborator = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password);
-            string token = _loginService.GenerateToken(email, password);
+            string token = _loginService.GenerateToken(email, password, status);
             if (token != null /*&& collaborator != null*/)
             {
                 return Ok(new { Token = token/*, Collaborator = collaborator*/ });

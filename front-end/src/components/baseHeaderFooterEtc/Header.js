@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import jwt_decode from "jwt-decode";
 // import InfinGif from "./gif2.gif"
 //import InfinGif from "./gif420.gif"
 import "../baseHeaderFooterEtc/Header.css"
@@ -11,8 +12,11 @@ const HeaderBanner = () => {
     useEffect(() => {
         const user = getUser()
         if (user) {
-            setCurrentUser(user)
-            console.log(currentUser)   
+            const decoded = jwt_decode(user)
+            //setCurrentUser(user)
+            const baseUrl="http://schemas.microsoft.com/ws/2008/06/identity/claims/"
+            setCurrentUser(decoded[baseUrl+"role"])   
+            console.log(currentUser)
         }
     }, [currentUser])
     
@@ -43,18 +47,18 @@ const HeaderBanner = () => {
                 <div className='w-full block flex-grow lg:flex lg:items-center lg:w-auto'>
                     <div className='text-sm lg:flex-grow'>
                        
-                        {currentUser ? (
+                        {currentUser === "CEO" ? (
                             <div>
-                                <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Departments</Link>
+                                <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Services | </Link>
 
-                                <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborators</Link>
+                                <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborateurs | </Link>
 
-                                <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Bills</Link>
+                                <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Note de frais |</Link>
 
                                 <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4' onClick={closeApp}>Déconnexion</Link>
                             </div>
                         ) : (
-                            <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Home</Link>
+                            <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Acceuil</Link>
                         )}
 
                     </div>

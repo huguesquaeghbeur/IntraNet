@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using IntraNetAPI.Models;
 using IntraNetAPI.Interfaces;
+using static IntraNetAPI.Models.Collaborator;
 
 namespace IntraNetAPI.Services
 {
@@ -45,23 +46,24 @@ namespace IntraNetAPI.Services
             return false;
         }
 
-        public string GenerateToken(string email, string password)
+        public string GenerateToken(string email, string password, StatusEnum status)
         {
             //on vérifie l'email et le mot de passe dans la DB
-            Collaborator c = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password);
+            Collaborator c = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password && c.Status == status);
             if (c != null)
-            { 
+            {
                 List<Claim> claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.Email, c.Email),
                     new Claim(ClaimTypes.Authentication, c.Password),
-                    new Claim(ClaimTypes.Role, "Admin"),
+                    new Claim(ClaimTypes.Role, c.Status.ToString()),
                 };
                 //signature du token
                 SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("voici donc une clé de sécurité d'une qualité exceptionnelle")), SecurityAlgorithms.HmacSha256);
 
                 // Création du Token
                 JwtSecurityToken jwt = new JwtSecurityToken(issuer: "infinIT", audience: "infinIT", claims: claims, signingCredentials: signingCredentials, expires: DateTime.Now.AddMinutes(1));
+
                 return new JwtSecurityTokenHandler().WriteToken(jwt);
             }
             return null;
