@@ -18,8 +18,11 @@ namespace IntraNetAPI.Models
         private bool advanceCash;
         private bool isExactAmount;
         private DateTime expenseDate;
-
         public int MissionId { get; set; }
+        public FeeTypeEnum FeeType { get; set; }
+        public ValidationEnum Validate { get; set; }
+
+
         [ForeignKey("MissionId")]
         [JsonIgnore]
         public virtual Mission Mission { get; set; }
@@ -39,7 +42,6 @@ namespace IntraNetAPI.Models
             BookKeeperValidation,
             Valided,
         }
-        public ValidationEnum Validate { get; set; }
         public enum FeeTypeEnum
         {
             Other,
@@ -47,7 +49,6 @@ namespace IntraNetAPI.Models
             Registration,
             Equipment,
         }
-        public FeeTypeEnum FeeType { get; set; }
 
 
     }

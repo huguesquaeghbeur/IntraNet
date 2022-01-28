@@ -1,9 +1,11 @@
+import { type } from "@testing-library/user-event/dist/type";
 import {
     getAllBills,
     createBill,
     updateBillApi,
     getBillByIdApi,
-    deleteBillFromApi
+    deleteBillFromApi,
+    deleteSpentFromApi
 } from "../../services/billsService";
 import {
     IS_LOADING,
@@ -14,8 +16,39 @@ import {
     END_ADDING_BILL,
     ERROR_ADDING_BILL,
     END_DELETING_BILL,
-    ERROR_DELETING_BILL
+    ERROR_DELETING_BILL,
+    END_DELETING_SPENT,
+    ERROR_DELETING_SPENT
 } from "../reducers/billsReducer"
+
+export const deleteSpent = (spentId, billId) => {
+    return (dispatch) => {
+        console.log("dans le delete")
+        console.log(spentId)
+        console.log(billId)
+
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        deleteSpentFromApi(spentId).then(res => {
+            console.log("dans le res")
+            console.log(res)
+
+            dispatch({
+                type: END_DELETING_SPENT,
+                res: { spentId: res.data.id, billId: billId }
+            })
+        }).catch(err=>{
+            console.log("dans le err")
+            console.log(err)
+            dispatch({
+                type: ERROR_DELETING_SPENT,
+                error:err
+            })
+        })
+    }
+}
 
 export const deleteBill = (id) => {
     console.log("dans l deleteBill")
@@ -30,16 +63,17 @@ export const deleteBill = (id) => {
                 type: END_DELETING_BILL,
                 res: res.data
             })
-        }).catch(err=>{
+        }).catch(err => {
             dispatch({
                 type: ERROR_DELETING_BILL,
-                error:err
+                error: err
             })
         })
     }
 }
 
 export function fetchAllBills() {
+    console.log("dans fetch all bill")
 
     return (dispatch) => {
         dispatch({
@@ -47,11 +81,16 @@ export function fetchAllBills() {
             value: true
         })
         getAllBills().then(res => {
+            console.log("dans le then")
+
             dispatch({
                 type: END_GETTING_ALL_BILLS,
                 bills: res.data
             })
         }).catch(error => {
+            console.log("dans l'erreur")
+            console.log(error)
+
             dispatch({
                 type: ERROR_GETTING_ALL_BILLS,
                 error: error
@@ -61,7 +100,10 @@ export function fetchAllBills() {
 }
 
 export function postBill(bill) {
+    console.log("post bill ")
     return (dispatch) => {
+        console.log("return bill ")
+
         dispatch({
             type: IS_LOADING,
             value: true
@@ -88,19 +130,27 @@ export function updateBill(bill) {
 }
 
 export const getBillById = (id) => {
-    return(dispatch)=>{
-        getBillByIdApi(id).then(res=>{
+    console.log("dans l'action")
+    return (dispatch) => {
         dispatch({
-            type: END_GETTING_BILLS_BY_ID,
-            bill: res.data
+            type: IS_LOADING,
+            value: true
         })
-    }).catch(error => {
-        dispatch({
-            type: ERROR_GETTING_BILLS_BY_ID,
-            error: error
+        getBillByIdApi(id).then(res => {
+            console.log("action")
+            console.log(res)
+
+            dispatch({
+                type: END_GETTING_BILLS_BY_ID,
+                bill: res.data
+            })
+        }).catch(err => {
+            dispatch({
+                type: ERROR_GETTING_BILLS_BY_ID,
+                error: err
+            })
         })
-    })
-}
+    }
 }
 
 

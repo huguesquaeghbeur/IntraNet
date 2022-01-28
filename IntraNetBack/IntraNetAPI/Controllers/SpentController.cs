@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IntraNetAPI.Controllers
 {
-    [EnableCors("specialOrigin")]
+    [EnableCors("allConnections")]
     [Route("intranet/v1/spent")]
     [ApiController]
     public class SpentController : ControllerBase
@@ -20,12 +20,14 @@ namespace IntraNetAPI.Controllers
         IRepository<Mission> _missionRepository;
         IRepository<Collaborator> _collaboratorRepository;
         UploadService _uploadService;
-        public SpentController(UploadService uploadService, IRepository<Spent> spentRepository, IRepository<Mission> missionRepository, IRepository<Collaborator> collaboratorRepository)
+        FormatService _formatService;
+        public SpentController(FormatService formatService, UploadService uploadService, IRepository<Spent> spentRepository, IRepository<Mission> missionRepository, IRepository<Collaborator> collaboratorRepository)
         {
             _spentRepository = spentRepository;
             _missionRepository = missionRepository;
             _collaboratorRepository = collaboratorRepository;
-            _uploadService = uploadService;   
+            _uploadService = uploadService;
+            _formatService = formatService;
         }
         [HttpPost]
         public IActionResult Post([FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
@@ -57,6 +59,39 @@ namespace IntraNetAPI.Controllers
             if (spent != null)
                 return Ok(spent);
             return NotFound(new { Message = "spent not found"});
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Spent spent = _spentRepository.FinById(id);
+            if (spent != null)
+            {
+                _spentRepository.Delete(spent);
+                return Ok(new { message = "spent deleted", id = id }) ;
+            }
+            return NotFound(new { Message = "spent not found" });
+        }
+
+        [HttpPatch]
+        public IActionResult Patch([FromForm] DateTime expenseDate, [FromForm] int id, [FromForm] int feeType, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
+        {
+            Spent spent = _spentRepository.FinById(id);
+            if (spent != null)
+            {
+                spent.MissionId = missionId == default ? spent.MissionId : missionId;   
+                spent.Amount = amount == default ? spent.Amount : amount;
+                spent.Commentary = commentary == default ? spent.Commentary : commentary; 
+                spent.AdvanceCash = advanceCash == default ? spent.AdvanceCash : advanceCash;
+                spent.IsExactAmount = isExactAmount == default ? spent.IsExactAmount : isExactAmount;
+                spent.Validate = Spent.ValidationEnum.InitialState;
+                spent.FeeType = feeType == default ? spent.FeeType : (Spent.FeeTypeEnum)feeType;
+                spent.ExpenseDate = _formatService.FormatDate(expenseDate);
+
+                _spentRepository.Update(spent);
+                return Ok(new { message = "spent updated", id = id, spent = spent });
+            }
+            return NotFound(new { Message = "spent not found" });
         }
 
     }

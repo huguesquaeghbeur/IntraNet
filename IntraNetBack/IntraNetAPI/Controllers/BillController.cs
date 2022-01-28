@@ -21,12 +21,14 @@ namespace IntraNetAPI.Controllers
         IRepository<Mission> _missionRepository;
         IRepository<Collaborator> _collaboratorRepository;
         UploadService _uploadService;
-        public BillController(IRepository<Bill> billRepository, UploadService uploadService, IRepository<Mission> missionRepository, IRepository<Collaborator> collaboratorRepository)
+        FormatService _formatService;
+        public BillController(FormatService formatService, IRepository<Bill> billRepository, UploadService uploadService, IRepository<Mission> missionRepository, IRepository<Collaborator> collaboratorRepository)
         {
             _billRepository = billRepository;
             _missionRepository = missionRepository;
             _collaboratorRepository = collaboratorRepository;
             _uploadService = uploadService;
+            _formatService = formatService;
         }
         [HttpGet]
         public IActionResult Get()
@@ -54,7 +56,7 @@ namespace IntraNetAPI.Controllers
             return NotFound(new { Message = "bill error" });
         }
         [HttpPatch]
-        public IActionResult Patch([FromForm] int billId, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
+        public IActionResult Patch([FromForm] int feeType, [FromForm] DateTime expenseDate, [FromForm] int billId, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount, [FromForm] int validateLevel)
         {
             Bill bill = _billRepository.FindById(billId);
             if(bill != null) {
@@ -65,13 +67,15 @@ namespace IntraNetAPI.Controllers
                     Commentary = commentary,
                     AdvanceCash = advanceCash,
                     IsExactAmount = isExactAmount,
-                    Validate = Spent.ValidationEnum.InitialState,
+                    Validate = (Spent.ValidationEnum)validateLevel,
+                    ExpenseDate = _formatService.FormatDate(expenseDate),
+                    FeeType = (Spent.FeeTypeEnum)feeType
                 };
                 if(proof != null)
                     spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
                 bill.Spents.Add(spent);
                 _billRepository.Update(bill);
-                return Ok(new { Message = "bill added", id = bill.Id });
+                return Ok(new { Message = "bill updated", id = bill.Id });
             }
             return NotFound(new { Message = "bill not found" });
         }
