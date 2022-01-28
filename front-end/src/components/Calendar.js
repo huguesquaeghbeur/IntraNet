@@ -38,7 +38,7 @@ const Calendar = () => {
               return <tr key={cols[0].date}>
                 {cols.map(col => (
                   col.date === todayFormatted
-                    ? <td key={col.date} className={`${col.classes} today`} onClick={() => dateClickHandler
+                    ? <td key={col.date} className={`today ${col.classes} `} onClick={() => dateClickHandler
                     (col.date)}>{col.value}</td>
                      : <td key={col.date} className={col.classes} onClick={() => 
                       dateClickHandler(col.date)}>{col.value}</td>  
@@ -51,7 +51,7 @@ const Calendar = () => {
         </tbody>
       </table>
 
-      <button className="button" onClick={getPrevMonth}>&#60;</button>
+      <button className="button " onClick={getPrevMonth}>&#60;</button>
       <button className="button" onClick={getNextMonth}>&#62;</button>
       
     </Fragment>

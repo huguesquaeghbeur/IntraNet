@@ -1,3 +1,27 @@
+.table {
+    width: 60%;
+    margin: 0 auto;
 
+  }
+  
+  .today {
+    background-color: blue;
+    
+  }
+  
+  .in-prev-month,
+  .in-next-month {
+    opacity: 0.5;
+  }
+  .button{
+    margin-left: 400px;
+    background-color: #009e6c;
+    color: white;
+    
+  }
+  p{
+    margin-left: 600px;
+    
+  }
 
  
