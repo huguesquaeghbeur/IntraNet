@@ -21,6 +21,7 @@ namespace IntraNetAPI.Tools
             services.AddScoped<IRepository<Spent>, SpentRepository>();
             services.AddTransient<UploadService>();
             services.AddScoped<FormatService>();
+            services.AddScoped<HolidayService>();
         }
     }
 }

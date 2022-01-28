@@ -17,12 +17,12 @@ namespace IntraNetAPI.Controllers
     {
         IRepository<Holiday> _holidayRepository;
         IRepository<Collaborator> _collaboratorRepository;
-        FormatService _formatService;
-        public HolidayAPIController(IRepository<Holiday> holidayRepository, IRepository<Collaborator> collaboratorRepository, FormatService formatService)
+        HolidayService _holidayService;
+        public HolidayAPIController(IRepository<Holiday> holidayRepository, IRepository<Collaborator> collaboratorRepository, HolidayService holidayService)
         {
             _holidayRepository = holidayRepository;
             _collaboratorRepository = collaboratorRepository;
-            _formatService = formatService;
+            _holidayService = holidayService;
         }
         // GET: api/<HolidayAPIController>
         [HttpGet]
@@ -47,34 +47,24 @@ namespace IntraNetAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
-            int tmpHalfDayBreak = 0;
-            if (startDate.DayOfYear == endDate.DayOfYear)
-            {
-                if (startOnMorning == true && endOnMorning == false)
-                {
-                    tmpHalfDayBreak = 1;
-                }
-            }
-            if (startDate.DayOfYear < endDate.DayOfYear)
-            {
-                if (startOnMorning == true && endOnMorning == false)
-                {
-                    tmpHalfDayBreak += 1;
-                } else if (startOnMorning == false && endOnMorning == true)
-                {
-                    tmpHalfDayBreak -= 1;
-                }
-            }
+            //Status Calcul
+            Collaborator coll = _collaboratorRepository.SearchOne(c => c.Id == collabId);
+            Holiday.ValidationEnum validationEnum = _holidayService.calculStatus(coll);
+
+            // Half Day Break Calcul
+            int tmpHalfDayBreak = _holidayService.calculHalfDayBreak(startDate, endDate, startOnMorning, endOnMorning);
+
             Holiday holiday = new Holiday()
             {
+                //Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
                 Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
-                StartDate = _formatService.FormatDate(startDate),
+                StartDate = startDate,
                 StartOnMorning = startOnMorning,
-                EndDate = _formatService.FormatDate(endDate),
+                EndDate = endDate,
                 EndOnMorning = endOnMorning,
                 HalfDayBreakCount = ((endDate.DayOfYear - startDate.DayOfYear) * 2) + tmpHalfDayBreak,
                 LeaveType = (Holiday.LeaveTypeEnum)leaveType,
-                Validation = Holiday.ValidationEnum.InitialState,
+                Validation = validationEnum,
             };
             if (_holidayRepository.Save(holiday))
             {
@@ -128,7 +118,11 @@ namespace IntraNetAPI.Controllers
             {
                 if (startOnMorning == true && endOnMorning == false)
                 {
-                    tmpHalfDayBreak = 1;
+                    tmpHalfDayBreak += 2;
+                }
+                else if (startOnMorning == true && endOnMorning == true)
+                {
+                    tmpHalfDayBreak += 1;
                 }
             }
             if (startDate < endDate)
