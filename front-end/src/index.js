@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
 import redux from "./redux/store";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bulma/css/bulma.min.css'
+
 import './styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

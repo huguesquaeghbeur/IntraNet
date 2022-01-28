@@ -1,4 +1,5 @@
 import React from "react";
+import './App.css'
 
 
 import {
@@ -13,18 +14,18 @@ import AddCollaborator from "./components/AddCollaboratorForm";
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
-import Calendar from "react-calendar";
+import Calendar from "./components/Calendar";
 
 
 
 
 
 function App() {
-    
-    
+
+
     return (
         <div className="App">
-            
+
             <Router>
                 <header className="header">
                     < AddMission />
@@ -45,15 +46,16 @@ function App() {
                     <Route
                         path="collaborator"
                         element={<AddCollaborator />} />
-                    <Route
+                    {<Route
                         path="calendar"
-                        element={<Calendar />} />
-                    
-                    
-                    </Routes>
+                        element={<Calendar />} />}
+
+
+                </Routes>
             </Router>
-           
             
+
+
         </div>
 
     );

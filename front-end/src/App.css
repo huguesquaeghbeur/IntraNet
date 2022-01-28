@@ -1,1 +1,22 @@
+.table {
+    margin: 0 auto 20px;
+  }
+  
+  .today {
+    background-color: #009e6c;
+    
+  }
+  
+  .in-prev-month,
+  .in-next-month {
+    opacity: 0.5;
+  }
+  .button{
+    margin-left: 350px;
+    
+  }
+  p{
+    margin-left: 500px;
+    
+  }
 
