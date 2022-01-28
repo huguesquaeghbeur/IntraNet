@@ -6,7 +6,9 @@ import {
     deleteBillFromApi,
     deleteSpentFromApi,
     updateBillApi,
-    generateFormDataFromBill
+    generateFormDataFromBill,
+    generateFormDataFromFeeLine,
+    updateSpentFromApi
 } from "../../services/billsService";
 import {
     IS_LOADING,
@@ -21,7 +23,9 @@ import {
     END_DELETING_SPENT,
     ERROR_DELETING_SPENT,
     END_SENDING_BILL,
-    ERROR_SENDING_BILL
+    ERROR_SENDING_BILL,
+    END_UPDATING_SPENT,
+    ERROR_UPDATING_SPENT
 } from "../reducers/billsReducer"
 
 export const deleteSpent = (spentId, billId) => {
@@ -149,7 +153,28 @@ export function sendBill(bill) {
             })
         })
     }
+}
 
+export function updateSpent(feeLine) {
+    console.log("dans le update spent actions")
+    const formData = generateFormDataFromFeeLine(feeLine)
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        updateSpentFromApi(formData).then(res => {
+            dispatch({
+                type: END_UPDATING_SPENT,
+                spent: res.data.spent
+            })
+        }).catch(err=>{
+            dispatch({
+                type: ERROR_UPDATING_SPENT,
+                error : err
+            })
+        })
+    }
 }
 
 export const getBillById = (id) => {

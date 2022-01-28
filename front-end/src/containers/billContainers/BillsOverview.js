@@ -1,25 +1,26 @@
 import { PureComponent } from "react"
 import { connect } from 'react-redux';
-import { fetchAllBills, postBill, sendBill, deleteBill } from '../../redux/actions/billsActions'
+import { fetchAllBills, postBill, sendBill, deleteBill,updateSpent } from '../../redux/actions/billsActions'
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
+import DetailModalWindow from "../../components/billComponents/DetailModalWindow"
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { getDateNowForBdd,dateFormat } from '../../services/formatService'
+import { getDateNowForBdd, dateFormat } from '../../services/formatService'
+import { generateFormDataFromFeeLine } from '../../services/billsService'
 
-
-export class BillsOverview extends PureComponent {
+export class BillsOverview extends PureComponent {  
     constructor(props) {
         super(props)
         this.state = {
             showConfirmation: false,
+            showDetail: false
         }
     }
 
     componentDidMount() {
         this.props.getAllBillsFromApi()
     }
-
     handleCreateBillClick = () => {
         const formData = new FormData()
         formData.append("collabId", 1)
@@ -34,18 +35,8 @@ export class BillsOverview extends PureComponent {
         })
     }
     sendBill = (bill) => {
-
-        console.log("dans le send bill overview")
-        console.log(this.props.bills[this.props.bills.length - 1])
         const b = this.props.bills.filter(b => b.submissionDate == getDateNowForBdd())
-        console.log(b > 0)
-        console.log(dateFormat(this.props.bills[5].submissionDate))
-        console.log(dateFormat(getDateNowForBdd()))
-
-
-        console.log(bill.id)
-        console.log(this.props.bills.filter(b => b.submissionDate == getDateNowForBdd()))
-        if (this.props.bills.filter(b => dateFormat(b.submissionDate) == dateFormat(getDateNowForBdd())).length == 0){
+        if (this.props.bills.filter(b => dateFormat(b.submissionDate) == dateFormat(getDateNowForBdd())).length == 0) {
             bill.submissionDate = getDateNowForBdd()
             bill.isSubmitted = true
             this.props.sendBill(bill)
@@ -55,7 +46,8 @@ export class BillsOverview extends PureComponent {
     }
     closeConfirmationModalWindow = () => {
         this.setState({
-            showConfirmation: false
+            showConfirmation: false,
+            showDetail: false
         })
     }
     showConfirmationModalWindow = (id) => {
@@ -63,6 +55,23 @@ export class BillsOverview extends PureComponent {
             showConfirmation: true,
             idBillToDelete: id
         })
+    }
+    showDetailModalWindow = (id) => {
+        this.setState({
+            showDetail: true,
+            bill: this.props.bills.filter(b => b.id == id)
+        }, () => {
+            console.log("dans les show detail")
+
+            console.log(this.state.bill)
+        })
+
+    }
+
+    changeValidateLevel = (feeLine) => {
+        console.log("dans le change validate lelebv")
+        // const formData = generateFormDataFromFeeLine(feeLine)
+        this.props.updateSpent(feeLine)
     }
 
     render() {
@@ -81,14 +90,19 @@ export class BillsOverview extends PureComponent {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                 </div>
-                <div>
+                <div className="">
                     {this.state.showConfirmation ? <ConfirmationModalWindow
                         deleteBillAction={this.deleteBill}
                         showConfirmation={this.showConfirmationModalWindow}
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                     /> : null}
+                    {this.state.showDetail ? <DetailModalWindow
+                        closeConfirmationModalWindow={this.closeConfirmationModalWindow}
+                        changeValidateLevel={this.changeValidateLevel}
+                        bill={this.state.bill}
+                    /> : null}
 
-                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} /></div>) : null}</div>
+                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} showDetail={this.showDetailModalWindow} /></div>) : null}</div>
                 </div>
             </section>
         )
@@ -107,8 +121,8 @@ const mapActionToProps = (dispatch) => {
         getAllBillsFromApi: () => dispatch(fetchAllBills()),
         postBill: (bill) => dispatch(postBill(bill)),
         sendBill: (bill) => dispatch(sendBill(bill)),
-        deleteBill: (id) => dispatch(deleteBill(id))
+        deleteBill: (id) => dispatch(deleteBill(id)),
+        updateSpent: (feeLine) => dispatch(updateSpent(feeLine))
     }
 }
-
-export default connect(mapStateToProps, mapActionToProps)(BillsOverview)
+    export default connect(mapStateToProps, mapActionToProps)(BillsOverview)

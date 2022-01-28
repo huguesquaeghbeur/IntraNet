@@ -11,6 +11,8 @@ export const END_DELETING_SPENT = "END_DELETING_SPENT"
 export const ERROR_DELETING_SPENT = "ERROR_DELETING_SPENT"
 export const END_SENDING_BILL = "END_SENDING_BILL"
 export const ERROR_SENDING_BILL = "END_SENDING_BILL"
+export const END_UPDATING_SPENT = "END_UPDATING_SPENT"
+export const ERROR_UPDATING_SPENT = "ERROR_UPDATING_SPENT"
 
 const initialState = {
     isLoading: false,
@@ -105,6 +107,25 @@ export default function billsReducer(state = initialState, action) {
                 bills: state.bills.map(b => b.id != action.bill.id ? b : action.bill)
             }
         case ERROR_SENDING_BILL:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error
+            }
+        case END_UPDATING_SPENT:
+            console.log("end updating spten")
+            // const bill = state.bills.filter(b => b.spents.filter(s=>s.id == action.spent.id).length==1)
+            console.log(state.bills)
+            console.log(state.bills.maps(b => b.spents.map(s => s.id == action.spent.id ? action.spent : s)))
+            bill.map(spents)
+            console.log(bill)
+            console.log(action.spent)
+            return {
+                ...state,
+                isLoading: false,
+                // bills: state.bills.spents.map(s => s.id != action.spent.id ? b : action.spent)
+            }
+        case ERROR_UPDATING_SPENT:
             return {
                 ...state,
                 isLoading: false,

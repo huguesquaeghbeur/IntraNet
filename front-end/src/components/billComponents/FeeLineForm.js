@@ -50,9 +50,7 @@ export default class FeeLineForm extends PureComponent {
         this.setState({
             options: tab,
         })
-
     }
-
     submitAction() {
         this.state.validate++
         this.confirmAction()

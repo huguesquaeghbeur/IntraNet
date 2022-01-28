@@ -1,10 +1,10 @@
-import { faCheck, faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEye, faPencilAlt, faTrashAlt, faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PureComponent } from "react";
 import { deleteSpent } from "../../services/billsService";
 import { dateFormat } from "../../services/formatService"
 
-// parent component : billContainerBillByid
+// parent component : billContainer/BillByid
 
 export class FeeLine extends PureComponent {
     constructor(props) {
@@ -18,11 +18,15 @@ export class FeeLine extends PureComponent {
         this.setState({
             FeeLine: this.props.FeeLine
         })
+        // console.log(this.state.FeeLine.validate)
     }
-
     handleSubmitClick() {
-        this.state.FeeLine.validate++
-        this.props.submitClick(this.state.FeeLine)
+        this.state.validate == 0 ? 2 : this.state.FeeLine.validate++
+        this.props.changeValidateLevel(this.state.FeeLine)
+    }
+    handleRejectClick() {
+        this.state.FeeLine.validate = 0
+        this.props.changeValidateLevel(this.state.FeeLine)
     }
     handleModifyClick() {
         this.props.modifyClick(this.props.FeeLine.id)
@@ -46,15 +50,27 @@ export class FeeLine extends PureComponent {
                     <p className="leading-normal text-gray-700"></p>
                     <hr />
                     <div className="text-center">
-                        <button onClick={() => this.handleSubmitClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
-                            <FontAwesomeIcon icon={faCheck} />
-                        </button>
-                        <button onClick={() => this.handleModifyClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
-                            <FontAwesomeIcon icon={faPencilAlt} />
-                        </button>
-                        <button onClick={() => this.handleDeleteClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                        </button>
+                        {/* {(this.state.FeeLine.validate > 1) ?
+                            <button onClick={() => this.handleViewClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                <FontAwesomeIcon icon={faEye} />
+                            </button> : null} */}
+                        {(this.state.FeeLine.validate > 1) ?
+                            <button onClick={() => this.handleRejectClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                <FontAwesomeIcon icon={faBan} />
+                            </button> : null}
+                        {(!(this.state.FeeLine.validate < 1) && this.state.FeeLine.validate < 5) ?
+                            <button onClick={() => this.handleSubmitClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                <FontAwesomeIcon icon={faCheck} />
+                            </button> : null}
+                        {!(this.state.FeeLine.validate > 1) ?
+                            <button onClick={() => this.handleModifyClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button> : null}
+                        {!(this.state.FeeLine.validate > 1) ?
+                            <button onClick={() => this.handleDeleteClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                <FontAwesomeIcon icon={faTrashAlt} />
+                            </button> : null}
+
                     </div>
                 </div>
             </div>

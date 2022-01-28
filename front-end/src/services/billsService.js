@@ -2,37 +2,17 @@ import axios from "axios"
 const baseUrl = "http://localhost:42515/intranet/v1"
 
 export const getAllBills = () => {
-    console.log("dans le get all bilsl")
     return axios.get(baseUrl+"/bill")
 }
 
 export const createBill = (bill) => {
-    console.log("create bill service collabid : ")
-    console.log(bill.getAll("collabId"))
     return axios.post(baseUrl+"/bill", bill)
 }
 
 export const addFeeLineToBillApi = (formData) => {
-    console.log("update bill service collabid : ")
-    console.log(formData.getAll("billId"))
-    console.log(formData.getAll("expenseDate"))
-    console.log(formData.getAll("advanceCash"))
-    console.log(formData.getAll("feeType"))
-    console.log(formData.getAll("isExactAmount"))
-    console.log(formData.getAll("proofs"))
-    console.log(formData.getAll("missionId"))
-    console.log(formData.getAll("validate"))
-    console.log(formData.getAll("amount"))
-    console.log(formData.getAll("commentary"))
     return axios.patch(baseUrl+"/bill", formData)
 }
 export const updateBillApi = (formData) => {
-    console.log(typeof formData)
-    console.log("update bill service : ")
-    console.log(formData.getAll("id"))
-    console.log(formData.getAll("isSubmitted"))
-    console.log(formData.getAll("submissionDate"))
-    console.log(formData.getAll("collaboratorId"))
     return axios.patch(baseUrl+"/bill/"+formData.getAll("id"),formData)
 }
 export const getBillByIdApi = (id) => {
@@ -40,7 +20,6 @@ export const getBillByIdApi = (id) => {
 }
 
 export const deleteBillFromApi = (id) => {
-    console.log("delete bill service "+id)
     return axios.delete(baseUrl+"/bill/"+id)
 }
 
@@ -54,6 +33,7 @@ export const updateSpentFromApi=(formData)=>{
 
 
 export const generateFormDataFromFeeLine = (feeLine) =>{
+    console.log(feeLine)
     const formData = new FormData()
     if(feeLine.billId !== undefined){
         formData.append("billId",feeLine.billId)

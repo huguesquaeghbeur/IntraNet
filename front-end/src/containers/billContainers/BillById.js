@@ -48,7 +48,7 @@ class BillByIdComponent extends PureComponent {
             this.updateState(res.data, false)
         })
     }
-    SubmitFeeLine = (feeLine) => {
+    changeValidateLevel = (feeLine) => {
         const formData = generateFormDataFromFeeLine(feeLine)
         updateSpentFromApi(formData).then(res => {
             this.updateState(res.data, true)
@@ -78,7 +78,6 @@ class BillByIdComponent extends PureComponent {
             spentId: i,
         })
     }
-
     updateState(apiRes, isFeeLineExist) {
         let spents = undefined
 
@@ -129,7 +128,7 @@ class BillByIdComponent extends PureComponent {
                             UpdateFeeLine={this.UpdateFeeLine}
                             spentId={this.state.spentId}
                         /> : null}
-                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} handleDeleteClick={this.handleDeleteClick} modifyClick={this.handleModifyClick} submitClick={this.SubmitFeeLine} />) : null}</div>
+                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} handleDeleteClick={this.handleDeleteClick} changeValidateLevel={this.changeValidateLevel} modifyClick={this.handleModifyClick} submitClick={this.submitFeeLine} />) : null}</div>
                 </div>
             </section>
         )
