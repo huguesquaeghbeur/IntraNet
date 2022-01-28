@@ -13,3 +13,7 @@ export const postDepartmentData = (data) => {
 export const updateDepartmentApi = (data) => {
     return axios.patch(baseUrl+ '/departments', data)
 }
+export const deleteDptFromApi = (id) => {
+    console.log("delete dpt service "+id)
+    return axios.delete(baseUrl+"/departments/"+id)
+}

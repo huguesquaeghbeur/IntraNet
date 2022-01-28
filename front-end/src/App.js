@@ -27,6 +27,8 @@ import FormuDpt from "./components/dptAddDelete/formDpt"
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
+import DptDescriptById from "./components/DptNewFolder/dptDescriptionByQqch/dptDescriptById";
+import { DepartmentNewView } from "./containers/DepartmentContainer/DepartmentNewView";
 // import BigCalendar from 'react-big-calendar';
 // import Year from './Year';
 
@@ -113,8 +115,15 @@ function App() {
                     <Route
                         path="departments/form"
                         element={<FormuDpt/>}
-                    />                          
-                                       
+                    />       
+                    <Route
+                        path="departments/newview"
+                        element={<DepartmentNewView/>}
+                    />                    
+                    <Route
+                        path="departments/description/byid"
+                        element={<DptDescriptById/>}
+                    />                 
                 </Routes>
             </Router>
             {/* <BigCalendar

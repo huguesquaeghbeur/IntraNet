@@ -3,16 +3,17 @@ import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 // import { getCollaborator } from "../redux/actions/collaboratorAction";
 // import { postCollaboratorData } from "../services/collaboratorData";
-import { getDepartmentById } from "../../redux/actions/departmentAction"
-import { postDepartmentData } from "../../services/departmentData"
-import alertAddedDpt from "./alertAddedDpt";
-import "../../styles/formDptStyle.css";
+import { getDepartmentById } from "../../../redux/actions/departmentAction"
+
+import "../../../styles/formDptStyle.css";
+import { getDepartmentRequestById } from "../../../services/departmentData";
 
 
 
-class FormuDpt extends PureComponent {
+class DptDescriptById extends PureComponent {
     state = {
-        title: ''
+        id: '',
+        titleById: ''
     }
 
 
@@ -26,37 +27,40 @@ class FormuDpt extends PureComponent {
     handleSubmit = (e) => {
         e.preventDefault();
         const formdata = new FormData();
-        formdata.append('title', this.state.title);
+        formdata.append('id', this.state.id);
 
 
-        postDepartmentData(formdata).then(response => {
+        getDepartmentRequestById(this.state.id).then(response => {
             this.setState({
-                departments: response.data
+                departments: response.data,
+                titleById: response.data.title,
+                idById: response.data.id
+                
             })
-            console.log(response.data)
+            console.log(response.data.title)
         })
         //// pour erase la saisie
         this.setState({
-            title: ''
+            id: ''
         })
     }
     render() {
         return (
             <div>
-                <h1 className="justify-center">Ajouter un dpt</h1>
+                <h1 className="justify-center">Rechercher un dpt par son ID</h1>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                        <form className="mb-0 space-y-6" method="POST" onLoad={alertAddedDpt} onSubmit={this.handleSubmit} >
+                        <form className="mb-0 space-y-6" method="GET" onSubmit={this.handleSubmit} >
                             <div>
                                 <div>
-                                    <hr/><label htmlFor="title"
+                                    <hr /><label htmlFor="id"
                                         className="centrageTitreDpt block text-sm font-medium text-gray-700">
-                                        || Merci de saisir le titre du nouveau département ||
-                                    </label><hr/><br/>
+                                        || Merci de saisir l'ID du département recherché ||
+                                    </label><hr /><br />
                                     <input type="text"
-                                        name="title"
+                                        name="id"
                                         onChange={this.handleChange}
-                                        value={this.state.title}
+                                        value={this.state.id}
                                         className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                                         required />
                                 </div>
@@ -68,8 +72,19 @@ class FormuDpt extends PureComponent {
                                     </button>
                                 </div>
 
+
                             </div>
                         </form>
+                    </div>
+
+                </div>
+                
+                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                    <div className="bg-orange-100 py-8 px-6 shadow rounded-lg sm:px-10">
+                        <div>
+                            <p><b><u>Vous avez rechercher le départment #</u></b><b><font color="FF0000">{this.state.idById}</font></b><br />   <b><u>- Il se nomme :</u></b> <b><font color="FF0000">{this.state.titleById}</font></b></p>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -79,7 +94,7 @@ class FormuDpt extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-        title: state.departments.title
+        id: state.departments.id
     }
 }
 const mapActionToProps = (dispatch) => {
@@ -88,6 +103,6 @@ const mapActionToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapActionToProps)(FormuDpt);
+export default connect(mapStateToProps, mapActionToProps)(DptDescriptById);
 
 

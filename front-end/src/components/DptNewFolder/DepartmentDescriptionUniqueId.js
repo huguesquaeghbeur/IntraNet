@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 
 class DepartmentDescriptionUniqueId extends Component {
     render() {
@@ -8,7 +8,39 @@ class DepartmentDescriptionUniqueId extends Component {
 
                 <div>
 
-                    EN COURS DE DEVELOPPEMENT
+
+
+
+                    <div class="p-10 gap-5">
+
+                        <div class="rounded overflow-hidden shadow-lg">
+                            {/* <img class="w-full" src="/mountain.jpg" alt="Mountain"/> */}
+                            <div class="px-6 py-4">
+                                <div class="font-bold text-xl mb-2">
+                                <Link to="/departments/description/byid" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>Search by ID</Link>
+                                </div>                                
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="rounded overflow-hidden shadow-lg">
+                            {/* <img class="w-full" src="/mountain.jpg" alt="Mountain"/> */}
+                            <div class="px-6 py-4">
+                                <div class="font-bold text-xl mb-2">
+                                <Link to="/departments/description" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>Search by Title</Link>
+                                </div>                                
+                            </div>
+                            
+                            
+                        </div>
+                        
+
+                    </div>
+
+
+
+                    {/* <Link to="/departments/description" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>Search by ID</Link>
+                    <Link to="/departments/description" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>Search by Title</Link> */}
 
                 </div>
 

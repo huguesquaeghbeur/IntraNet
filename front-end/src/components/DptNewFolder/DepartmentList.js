@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"
 // import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-import { getAllDepartments, updateDepartmentApi } from '../../services/departmentData';
+import { connect } from 'react-redux';
+import { deleteDptFromApi, getAllDepartments, updateDepartmentApi } from '../../services/departmentData';
 // import SingleDepartment from './SingleDepartment';
 
 
@@ -11,17 +12,26 @@ class DepartmentList extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-
+            idState: undefined,
             departments: []
         }
 
     }
 
 
-    handleRemoveDpt = (e) => {
-        const id = e.target.getAttribute("this.state.departments.id")
-        updateDepartmentApi(this.state.departments.filter(departments => this.state.departments.id !== id));
-    };
+    // handleRemoveDpt = (idState) => {
+
+    //     // const id = e.target.getAttribute("this.state.departments.id")
+    //     deleteDptFromApi(this.state.departments.filter(department => department.id !== idState));
+    //     this.state.department.id = idState;
+    //     console.log(idState)
+    // };this.state.departments.filter(d => d.id!=e)
+    handleDeleteClick(e) {
+
+        deleteDptFromApi(e)
+        window.location.reload();
+    }
+
 
 
     componentDidMount() {
@@ -40,40 +50,50 @@ class DepartmentList extends PureComponent {
         return (
             <div>
                 <div className="flex flex-col justify-around">
-                    {departments.map(department =>
+                    {this.state.departments.map(department =>
                         <div>
-                            <div key={department.id} className="border bg-slate-100 hover:bg-slate-200 rounded-md shadow-ambre-100/50 p-2 m-4">
+                            {/* <div key={department.id} className="border bg-slate-100 hover:bg-slate-200 rounded-md shadow-ambre-100/50 p-2 m-4">
                                 <div className="flex justify-between">
                                     <div className="bg-orange-100 rounded-md p-1">{department.title}</div>
                                     <div className="rounded-full bg-cyan-300 p-1 m-1">
 
-                                        <button onClick={() => this.handleRemoveDpt(department.id)} className='bg-red-400 rounded-md p-1 m-1 '>delete</button>
+                                        <button onClick={() => this.handleDeleteClick(department.id)} className='bg-red-400 rounded-md p-1 m-1 '><FontAwesomeIcon icon={faTrashAlt} /></button>
                                         # {department.id}
                                     </div>
+
                                 </div>
 
-                            </div>
+                            </div> */}
 
 
 
-                            <div class="p-10 gap-5">
+                            <div className="p-10 gap-5">
 
-                                <div class="rounded overflow-hidden shadow-lg">
+                                <div className="rounded overflow-hidden shadow-lg">
                                     {/* <img class="w-full" src="/mountain.jpg" alt="Mountain"/> */}
-                                    <div class="px-6 py-4">
-                                        <div class="font-bold text-xl mb-2">{department.title}</div>
-                                        <p class="text-gray-700 text-base">
+                                    <div className="px-6 py-4">
+                                        <div className="font-bold text-xl mb-2">{department.title}</div>
+                                        <p className="text-gray-700 text-base">
                                             Vous êtes bien dans le département : {department.title} /
-                                            <br/>
+                                            <br />
                                             Son iD est : {department.id} /
-                                            <br/>
+                                            <br />
                                             Nous vous souhaitons un bon séjour au sein de {department.title}
                                         </p>
                                     </div>
-                                    <div class="px-6 pt-4 pb-2">
-                                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                                    <div className="px-6 pt-4 pb-2">
+                                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+                                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+                                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+                                    </div>
+                                    <div className="flex justify-end">
+                                        
+                                        <div className="rounded-full bg-blue-300 p-1 m-1">
+
+                                            <button onClick={() => this.handleDeleteClick(department.id)} className='bg-red-400 rounded-md p-1 m-1 '><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                            # {department.id}
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -88,4 +108,19 @@ class DepartmentList extends PureComponent {
     }
 }
 
-export default DepartmentList;
+const mapStateToProps = (state) => {
+    console.log("mapstatetoprops " + state.departments.departments)
+    return {
+        departments: state.departments.departments,
+        isLoading: state.departments.isLoading
+    }
+}
+
+const mapActionToProps = (dispatch) => {
+    return {
+        deleteDptFromList: (id) => dispatch(deleteDptFromApi(id))
+    }
+}
+
+
+export default connect(mapStateToProps, mapActionToProps)(DepartmentList)

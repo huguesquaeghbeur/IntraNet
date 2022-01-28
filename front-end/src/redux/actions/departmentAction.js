@@ -3,13 +3,16 @@ import {
     postDepartmentData,    
     getDepartmentRequestById,
     updateDepartmentApi,
+    deleteDptFromApi
 } from "../../services/departmentData";
 import {
     IS_LOADING,
     END_GETTING_ALL_DEPARTMENTS,
     ERROR_GETTING_ALL_DEPARTMENTS,
     ERROR_GETTING_DEPARTMENTS_BY_ID,
-    END_GETTING_DEPARTMENTS_BY_ID
+    END_GETTING_DEPARTMENTS_BY_ID,
+    END_DELETING_DEPARTMENT,
+    ERROR_DELETING_DEPARTMENT
 } from "../reducers/departmentReducer"
 
 export function fetchAllDepartments() {
@@ -74,4 +77,26 @@ export function getDepartmentById(id) {
         })
     })
 }
+}
+
+export const deleteDepartmentAction = (id) => {
+    console.log("dans le deleteDepartmentAction")
+
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        deleteDptFromApi(id).then(res => {
+            dispatch({
+                type: END_DELETING_DEPARTMENT,
+                res: res.data
+            })
+        }).catch(err => {
+            dispatch({
+                type: ERROR_DELETING_DEPARTMENT,
+                error: err
+            })
+        })
+    }
 }
