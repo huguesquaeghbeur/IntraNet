@@ -81,26 +81,9 @@ namespace IntraNetAPI.Controllers
             if (holiday != null)
             {
                 holiday.Validation = (Holiday.ValidationEnum)validation;
-                if (validation == 0)
-                {
-                    msg = "holiday refused";
-                }
-                else if (validation == 1)
-                {
-                    msg = "Initial state holiday";
-                }
-                else if (validation == 2)
-                {
-                    msg = "holiday approved by Chief";
-                }
-                else if (validation == 3)
-                {
-                    msg = "holiday approved by Human Ressources";
-                }
-                else if (validation == 4)
-                {
-                    msg = "holiday approved by All";
-                }
+                
+                msg = _holidayService.validationStateMsg(validation);
+
                 if (_holidayRepository.Update(holiday))
                 {
                     return Ok(new { Message = msg, Id = holiday.Id, validation = holiday.Validation });
@@ -111,29 +94,8 @@ namespace IntraNetAPI.Controllers
         [HttpPut]
         public IActionResult Put([FromForm] int id, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
-            int tmpHalfDayBreak = 0;
-            if (startDate == endDate)
-            {
-                if (startOnMorning == true && endOnMorning == false)
-                {
-                    tmpHalfDayBreak += 2;
-                }
-                else if (startOnMorning == true && endOnMorning == true)
-                {
-                    tmpHalfDayBreak += 1;
-                }
-            }
-            if (startDate < endDate)
-            {
-                if (startOnMorning == true && endOnMorning == false)
-                {
-                    tmpHalfDayBreak += 1;
-                }
-                else if (startOnMorning == false && endOnMorning == true)
-                {
-                    tmpHalfDayBreak -= 1;
-                }
-            }
+            int tmpHalfDayBreak = _holidayService.calculHalfDayBreak(startDate, endDate, startOnMorning, endOnMorning);
+
             Holiday holiday = _holidayRepository.FinById(id);
             if(holiday != null)
             {

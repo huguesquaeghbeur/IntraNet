@@ -52,5 +52,31 @@ namespace IntraNetAPI.Services
             }
             return Holiday.ValidationEnum.InitialState;
         }
+
+        public string validationStateMsg(int validationEnum)
+        {
+
+            if (validationEnum == 0)
+            {
+                return "holiday refused";
+            }
+            else if (validationEnum == 1)
+            {
+                return "Initial state holiday";
+            }
+            else if (validationEnum == 2)
+            {
+                return "holiday approved by Chief";
+            }
+            else if (validationEnum == 3)
+            {
+                return "holiday approved by Human Ressources";
+            }
+            else if (validationEnum == 4)
+            {
+                return "holiday approved by All";
+            }
+            return "unchange validation";
+        }
     }
 }
