@@ -13,7 +13,7 @@ export const postHolidayData = (data) => {
 export const validateHolidayApi = (id, validation) => {
     return axios.patch(baseUrl + '/holidays/' + id, validation)
 }
-export const changeHolidayApi = (holiday) => {
+export const updateHolidayApi = (holiday) => {
     return axios.put(baseUrl, holiday)
 }
 export const deleteHolidayApi = (id) => {

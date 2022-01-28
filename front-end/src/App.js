@@ -27,6 +27,7 @@ import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentD
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
+import HolidayOwn from "./containers/holidayContainers/HolidayOwn";
 // import BigCalendar from 'react-big-calendar';
 // import Year from './Year';
 
@@ -58,13 +59,16 @@ function App() {
                         element={<HolidayList />}
                     />
                     <Route
+                        path="holiday/own"
+                        element={<HolidayOwn />}
+                    />
+                    <Route
                         path="holiday/:id"
                         element={<HolidayById />}
                     />
                     <Route
                         path="holiday/post"
                         element={<PostRequestHoliday />}
-                        
                     />
                     <Route
                         path="infos"

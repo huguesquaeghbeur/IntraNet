@@ -2,39 +2,37 @@ import { faBaby, faCheck, faClock, faDollarSign, faFileMedical, faNotEqual, faTi
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAllCollaborator } from '../../services/collaboratorData';
+import { getCollaborator } from '../../redux/actions/collaboratorAction';
+import { getCollaboratorById } from '../../services/collaboratorData';
+import { getDepartmentRequestById } from '../../services/departmentData';
 
 class HolidayCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            collab: {}
+            collab: {},
+            department: {}
         }
     }
 
-    // componentDidMount = () => {
-    //     this.props.getCollaboratorById(this.props.collab).then(res => {
-    //         this.setState({
-    //             collab: res.data
-    //         })
-    //     }).catch(error => {
-    //         console.log(error)
-    //     })
-    //         getCollaboratorById(this.props.post.collaboratorId)
-    //         console.log(this.props.collab)
-
-    // }
     componentDidMount = () => {
-        // this.props.getCollaboratorById(this.state.collaboratorNeed).then(res => {
-        //     this.setState({
-        //         collab: res.data
-        //     }, [])
-
-        console.log(this.props)
-        // })
+        getCollaboratorById(this.props.post.collaboratorId).then(res => {
+            this.setState({
+                collab: res.data
+            })
+        }).then(() => {
+            // getDepartmentRequestById(this.state.collab.department).then(res => {
+            getDepartmentRequestById(1).then(res => {
+                this.setState({
+                    department: res.data
+                })
+                console.log(this.state.department)
+            })
+        })
     }
 
     render() {
+        console.log(this.state.collab)
         return (
             <div>
                 {this.props.post !== undefined ? (
@@ -65,16 +63,9 @@ class HolidayCard extends Component {
                                 # {this.props.post.id}
                             </div>
                         </div>
-                        {/* {this.state.collab !== undefined ? */}
                         <div className="flex justify-center">
-                            Collaborateur : <b>{this.props.post.collaboratorId} {this.props.post.collaborator}</b>
+                            Collaborateur : <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
                         </div>
-                        {/* :
-                            <div className="flex justify-center">
-                                Collaborateur : <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
-                            </div>
-                        } */}
-
                         <div className="text-blue-500 pl-8 pt-2">
                             <b>
                                 {this.props.post.leaveType === 0 ? (
@@ -112,15 +103,11 @@ class HolidayCard extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        // holiday: state.holidayState.holidays,
-    }
-}
 const mapActionToProps = (dispatch) => {
     return {
-        // getAllCollaborator: () => dispatch(getAllCollaborator()),
+        getCollaborator: (cId) => dispatch(getCollaborator(cId)),
+        getDepartmentRequestById: (dId) => dispatch(getDepartmentRequestById(dId))
     }
 }
 
-export default connect(mapStateToProps, mapActionToProps)(HolidayCard);
+export default connect(mapActionToProps)(HolidayCard);

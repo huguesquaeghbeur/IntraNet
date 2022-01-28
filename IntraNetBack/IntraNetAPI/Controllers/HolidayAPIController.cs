@@ -4,7 +4,6 @@ using IntraNetAPI.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -56,8 +55,7 @@ namespace IntraNetAPI.Controllers
 
             Holiday holiday = new Holiday()
             {
-                //Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
-                Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
+                Collaborator = _collaboratorRepository.FinById(collabId),
                 StartDate = startDate,
                 StartOnMorning = startOnMorning,
                 EndDate = endDate,

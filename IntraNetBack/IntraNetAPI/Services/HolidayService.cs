@@ -35,15 +35,15 @@ namespace IntraNetAPI.Services
             {
                 if (collab.Status == Collaborator.StatusEnum.Basic)
                 {
-                    if (collab.Department.Title == "Human Ressources")
+                    if (collab.Department.Title == "Ressources Humaines")
                     {
-                        return Holiday.ValidationEnum.ChiefValidation;
+                        return Holiday.ValidationEnum.HRValidation;
                     }
                     return Holiday.ValidationEnum.InitialState;
                 }
                 else if (collab.Status == Collaborator.StatusEnum.ProjectChief || collab.Status == Collaborator.StatusEnum.DepartmentChief)
                 {
-                    if (collab.Department.Title == "Human Ressources")
+                    if (collab.Department.Title == "Ressources Humaines")
                     {
                         return Holiday.ValidationEnum.HRValidation;
                     }
