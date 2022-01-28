@@ -49,14 +49,17 @@ class HolidayCard extends Component {
                         <div className="flex justify-between">
                             <div>
                                 {(this.props.post.validation === 1) ? (
-                                    <span className="text-sm px-3 bg-yellow-200 text-yellow-800 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation du CDS</span>
+                                    <span className="text-sm px-3 bg-yellow-200 text-yellow-700 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation du CDS</span>
                                 ) : (this.props.post.validation === 2) ? (
-                                    <div className="text-sm px-3 bg-orange-200 text-orange-800 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation RH</div>
+                                    <div className="text-sm px-3 bg-orange-200 text-orange-600 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation RH</div>
                                 ) : (this.props.post.validation === 3) ? (
-                                    <div className="text-sm px-3 bg-green-200 text-green-800 rounded-full"><FontAwesomeIcon icon={faCheck} /> Validé</div>
-                                ) : (this.props.post.validation === 0) ? (
-                                    <div className="text-sm px-3 bg-red-200 text-red-800 rounded-full"><FontAwesomeIcon icon={faTimesCircle} /> Refusé</div>
-                                ) : null}
+                                    <div className="text-sm px-3 bg-orange-400 text-orange-900 rounded-full"><FontAwesomeIcon icon={faCheck} /> en attente de validation DRH</div>
+                                )
+                                    : (this.props.post.validation === 4) ? (
+                                        <div className="text-sm px-3 bg-green-200 text-green-800 rounded-full"><FontAwesomeIcon icon={faCheck} /> Validé</div>
+                                    ) : (this.props.post.validation === 0) ? (
+                                        <div className="text-sm px-3 bg-red-200 text-red-800 rounded-full"><FontAwesomeIcon icon={faTimesCircle} /> Refusé</div>
+                                    ) : null}
                             </div>
                             <div className="rounded-xl bg-blue-200 text-blue-400 p-1 m-1">
                                 # {this.props.post.id}
