@@ -116,14 +116,36 @@ export default function billsReducer(state = initialState, action) {
             console.log("end updating spten")
             // const bill = state.bills.filter(b => b.spents.filter(s=>s.id == action.spent.id).length==1)
             console.log(state.bills)
-            console.log(state.bills.maps(b => b.spents.map(s => s.id == action.spent.id ? action.spent : s)))
-            bill.map(spents)
-            console.log(bill)
-            console.log(action.spent)
+            // console.log(state.bills.maps(b => b.Id==action.spent.billId ? spents.map(s => s.id == action.spent.id ? action.spent : s)))
+            // bill.map(spents)
+            // // console.log(bill)
+            // // console.log(action.spent)
+            // let spents
+            // state.bills.forEach(bill => {
+            //     // console.log({
+            //     //     ...bill,
+            //     //     spents:["a"]
+            //     // })
+            //     if (bill.id == action.spent.billId) {
+            //         spents = bill.spents.map(s => s.id == action.spent.id ? action.spent : s)
+            //     }
+            // });
+            // console.log("spents")
+            // console.log(spents)
+            // console.log(action.spent)
+
+            // console.log(state.bills.map(b => b.id == action.spent.billId ? {
+            //     ...b,
+            //     spents: spents
+            // } : b))
+            // state.bills=undefined
             return {
                 ...state,
                 isLoading: false,
-                // bills: state.bills.spents.map(s => s.id != action.spent.id ? b : action.spent)
+                bills: state.bills.map(b => b.id == action.spent.billId ? {
+                    ...b,
+                    spents: spents
+                } : b)
             }
         case ERROR_UPDATING_SPENT:
             return {

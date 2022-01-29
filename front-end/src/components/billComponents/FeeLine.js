@@ -4,7 +4,7 @@ import { PureComponent } from "react";
 import { deleteSpent } from "../../services/billsService";
 import { dateFormat } from "../../services/formatService"
 
-// parent component : billContainer/BillByid
+// parent component : billContainer/BillByid & billComponent/DetailModalWindow
 
 export class FeeLine extends PureComponent {
     constructor(props) {
@@ -21,7 +21,11 @@ export class FeeLine extends PureComponent {
         // console.log(this.state.FeeLine.validate)
     }
     handleSubmitClick() {
-        this.state.validate == 0 ? 2 : this.state.FeeLine.validate++
+        console.log("this feeline")
+        console.log(this.state.FeeLine)
+
+        this.state.FeeLine.validate++
+        console.log(this.state.FeeLine)
         this.props.changeValidateLevel(this.state.FeeLine)
     }
     handleRejectClick() {
@@ -37,7 +41,7 @@ export class FeeLine extends PureComponent {
 
     render() {
         return (
-            <div className="w-96  rounded-lg shadow-lg mb-6">
+            <div className="w-80  rounded-lg shadow-lg mb-6">
                 <div className="px-6 py-4 ">
                     <div className="flex justify-between">
                         <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800"><b>{dateFormat(this.state.FeeLine.expenseDate) !== undefined ? dateFormat(this.state.FeeLine.expenseDate) : "Date à binder"}</b></p>

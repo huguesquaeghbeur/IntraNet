@@ -13,6 +13,7 @@ namespace IntraNetAPI.Models
         }
 
         private int id;
+        private int billId;
         private decimal amount;
         private string commentary;
         private bool advanceCash;
@@ -32,6 +33,8 @@ namespace IntraNetAPI.Models
         public string Commentary { get => commentary; set => commentary = value; }
         public bool AdvanceCash { get => advanceCash; set => advanceCash = value; }
         public bool IsExactAmount { get => isExactAmount; set => isExactAmount = value; }
+        public int BillId { get => billId; set => billId = value; }
+
         public DateTime ExpenseDate { get => expenseDate; set => expenseDate = value; }
 
         public enum ValidationEnum

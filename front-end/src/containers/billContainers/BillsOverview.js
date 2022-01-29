@@ -1,6 +1,6 @@
 import { PureComponent } from "react"
 import { connect } from 'react-redux';
-import { fetchAllBills, postBill, sendBill, deleteBill,updateSpent } from '../../redux/actions/billsActions'
+import { fetchAllBills, postBill, sendBill, deleteBill, updateSpent } from '../../redux/actions/billsActions'
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
 import DetailModalWindow from "../../components/billComponents/DetailModalWindow"
@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getDateNowForBdd, dateFormat } from '../../services/formatService'
 import { generateFormDataFromFeeLine } from '../../services/billsService'
 
-export class BillsOverview extends PureComponent {  
+export class BillsOverview extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
@@ -21,6 +21,7 @@ export class BillsOverview extends PureComponent {
     componentDidMount() {
         this.props.getAllBillsFromApi()
     }
+
     handleCreateBillClick = () => {
         const formData = new FormData()
         formData.append("collabId", 1)
@@ -59,19 +60,18 @@ export class BillsOverview extends PureComponent {
     showDetailModalWindow = (id) => {
         this.setState({
             showDetail: true,
-            bill: this.props.bills.filter(b => b.id == id)
-        }, () => {
-            console.log("dans les show detail")
-
-            console.log(this.state.bill)
+            billId: id
         })
 
     }
 
     changeValidateLevel = (feeLine) => {
-        console.log("dans le change validate lelebv")
-        // const formData = generateFormDataFromFeeLine(feeLine)
         this.props.updateSpent(feeLine)
+        this.setState({
+            showDetail: false
+        },()=>{
+            this.showDetailModalWindow(feeLine.billId)
+        })
     }
 
     render() {
@@ -96,10 +96,11 @@ export class BillsOverview extends PureComponent {
                         showConfirmation={this.showConfirmationModalWindow}
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                     /> : null}
-                    {this.state.showDetail ? <DetailModalWindow
+                    {this.state.showDetail  ? <DetailModalWindow
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                         changeValidateLevel={this.changeValidateLevel}
-                        bill={this.state.bill}
+                        billId={this.state.billId}
+                        bills={this.props.bills}
                     /> : null}
 
                     <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} showDetail={this.showDetailModalWindow} /></div>) : null}</div>
@@ -125,4 +126,4 @@ const mapActionToProps = (dispatch) => {
         updateSpent: (feeLine) => dispatch(updateSpent(feeLine))
     }
 }
-    export default connect(mapStateToProps, mapActionToProps)(BillsOverview)
+export default connect(mapStateToProps, mapActionToProps)(BillsOverview)

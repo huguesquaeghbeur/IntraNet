@@ -52,6 +52,9 @@ export default class FeeLineForm extends PureComponent {
         })
     }
     submitAction() {
+        console.log(this.state.validate)
+        if(this.state.validate==0)
+            this.state.validate++
         this.state.validate++
         this.confirmAction()
     }
