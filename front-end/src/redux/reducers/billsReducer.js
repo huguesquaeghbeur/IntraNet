@@ -141,11 +141,11 @@ export default function billsReducer(state = initialState, action) {
             // state.bills=undefined
             return {
                 ...state,
-                isLoading: false,
-                bills: state.bills.map(b => b.id == action.spent.billId ? {
-                    ...b,
-                    spents: spents
-                } : b)
+                // isLoading: false,
+                // bills: state.bills.map(b => b.id == action.spent.billId ? {
+                //     ...b,
+                //     spents: spents
+                // } : b)
             }
         case ERROR_UPDATING_SPENT:
             return {

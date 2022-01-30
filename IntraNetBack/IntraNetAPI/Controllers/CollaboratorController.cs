@@ -8,7 +8,7 @@ using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
 using IntraNetAPI.Interfaces;
 using Microsoft.AspNetCore.Cors;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Controllers
 {
@@ -105,5 +105,17 @@ namespace IntraNetAPI.Controllers
             return NotFound();
         }
 
+        [HttpPost("login")]
+        public IActionResult Login([FromForm] string email, [FromForm] string password)
+        {
+            Collaborator collaborator = _data.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Include(c => c.Department).Where(c => c.Email == email && c.Password == password).FirstOrDefault();
+            if(collaborator != null)
+                return Ok(new { collaborator = collaborator } );
+            return NotFound();
+
+        }
     }
+
+
+
 }
