@@ -3,8 +3,13 @@
     "",
     "\\IntraNetBack",
     "\\IntraNetBack\\IntraNetAPI",
-    "\\IntraNetBack\\IntraNetAPI\\Controllers"
+    "\\IntraNetBack\\IntraNetAPI\\Controllers",
+    "\\IntraNetBack\\IntraNetAPI\\Services"
   ],
-  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\CollaboratorController.cs",
+<<<<<<< HEAD
+  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\MissionController.cs",
+=======
+  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Controllers\\DepartmentController.cs",
+>>>>>>> DevFlo
   "PreviewInSolutionExplorer": false
 }

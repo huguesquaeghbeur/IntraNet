@@ -1,6 +1,7 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Repositories;
+using IntraNetAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IntraNetAPI.Tools
@@ -18,6 +19,8 @@ namespace IntraNetAPI.Tools
             services.AddScoped<IRepository<Mission>, MissionRepository>();
             services.AddScoped<IRepository<Proof>, ProofRepository>();
             services.AddScoped<IRepository<Spent>, SpentRepository>();
+            services.AddTransient<UploadService>();
+            services.AddScoped<FormatService>();
         }
     }
 }

@@ -5,6 +5,7 @@ namespace IntraNetAPI.Models
     public class Department
     {
         private int id;
+
         private string title;
         public virtual List<Mission> Missions { get; set; }
         public virtual List<Collaborator> Collaborators { get;set; }

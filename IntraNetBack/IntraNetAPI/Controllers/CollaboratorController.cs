@@ -6,20 +6,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using IntraNetAPI.Interfaces;
 using Microsoft.AspNetCore.Cors;
 
 
 namespace IntraNetAPI.Controllers
 {
-    [EnableCors("specialOrigin")]
-    [Route("collaborator")]
+    [EnableCors("allConnections")]
+    [Route("intranet/v1/collaborator")]
     public class CollaboratorController : Controller
     {
         DataContext _data;
+        IRepository<Department> _departmentRepository;
 
-        public CollaboratorController(DataContext data)
+        public CollaboratorController(DataContext data, IRepository<Department> departmentRepository)
         {
             _data = data;
+            _departmentRepository = departmentRepository;
         }
 
         [HttpGet]
@@ -40,15 +43,17 @@ namespace IntraNetAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromForm] string FirstName, [FromForm] string LastName, [FromForm] DateTime Birthday, [FromForm] bool IsChief, [FromForm] bool IsAdmin, [FromForm] int HalfDayBreak, [FromForm] string Email, [FromForm] string Password)
+        public IActionResult Post([FromForm] string FirstName, [FromForm] string LastName, [FromForm] DateTime Birthday, [FromForm] int Department, [FromForm] int Status, [FromForm] bool IsAdmin, [FromForm] bool IsActive, [FromForm] int HalfDayBreak, [FromForm] string Email, [FromForm] string Password)
         {
             Collaborator collaborator = new Collaborator()
             {
                 FirstName = FirstName,
                 LastName = LastName,
                 Birthday = Birthday,
-                IsChief = false,
-                IsAdmin = true,
+                Department = _data.Departments.Find(Department),
+                Status = (Collaborator.StatusEnum) Status,
+                IsAdmin = IsAdmin,
+                IsActive = IsActive,
                 HalfDayBreak = 60,
                 Email = Email,
                 Password = Password
@@ -63,13 +68,14 @@ namespace IntraNetAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Collaborator newCollaborator)
+        public IActionResult Put(int id, [FromForm] Collaborator newCollaborator)
         {
             Collaborator collaborator = _data.Collaborators.Find(id);
             if (collaborator != null)
             {
                 collaborator.FirstName = newCollaborator.FirstName ?? collaborator.FirstName;
                 collaborator.LastName = newCollaborator.LastName ?? collaborator.LastName;
+                //collaborator.Birthday = newCollaborator.Birthday ?? collaborator.Birthday;
                 //collaborator.HalfDayBreak = newCollaborator.HalfDayBreak ?? collaborator.HalfDayBreak;
                 collaborator.Email = newCollaborator.Email ?? collaborator.Email;
                 collaborator.Password = newCollaborator.Password ?? collaborator.Password;

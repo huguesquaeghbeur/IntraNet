@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IntraNetAPI.Tools;
+
 
 namespace IntraNetAPI
 {
@@ -26,18 +26,21 @@ namespace IntraNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new Converters.DateTimeConverter());
+            });
             services.AddOurServices();
-            services.AddControllers();
+            
             services.AddCors(options =>
             {
-                options.AddPolicy("allConnections", buider =>
+                options.AddPolicy("allConnections", builder =>
                 {
-                    buider.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {
-                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                    builder.WithMethods("POST").WithOrigins("http://localhost:42515");
                 });
             });
         }
@@ -52,10 +55,8 @@ namespace IntraNetAPI
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseCors();
-
-
- 
 
             app.UseAuthorization();
 

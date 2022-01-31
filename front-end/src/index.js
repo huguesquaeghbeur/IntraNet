@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
+import store from "./redux/store";
+import './styles/index.css';
 import redux from "./redux/store";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bulma/css/bulma.min.css'
 
-import './styles/index.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -13,10 +15,11 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={redux}>
+    <Provider store={store}>
       
         <App />
       
+    
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

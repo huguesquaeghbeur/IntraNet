@@ -15,6 +15,11 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Info element)
+        {
+            throw new NotImplementedException();
+        }
+
         public Info FinById(int id)
         {
             return _dataContext.Infos.Find(id);

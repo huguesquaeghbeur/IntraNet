@@ -1,8 +1,10 @@
 ﻿using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace IntraNetAPI.Repositories
@@ -13,34 +15,41 @@ namespace IntraNetAPI.Repositories
         {
         }
 
+        public bool Delete(Spent element)
+        {
+            _dataContext.Spents.Remove(element);
+            return _dataContext.SaveChanges() > 0;
+        }
+
         public Spent FinById(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Spents.Include(s=>s.Mission).Include(s=>s.Proofs).FirstOrDefault(s=>s.Id == id);
         }
 
         public IEnumerable<Spent> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Spents.Include(s => s.Mission).Include(s => s.Proofs);
         }
 
         public bool Save(Spent element)
         {
-            throw new NotImplementedException();
+            _dataContext.Spents.Add(element);
+            return _dataContext.SaveChanges() > 0;
         }
 
         public IEnumerable<Spent> Search(Expression<Func<Spent, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Spents.Include(s => s.Mission).Include(s => s.Proofs).Where(predicate);
         }
 
         public Spent SearchOne(Expression<Func<Spent, bool>> searchMethode)
         {
-            throw new NotImplementedException();
+            return _dataContext.Spents.Include(s => s.Mission).Include(s => s.Proofs).Where(searchMethode).FirstOrDefault();
         }
 
         public bool Update(Spent element)
         {
-            throw new NotImplementedException();
+            return _dataContext.SaveChanges()>0;
         }
     }
 }
