@@ -62,3 +62,7 @@ export const generateFormDataFromBill = bill =>{
     formData.append("collaboratorId",bill.collaboratorId)
     return formData
 }
+
+// export const getBillsByDepartmentId = (id) => {
+//     const 
+// }

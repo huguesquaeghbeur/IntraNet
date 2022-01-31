@@ -8,7 +8,8 @@ import {
     updateBillApi,
     generateFormDataFromBill,
     generateFormDataFromFeeLine,
-    updateSpentFromApi
+    updateSpentFromApi,
+    // getBillsByDepartmentApi
 } from "../../services/billsService";
 import {
     IS_LOADING,
@@ -25,7 +26,9 @@ import {
     END_SENDING_BILL,
     ERROR_SENDING_BILL,
     END_UPDATING_SPENT,
-    ERROR_UPDATING_SPENT
+    ERROR_UPDATING_SPENT,
+    END_GETTING_BILLS_BY_DEPARTMENTID,
+    ERROR_GETTING_BILLS_BY_DEPARTMENTID,
 } from "../reducers/billsReducer"
 
 export const deleteSpent = (spentId, billId) => {
@@ -148,7 +151,7 @@ export function sendBill(bill) {
             console.log("dans le err")
             console.log(error)
             dispatch({
-                type:ERROR_SENDING_BILL,
+                type: ERROR_SENDING_BILL,
                 error: error
             })
         })
@@ -168,10 +171,10 @@ export function updateSpent(feeLine) {
                 type: END_UPDATING_SPENT,
                 spent: res.data.spent
             })
-        }).catch(err=>{
+        }).catch(err => {
             dispatch({
                 type: ERROR_UPDATING_SPENT,
-                error : err
+                error: err
             })
         })
     }
@@ -201,4 +204,25 @@ export const getBillById = (id) => {
     }
 }
 
+export const getBillsByDepartmentId = (id) => {
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        getBillsByDepartmentApi(id).then(res => {
+            console.log("action")
+            console.log(res)
 
+            dispatch({
+                type: END_GETTING_BILLS_BY_DEPARTMENTID,
+                bills: res.data
+            })
+        }).catch(err => {
+            dispatch({
+                type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+                error: err
+            })
+        })
+    }
+}

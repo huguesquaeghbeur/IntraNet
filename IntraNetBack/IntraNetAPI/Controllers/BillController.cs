@@ -43,6 +43,11 @@ namespace IntraNetAPI.Controllers
                 return Ok(bill);
             return NotFound(new { Message = "bill not found" });
         }
+        //[HttpGet("department")]
+        //public IActionResult GetByDepartment([FromForm] int id)
+        //{
+        //    return Ok(_billRepository.Search(b=>b.De)
+        //}
         [HttpPost]
         public IActionResult Post([FromForm]int collabId)
             {

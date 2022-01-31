@@ -1,6 +1,6 @@
 import { PureComponent } from "react"
 import { connect } from 'react-redux';
-import { fetchAllBills, postBill, sendBill, deleteBill, updateSpent } from '../../redux/actions/billsActions'
+import { fetchAllBills, postBill, sendBill, deleteBill, updateSpent,getBillsByDepartmentId } from '../../redux/actions/billsActions'
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
 import DetailModalWindow from "../../components/billComponents/DetailModalWindow"
@@ -19,11 +19,11 @@ export class BillsOverview extends PureComponent {
     }
 
     componentDidMount() {
-        if(true){
+        if(true)
             this.props.getAllBillsFromApi()
-        }else{
-
-        }
+        // }else{
+        //     this.props.getBillsByDepartmentId(this.props.user.department)
+        // }
         // this.props.getAllBillsFromApi()
     }
 
@@ -129,7 +129,8 @@ const mapActionToProps = (dispatch) => {
         postBill: (bill) => dispatch(postBill(bill)),
         sendBill: (bill) => dispatch(sendBill(bill)),
         deleteBill: (id) => dispatch(deleteBill(id)),
-        updateSpent: (feeLine) => dispatch(updateSpent(feeLine))
+        updateSpent: (feeLine) => dispatch(updateSpent(feeLine)),
+        getBillsByDepartmentId : (id) => dispatch(getBillsByDepartmentId())
     }
 }
 export default connect(mapStateToProps, mapActionToProps)(BillsOverview)

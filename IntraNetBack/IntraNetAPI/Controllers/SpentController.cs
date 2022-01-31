@@ -91,7 +91,7 @@ namespace IntraNetAPI.Controllers
                 {
                     foreach (IFormFile proof in proofs)
                     {
-                        spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof) });
+                        spent.Proofs.Add(new Proof() { PdfUrl = _uploadService.Upload(proof),  });
                     }
                 }
                 _spentRepository.Update(spent);
