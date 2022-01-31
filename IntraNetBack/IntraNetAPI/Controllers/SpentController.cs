@@ -64,7 +64,7 @@ namespace IntraNetAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            Spent spent = _spentRepository.FinById(id);
+            Spent spent = _spentRepository.FindById(id);
             if (spent != null)
             {
                 _spentRepository.Delete(spent);
@@ -76,7 +76,7 @@ namespace IntraNetAPI.Controllers
         [HttpPatch]
         public IActionResult Patch([FromForm] DateTime expenseDate, [FromForm] int id, [FromForm] int feeType, [FromForm] IFormFile proof, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
         {
-            Spent spent = _spentRepository.FinById(id);
+            Spent spent = _spentRepository.FindById(id);
             if (spent != null)
             {
                 spent.MissionId = missionId == default ? spent.MissionId : missionId;   
