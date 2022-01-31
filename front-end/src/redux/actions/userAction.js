@@ -4,6 +4,7 @@ import { loginUser, getUserFromToken } from "../../services/collaboratorData";
 export function login(formData) {
     return dispatch => {
         console.log("dans le login")
+        console.log(formData)
         dispatch({
             type: IS_LOADING,
             value: true

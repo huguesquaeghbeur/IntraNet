@@ -108,7 +108,7 @@ namespace IntraNetAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromForm] string email, [FromForm] string password)
         {
-            Collaborator collaborator = _data.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Include(c => c.Department).Where(c => c.Email == email && c.Password == password).FirstOrDefault();
+            Collaborator collaborator = _data.Collaborators.Include(c=>c.Bills).ThenInclude(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).Include(c => c.Holidays).Include(c => c.Missions).Include(c => c.Department).Where(c => c.Email == email && c.Password == password).FirstOrDefault();
             if(collaborator != null)
                 return Ok(new { collaborator = collaborator } );
             return NotFound();

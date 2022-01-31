@@ -4,7 +4,7 @@ import { fetchAllBills, postBill, sendBill, deleteBill, updateSpent } from '../.
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
 import DetailModalWindow from "../../components/billComponents/DetailModalWindow"
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faIgloo, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getDateNowForBdd, dateFormat } from '../../services/formatService'
 import { generateFormDataFromFeeLine } from '../../services/billsService'
@@ -19,7 +19,12 @@ export class BillsOverview extends PureComponent {
     }
 
     componentDidMount() {
-        this.props.getAllBillsFromApi()
+        if(true){
+            this.props.getAllBillsFromApi()
+        }else{
+
+        }
+        // this.props.getAllBillsFromApi()
     }
 
     handleCreateBillClick = () => {
@@ -103,7 +108,7 @@ export class BillsOverview extends PureComponent {
                         bills={this.props.bills}
                     /> : null}
 
-                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} showDetail={this.showDetailModalWindow} /></div>) : null}</div>
+                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.user.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} showDetail={this.showDetailModalWindow} /></div>) : null}</div>
                 </div>
             </section>
         )
@@ -113,7 +118,8 @@ export class BillsOverview extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         bills: state.bills.bills,
-        isLoading: state.bills.isLoading
+        isLoading: state.bills.isLoading,
+        user : state.user.user
     }
 }
 

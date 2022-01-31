@@ -48,10 +48,6 @@ namespace IntraNetAPI.Services
 
         public string GenerateToken(Collaborator c)
         {
-            //on vérifie l'email et le mot de passe dans la DB
-            //Collaborator c = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password && c.Status == status);
-            //if (c != null)
-            //{
                 List<Claim> claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.Email, c.Email),
@@ -66,7 +62,6 @@ namespace IntraNetAPI.Services
 
                 return new JwtSecurityTokenHandler().WriteToken(jwt);
             }
-        //    return null;
-        //}
+
     }
 }

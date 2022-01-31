@@ -3,13 +3,15 @@ import React, { PureComponent } from 'react';
 import InfinGif from "./gif420.gif"
 import "../baseHeaderFooterEtc/Header.css"
 import { Link } from 'react-router-dom';
-import { logout } from '../../redux/actions/userAction'
+import { logout,getUser } from '../../redux/actions/userAction'
 import { connect } from 'react-redux'
 
 class HeaderBanner extends PureComponent {
     constructor(props) {
         super(props);
+        // this.props.getUser()
     }
+    
     handleLogoutClick() {
         console.log("handle click")
         this.props.logout()
@@ -30,31 +32,17 @@ class HeaderBanner extends PureComponent {
                         {/* <span className='font-semibold text-xl tracking-tight'>IntraNet DevLoopers de la Noche</span> */}
                     </div>
 
-                    {this.props.user !== undefined ?
+                    {localStorage.getItem('token') !== null ?
                         <div className='w-full block flex-grow lg:flex lg:items-center lg:w-auto'>
                             <div className='text-sm lg:flex-grow'>
                                 <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>HOME</Link>
-                                {/* <a href="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>
-                                HOME
-                            </a> */}
                                 <br />
                                 <br />
                                 <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Departments</Link>
-                                {/* <a href="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>
-                                Departments
-                            </a> */}
                                 <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborators</Link>
-                                {/* <a href="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>
-                                Collaborators
-                            </a> */}
                                 <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Bills</Link>
-                                {/* <a href="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200'>
-                                Bills
-                            </a> */}
                             </div>
                             <div>
-                                {/* <Link to="/" className='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0'>Connexion</Link> */}
-                                {/* <a href="/" className='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0'>Connexion</a> */}
                                 <Link to="/"  >
                                     <button className='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0'
                                         onClick={() => this.handleLogoutClick()}
@@ -80,7 +68,8 @@ class HeaderBanner extends PureComponent {
 
 const mapsActionToProps = (dispatch) => {
     return {
-        logout: () => dispatch(logout())
+        logout: () => dispatch(logout()),
+        getUser: () => dispatch(getUser())
     }
 }
 

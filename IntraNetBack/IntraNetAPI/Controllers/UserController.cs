@@ -36,5 +36,5 @@ namespace IntraNetAPI.Controllers
             }
             return NotFound();
         }
-    }
+    }   
 }

@@ -21,7 +21,8 @@ export const updateCollaboratorData = (id, data) => {
 export const loginUser = (data) => {
     console.log(data.getAll("email"))
     console.log(data.getAll("password"))
-
+    if(localStorage.getItem('token')===undefined)
+        localStorage.removeItem('token')
     return axios.post(baseUrl + '/login', data)
 }
 

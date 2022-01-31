@@ -98,7 +98,6 @@ namespace IntraNetAPI.Controllers
             }
             return NotFound(new { message = "bill not found", bill = bill });
         }
-
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
