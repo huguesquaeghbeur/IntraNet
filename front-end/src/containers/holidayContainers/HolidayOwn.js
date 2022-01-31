@@ -6,17 +6,17 @@ import { Link } from 'react-router-dom';
 import HolidayCard from '../../components/holidayComponents/HolidayCard';
 import ButtonComponent from '../../components/toolComponents/ButtonComponent';
 import { getHolidaysFromApi } from '../../redux/actions/holidayAction';
+import { getUser } from '../../redux/actions/userAction';
 
 class HolidayOwn extends PureComponent {
     constructor(props) {
         super(props)
-        this.state = {
-            idCollab: ""
-        }
+        this.state = { }
     }
 
 
     componentDidMount = () => {
+        this.props.getUser();
         this.props.getAllHolidaysFromApi();
     }
     handleRole = (e) => {
@@ -26,6 +26,7 @@ class HolidayOwn extends PureComponent {
     }
 
     render() {
+        console.log(this.props.user.user.id)
         return (
             <div>
                 <div>
@@ -36,34 +37,14 @@ class HolidayOwn extends PureComponent {
                         <div className={`flex flex-wrap justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
                             <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
                         </div>
-                        <div className="flex justify-center">
-                            <div className="m-2 p-2">
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">#1</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="1" name="idCollab"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">#2</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="2" name="idCollab"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">#3</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="3" name="idCollab"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">empty id</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="" name="idCollab"></input>
-                                </div>
-                            </div>
-                        </div>
 
                         <div className="flex flex-col">
                             <div className="text-gray-400 font-bold uppercase">
                                 Historique des demande de congés en cours 
                             </div>
                             <div className="flex flex-row flex-wrap justify-around">
-                                {this.state.idCollab && this.props.holidays.filter(h => h.collaboratorId == this.state.idCollab) ?
-                                    this.props.holidays.filter(h => h.collaboratorId == this.state.idCollab).map(filteredHoliday => (
+                                {this.props.user.user.id && this.props.holidays.filter(h => h.collaboratorId == this.props.user.user.id) ?
+                                    this.props.holidays.filter(h => h.collaboratorId == this.props.user.user.id).map(filteredHoliday => (
                                         <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
                                             <HolidayCard post={filteredHoliday} />
                                         </Link>
@@ -83,11 +64,13 @@ const mapStateToProps = (state) => {
     return {
         holidays: state.holidayState.holidays,
         isLoading: state.holidayState.isLoading,
+        user: state.user
     }
 }
 const mapActionToProps = (dispatch) => {
     return {
         getAllHolidaysFromApi: () => dispatch(getHolidaysFromApi()),
+        getUser: () => dispatch(getUser())
     }
 }
 

@@ -15,7 +15,7 @@ class HolidayCard extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount(){
         getCollaboratorById(this.props.post.collaboratorId).then(res => {
             this.setState({
                 collab: res.data
