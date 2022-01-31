@@ -29,19 +29,19 @@ class UserLogin extends PureComponent {
         console.log("lalal")
         this.props.login(formdata)
         // window.location.reload(false);
-        // loginUser(formdata).then(response => {
-        //     this.setState({
-        //         collaborators: response.data
-        //     })
-        //     // localStorage.setItem("token", JSON.stringify(response.data.token))
-        //     //localStorage.setItem("collaborator", JSON.stringify(response.data.collaborator))
-        //     console.log("lareponse")
-        //     console.log(response)
-        //     // window.location.reload();
-        // }).catch(err => {
-        //     console.log("error")
-        //     console.log(err)
-        // })
+        loginUser(formdata).then(response => {
+            this.setState({
+                collaborators: response.data
+            })
+            localStorage.setItem("token", JSON.stringify(response.data.token))
+            localStorage.setItem("collaborator", JSON.stringify(response.data.collaborator))
+            console.log("lareponse")
+            console.log(response)
+            window.location.reload();
+        }).catch(err => {
+            console.log("error")
+            console.log(err)
+        })
     }
 
     render() {
