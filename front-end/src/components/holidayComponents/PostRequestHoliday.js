@@ -5,6 +5,7 @@ import { postHolidayData } from '../../services/holidayData';
 import AlertComponent from '../toolComponents/AlertComponent';
 import { faBan, faCheckCircle, faPaperPlane, faSave, faWindowClose, faBackspace } from "@fortawesome/free-solid-svg-icons";
 import ButtonComponent from '../toolComponents/ButtonComponent';
+import { getUser } from '../../redux/actions/userAction';
 
 class PostRequestHoliday extends PureComponent {
     constructor(props) {
@@ -21,15 +22,20 @@ class PostRequestHoliday extends PureComponent {
         halfDayBreakCount: '',
         alertC: 0,
     }
+
+    componentDidMount(){
+        this.props.getUser()
+    }
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
+        console.log(this.props.user.user.status)
     }
 
     handleCancel = () => {
         this.setState({
-            collabId: '',
+            collabId: this.props.user.user.id,
             startDate: '',
             startOnMorning: true,
             endDate: '',
@@ -44,7 +50,7 @@ class PostRequestHoliday extends PureComponent {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('collabId', this.state.collabId);
+        formData.append('collabId', this.props.user.user.id);
         formData.append('startDate', this.state.startDate);
         formData.append('startOnMorning', this.state.startOnMorning);
         formData.append('endDate', this.state.endDate);
@@ -61,7 +67,7 @@ class PostRequestHoliday extends PureComponent {
         })
 
         this.setState({
-            collabId: '',
+            collabId: this.props.user.user.id,
             startDate: '',
             startOnMorning: true,
             endDate: '',
@@ -73,7 +79,8 @@ class PostRequestHoliday extends PureComponent {
     }
 
     render() {
-        const { collabId, startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount, alertC } = this.state;
+        console.log(this.props.user.user)
+        const { startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount, alertC } = this.state;
         return (
             <div>
                 <div>
@@ -99,13 +106,7 @@ class PostRequestHoliday extends PureComponent {
                             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                                 <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                                     <form id="create_holiday_request" className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit}>
-                                        <div>
-                                            <label htmlFor="collabId" className="block text-sm font-medium text-gray-700">Demandeur</label>
-                                            <div>
-                                                <input value={collabId} onChange={this.handleChange} id="collabId" name="collabId" required className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
-                                            </div>
-                                        </div>
-
+                                       
                                         <div>
                                             <label htmlFor="leaveType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                             <div className="mt-1">
@@ -201,4 +202,16 @@ class PostRequestHoliday extends PureComponent {
     }
 }
 
-export default connect()(PostRequestHoliday);
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+} 
+
+const mapActionToProps = (dispatch) => {
+    return {
+        getUser : () => dispatch(getUser()),
+    }
+}
+
+export default connect(mapStateToProps, mapActionToProps)(PostRequestHoliday);
