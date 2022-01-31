@@ -14,5 +14,6 @@ namespace IntraNetAPI.Interfaces
         IEnumerable<T> Search(Expression<Func<T, bool>> predicate);
         T SearchOne(Expression<Func<T, bool>> searchMethode);
         IEnumerable<T> GetAll();
+        bool Delete(T element);
     }
 }

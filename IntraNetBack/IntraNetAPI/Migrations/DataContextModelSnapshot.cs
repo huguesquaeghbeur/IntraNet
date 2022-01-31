@@ -38,8 +38,14 @@ namespace IntraNetAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CollaboratorId")
+                    b.Property<int>("CollaboratorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsSubmitted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -69,10 +75,10 @@ namespace IntraNetAPI.Migrations
                     b.Property<int>("HalfDayBreak")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAdmin")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool>("IsChief")
+                    b.Property<bool>("IsAdmin")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
@@ -80,6 +86,9 @@ namespace IntraNetAPI.Migrations
 
                     b.Property<string>("Password")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -108,11 +117,20 @@ namespace IntraNetAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CollaboratorId")
+                    b.Property<int>("CollaboratorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("EndOnMorning")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("HalfDayBreakCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeaveType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
@@ -225,10 +243,16 @@ namespace IntraNetAPI.Migrations
                     b.Property<string>("Commentary")
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("FeeType")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsExactAmount")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("MissionId")
+                    b.Property<int>("MissionId")
                         .HasColumnType("int");
 
                     b.Property<int>("Validate")
@@ -262,7 +286,9 @@ namespace IntraNetAPI.Migrations
                 {
                     b.HasOne("IntraNetAPI.Models.Collaborator", "Collaborator")
                         .WithMany("Bills")
-                        .HasForeignKey("CollaboratorId");
+                        .HasForeignKey("CollaboratorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Collaborator");
                 });
@@ -280,7 +306,9 @@ namespace IntraNetAPI.Migrations
                 {
                     b.HasOne("IntraNetAPI.Models.Collaborator", "Collaborator")
                         .WithMany("Holidays")
-                        .HasForeignKey("CollaboratorId");
+                        .HasForeignKey("CollaboratorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Collaborator");
                 });
@@ -324,7 +352,9 @@ namespace IntraNetAPI.Migrations
 
                     b.HasOne("IntraNetAPI.Models.Mission", "Mission")
                         .WithMany()
-                        .HasForeignKey("MissionId");
+                        .HasForeignKey("MissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Mission");
                 });

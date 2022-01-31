@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Http.Results;
 using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
@@ -14,6 +15,12 @@ namespace IntraNetAPI.Repositories
         public MissionRepository(DataContext dataContext) : base(dataContext)
         {
 
+        }
+
+        public bool Delete(Mission element)
+        {
+            _dataContext.Missions.Remove(element);
+            return true;
         }
 
         public Mission FinById(int id)
