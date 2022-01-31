@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { faList, faChevronRight, faAlignLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList, faAlignLeft, faTasks } from "@fortawesome/free-solid-svg-icons";
+import MenuItem from '../../components/holidayComponents/MenuItem';
 
 class HolidayMenu extends PureComponent {
     constructor(props) {
@@ -23,69 +23,29 @@ class HolidayMenu extends PureComponent {
                         <div className="flex flex-col items-stretch mt-5">
                             {/* <!-- Nav Item #1 --> */}
                             <Link to="/holiday/post">
-                            <div className="flex flex-row group px-4 py-8
-                    border-t hover:cursor-pointer
-                    transition-all duration-200 delay-100">
-
-                                {/* <!-- Nav Icon --> */}
-                                <div className="rounded-xl bg-blue-100 px-3 py-2 md:py-4">
-                                    <FontAwesomeIcon icon={faAlignLeft} className="mx-auto 
-                            text-indigo-900 text-2xl md:text-3xl"/>
-                                </div>
-
-                                {/* <!-- Text --> */}
-                                <div className="grow flex flex-col pl-5 pt-2">
-                                    <div className="font-bold text-sm md:text-lg lg:text-xl group-hover:underline">
-                                        Formulaire
-                                    </div>
-
-                                    <div className="font-semibold text-sm md:text-md lg:text-lg
-                            text-gray-400 group-hover:text-gray-500
-                            transition-all duration-200 delay-100">
-                                        Faire une nouvelle demande
-                                    </div>
-                                </div>
-
-                                {/* <!-- Chevron --> */}
-                                <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 mdi-24px my-auto
-                        group-hover:text-gray-700 transition-all duration-200 delay-100" />
-                            </div>
+                                <MenuItem
+                                    icon={faAlignLeft}
+                                    title="Formulaire"
+                                    text="Faire une nouvelle demande" />
                             </Link>
-
+                            {/* <!-- Nav Item #2 --> */}
+                            <Link to="/holiday/own">
+                                <MenuItem
+                                    icon={faList}
+                                    title="Historique"
+                                    text="Liste des congés personnels en attente" />
+                            </Link>
                             {/* <!-- Nav Item #2 --> */}
                             <Link to="/holiday/list">
-                            <div className="flex flex-row group px-4 py-8
-                    border-t hover:cursor-pointer
-                    transition-all duration-200 delay-100">
-
-                                {/* <!-- Nav Icon --> */}
-                                <div className="rounded-xl bg-blue-100 px-3 py-2 md:py-4">
-                                <FontAwesomeIcon icon={faList} className="mx-auto 
-                            text-indigo-900 text-2xl md:text-3xl"/>
-                                </div>
-
-                                {/* <!-- Text --> */}
-                                <div className="grow flex flex-col pl-5 pt-2">
-                                    <div className="font-bold text-sm md:text-lg lg:text-xl group-hover:underline">
-                                        Historique
-                                    </div>
-
-                                    <div className="font-semibold text-sm md:text-md lg:text-lg
-                            text-gray-400 group-hover:text-gray-500
-                            transition-all duration-200 delay-100">
-                                        Liste des congés en attente
-                                    </div>
-                                </div>
-
-                                {/* <!-- Chevron --> */}
-                                <FontAwesomeIcon icon={faChevronRight} className="text-gray-400 mdi-24px my-auto
-                        group-hover:text-gray-700 transition-all duration-200 delay-100" />
-                            </div>
+                                <MenuItem
+                                    icon={faTasks}
+                                    title="Gestion"
+                                    text="Gestion des gongès en attente" />
                             </Link>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 }

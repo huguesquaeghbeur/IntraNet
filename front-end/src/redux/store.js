@@ -14,7 +14,7 @@ export default createStore(
         user:userReducer,
         info: InfoReducer,
         collaborator: collaboratorReducer,
-        holiday: HolidayReducer,
+        holidayState: HolidayReducer,
         bills: billsReducer,
         departments: departmentReducer,
     }), composeEnhancer(applyMiddleware(thunk)))

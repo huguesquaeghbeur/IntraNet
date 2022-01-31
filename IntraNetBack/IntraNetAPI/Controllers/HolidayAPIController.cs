@@ -4,7 +4,6 @@ using IntraNetAPI.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,12 +16,12 @@ namespace IntraNetAPI.Controllers
     {
         IRepository<Holiday> _holidayRepository;
         IRepository<Collaborator> _collaboratorRepository;
-        FormatService _formatService;
-        public HolidayAPIController(IRepository<Holiday> holidayRepository, IRepository<Collaborator> collaboratorRepository, FormatService formatService)
+        HolidayService _holidayService;
+        public HolidayAPIController(IRepository<Holiday> holidayRepository, IRepository<Collaborator> collaboratorRepository, HolidayService holidayService)
         {
             _holidayRepository = holidayRepository;
             _collaboratorRepository = collaboratorRepository;
-            _formatService = formatService;
+            _holidayService = holidayService;
         }
         // GET: api/<HolidayAPIController>
         [HttpGet]
@@ -36,45 +35,34 @@ namespace IntraNetAPI.Controllers
         public IActionResult Get(int holidayId)
         {
             Holiday h = _holidayRepository.FinById(holidayId);
-            if(h != null)
+            if (h != null)
             {
                 return Ok(h);
             }
-            return NotFound(new { Message = "holiday not found"});
+            return NotFound(new { Message = "holiday not found" });
         }
 
         // POST api/<HolidayAPIController>
         [HttpPost]
         public IActionResult Post([FromForm] int collabId, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
-            int tmpHalfDayBreak = 0;
-            if (startDate == endDate)
-            {
-                if (startOnMorning == true && endOnMorning == false)
-                {
-                    tmpHalfDayBreak = 1;
-                }
-            }
-            if (startDate < endDate)
-            {
-                if (startOnMorning == true && endOnMorning == false)
-                {
-                    tmpHalfDayBreak += 1;
-                } else if (startOnMorning == false && endOnMorning == true)
-                {
-                    tmpHalfDayBreak -= 1;
-                }
-            }
+            //Status Calcul
+            Collaborator coll = _collaboratorRepository.SearchOne(c => c.Id == collabId);
+            Holiday.ValidationEnum validationEnum = _holidayService.calculStatus(coll);
+
+            // Half Day Break Calcul
+            int tmpHalfDayBreak = _holidayService.calculHalfDayBreak(startDate, endDate, startOnMorning, endOnMorning);
+
             Holiday holiday = new Holiday()
             {
-                Collaborator = _collaboratorRepository.SearchOne(c => c.Id == collabId),
-                StartDate = _formatService.FormatDate(startDate),
+                Collaborator = _collaboratorRepository.FinById(collabId),
+                StartDate = startDate,
                 StartOnMorning = startOnMorning,
-                EndDate = _formatService.FormatDate(endDate),
+                EndDate = endDate,
                 EndOnMorning = endOnMorning,
-                HalfDayBreakCount = ((endDate.Day - startDate.Day)*2) + tmpHalfDayBreak,
+                HalfDayBreakCount = ((endDate.DayOfYear - startDate.DayOfYear) * 2) + tmpHalfDayBreak,
                 LeaveType = (Holiday.LeaveTypeEnum)leaveType,
-                Validation = Holiday.ValidationEnum.InitialState,
+                Validation = validationEnum,
             };
             if (_holidayRepository.Save(holiday))
             {
@@ -85,41 +73,56 @@ namespace IntraNetAPI.Controllers
 
 
         // PUT api/<HolidayAPIController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] int validation)
+        [HttpPatch("{id}")]
+        public IActionResult Patch(int id, [FromForm] int validation)
         {
+            string msg = "";
             Holiday holiday = _holidayRepository.FinById(id);
-            if(holiday == null)
+            if (holiday != null)
             {
                 holiday.Validation = (Holiday.ValidationEnum)validation;
-                if (validation == 0)
+                
+                msg = _holidayService.validationStateMsg(validation);
+
+                if (_holidayRepository.Update(holiday))
                 {
-                    return Ok(new { message = "holiday refused" });
-                }
-                else if(validation == 1)
-                {
-                    return Ok(new { message = "Initial state holiday" });
-                }
-                else if (validation == 2)
-                {
-                    return Ok(new { message = "holiday approved by Chief" });
-                }
-                else if (validation == 3)
-                {
-                    return Ok(new { message = "holiday approved by Human Ressources" });
-                }
-                else if (validation == 4)
-                {
-                    return Ok(new { message = "holiday approved by All" });
-                }
+                    return Ok(new { Message = msg, Id = holiday.Id, validation = holiday.Validation });
+                };
             }
-            return NotFound(new { message = "error validation" });
+            return NotFound(new { Message = "error holiday not found" });
+        }
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
+        {
+            int tmpHalfDayBreak = _holidayService.calculHalfDayBreak(startDate, endDate, startOnMorning, endOnMorning);
+
+            Holiday holiday = _holidayRepository.FinById(id);
+            if(holiday != null)
+            {
+                holiday.StartDate = startDate;
+                holiday.StartOnMorning = startOnMorning;
+                holiday.EndDate = endDate;
+                holiday.EndOnMorning = endOnMorning;
+                holiday.HalfDayBreakCount = ((endDate.DayOfYear - startDate.DayOfYear) * 2) + tmpHalfDayBreak;
+                holiday.LeaveType = (Holiday.LeaveTypeEnum)leaveType;
+            }
+            if (_holidayRepository.Update(holiday))
+            {
+                return Ok(new { Message = "Holiday updated", Id = holiday.Id });
+            }
+            return NotFound(new { Message = "error holiday updating" });
         }
 
-        //// DELETE api/<HolidayAPIController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Holiday holiday = _holidayRepository.FinById(id);
+            if(holiday != null)
+            {
+                _holidayRepository.Delete(holiday);
+                return Ok(new { Message = "holiday deleted", Id = holiday.Id });
+            }
+            return NotFound(new { Message = "holiday not found" });
+        }
     }
 }

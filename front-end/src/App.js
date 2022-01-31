@@ -29,6 +29,7 @@ import Home from "./containers/Home"
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
+import HolidayOwn from "./containers/holidayContainers/HolidayOwn";
 // import BigCalendar from 'react-big-calendar';
 // import Year from './Year';
 
@@ -60,13 +61,16 @@ function App() {
                         element={localStorage.getItem("token") !== null ? <HolidayList /> : <UserLogin />}
                     />
                     <Route
+                        path="holiday/own"
+                        element={localStorage.getItem("token") !== null ? <HolidayOwn /> : <UserLogin />}
+                    />
+                    <Route
                         path="holiday/:id"
                         element={localStorage.getItem("token") !== null ? <HolidayById /> : <UserLogin />}
                     />
                     <Route
                         path="holiday/post"
                         element={localStorage.getItem("token") !== null ? <PostRequestHoliday /> : <UserLogin />}
-
                     />
                     <Route
                         path="infos"
