@@ -91,8 +91,8 @@ namespace IntraNetAPI.Controllers
             }
             return NotFound(new { Message = "error holiday not found" });
         }
-        [HttpPut]
-        public IActionResult Put([FromForm] int id, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromForm] DateTime startDate, [FromForm] bool startOnMorning, [FromForm] DateTime endDate, [FromForm] bool endOnMorning, [FromForm] int leaveType)
         {
             int tmpHalfDayBreak = _holidayService.calculHalfDayBreak(startDate, endDate, startOnMorning, endOnMorning);
 
@@ -103,7 +103,7 @@ namespace IntraNetAPI.Controllers
                 holiday.StartOnMorning = startOnMorning;
                 holiday.EndDate = endDate;
                 holiday.EndOnMorning = endOnMorning;
-                holiday.HalfDayBreakCount = ((endDate.Day - startDate.Day) * 2) + tmpHalfDayBreak;
+                holiday.HalfDayBreakCount = ((endDate.DayOfYear - startDate.DayOfYear) * 2) + tmpHalfDayBreak;
                 holiday.LeaveType = (Holiday.LeaveTypeEnum)leaveType;
             }
             if (_holidayRepository.Update(holiday))

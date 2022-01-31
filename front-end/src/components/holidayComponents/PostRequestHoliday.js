@@ -82,23 +82,16 @@ class PostRequestHoliday extends PureComponent {
                 <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col" id="top">
                         {alertC === 1 ?
-                            <AlertComponent
-                                color="bg-red-400"
-                                borderColor="border-red-500"
-                                textColor="text-white"
+                            <AlertComponent color="bg-red-400" borderColor="border-red-500" textColor="text-white"
                                 logo={faWindowClose}
-                                title="Demande de congé annulée"
-                                body="Vous pouvez effectuer une nouvelle demande"
-                            /> : null}
+                                title="Demande de congé annulée" body="Vous pouvez effectuer une nouvelle demande" />
+                            : null}
                         {alertC === 2 ?
-                            <AlertComponent
-                                color="bg-green-400"
-                                borderColor="border-green-500"
-                                textColor="text-black"
+                            <AlertComponent color="bg-green-400" borderColor="border-green-500" textColor="text-black"
                                 logo={faCheckCircle}
-                                title="Demande de congé effectuée"
-                                body="Vous pouvez toujours la modifier depuis ..."
-                            /> : null}
+                                title="Demande de congé effectuée" body="Vous pouvez toujours la modifier depuis ..." />
+                            : null}
+
                         <div className="flex flex-col">
                             <div className="text-gray-400 font-bold uppercase">
                                 Nouvelle demande de congé
@@ -179,36 +172,21 @@ class PostRequestHoliday extends PureComponent {
                                         <div className="flex flex-row justify-around">
                                             <div>
                                                 <a href="#top">
-                                                    <ButtonComponent
-                                                        type="button"
-                                                        color="bg-red-400"
-                                                        colorText="white"
-                                                        body="Annuler"
-                                                        logo={faBan}
-                                                        onClickMethod={this.handleCancel}
-                                                    />
+                                                    <ButtonComponent type="button" color="bg-red-400" colorText="white"
+                                                        body="Annuler" logo={faBan}
+                                                        onClickMethod={this.handleCancel} />
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="#top">
-                                                    <ButtonComponent
-                                                        type="button"
-                                                        color="bg-indigo-500"
-                                                        colorText="white"
-                                                        body="Sauvegarder"
-                                                        logo={faSave}
-                                                    />
+                                                    <ButtonComponent type="button" color="bg-indigo-500" colorText="white"
+                                                        body="Sauvegarder" logo={faSave} />
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="#top">
-                                                    <ButtonComponent
-                                                        type="submit"
-                                                        color="bg-green-500"
-                                                        colorText="white"
-                                                        body="Soumettre"
-                                                        logo={faPaperPlane}
-                                                    />
+                                                    <ButtonComponent type="submit" color="bg-green-500" colorText="white"
+                                                        body="Soumettre" logo={faPaperPlane} />
                                                 </a>
                                             </div>
                                         </div>

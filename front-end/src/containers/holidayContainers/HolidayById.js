@@ -5,6 +5,7 @@ import ButtonComponent from '../../components/toolComponents/ButtonComponent';
 import { getHolidayRequestById, deleteHolidayApi, validateHolidayApi } from '../../services/holidayData';
 import { faBackspace, faBan, faCheck, faCalendarCheck, faUndoAlt, faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import HolidayForm from '../../components/holidayComponents/HolidayForm';
+import ConfirmModal from '../../components/holidayComponents/ConfirmModal';
 
 class HolidayById extends PureComponent {
     constructor(props) {
@@ -16,7 +17,8 @@ class HolidayById extends PureComponent {
             role: "",
             department: "",
             idCollab: "",
-            showUpdateForm: false
+            showUpdateForm: false,
+            showConfirmModal: false,
         }
     }
 
@@ -27,7 +29,7 @@ class HolidayById extends PureComponent {
                 postId: res.data.id,
                 collab: res.data.collaboratorId
             })
-            console.log(this.state)
+            
         }).catch(error => {
             console.log(error)
         })
@@ -60,13 +62,24 @@ class HolidayById extends PureComponent {
         })
         // window.location.assign("http://localhost:3000/holiday/list");
     }
-
-    handleSave = () => {
-        const formData = new FormData();
-        formData.append('id', this.state.post.id)
-        formData.append('collaboratorId', this.state.post.collaboratorId)
-        formData.append('')
+    handleOpenModal = () => {
+        this.setState({
+            showConfirmModal: true
+        })
+        console.log(this.state.showConfirmModal)
     }
+    handleCloseModal = () => {
+        this.setState({
+            showConfirmModal: false
+        })
+    }
+
+    // handleSave = () => {
+    //     const formData = new FormData();
+    //     formData.append('id', this.state.post.id)
+    //     formData.append('collaboratorId', this.state.post.collaboratorId)
+    //     formData.append('')
+    // }
 
     handleValidate = async (number) => {
         console.log(number)
@@ -77,14 +90,12 @@ class HolidayById extends PureComponent {
             this.setState({
                 validation: res.data
             })
-            console.log(res.data)
         })
         window.location.reload(true);
     }
 
     render() {
-        console.log(this.state.post)
-        console.log(this.state.role)
+        
         return (
             <div>
                 <div>
@@ -145,32 +156,21 @@ class HolidayById extends PureComponent {
                             </div>
                         </div>
                         <div className="flex flex-col">
-
+                            <div className="text-gray-400 font-bold uppercase">
+                                Demande de congés n° {this.state.post.id}
+                            </div>
                             {this.state.post && (this.state.idCollab == this.state.post.collaboratorId) ?
                                 <div>
-                                    <div className="text-gray-400 font-bold uppercase">
-                                        Demande de congés n° {this.state.post.id}
-                                    </div>
                                     {!this.state.showUpdateForm ?
                                         <div className="flex flex-col justify-center">
                                             <HolidayCard post={this.state.post} />
                                             <div className="flex justify-center">
-                                                <ButtonComponent
-                                                    type="button"
-                                                    color="bg-red-500"
-                                                    colorText="white"
-                                                    body="Supprimer"
-                                                    logo={faTrashAlt}
-                                                    onClickMethod={this.handleDelete}
-                                                />
-                                                <ButtonComponent
-                                                    type="button"
-                                                    color="bg-indigo-500"
-                                                    colorText="white"
-                                                    body="Modifier"
-                                                    logo={faPencilAlt}
-                                                    onClickMethod={() => this.updateClickOpenForm()}
-                                                />
+                                                <ButtonComponent type="button" color="bg-red-500" colorText="white"
+                                                    body="Supprimer" logo={faTrashAlt}
+                                                    onClickMethod={() => this.handleOpenModal()} />
+                                                <ButtonComponent type="button" color="bg-indigo-500" colorText="white"
+                                                    body="Modifier" logo={faPencilAlt}
+                                                    onClickMethod={() => this.updateClickOpenForm()} />
                                             </div>
                                         </div>
                                         : <div>
@@ -178,10 +178,9 @@ class HolidayById extends PureComponent {
                                                 <div>
                                                     <HolidayForm
                                                         holiday={this.state.post}
-                                                        updateClickCloseForm={() => this.updateClickCloseForm()}
-                                                    />
+                                                        updateClickCloseForm={() => this.updateClickCloseForm()} />
                                                 </div>
-                                                <div className="">
+                                                <div>
                                                     <HolidayCard post={this.state.post} />
                                                 </div>
                                             </div>
@@ -191,154 +190,89 @@ class HolidayById extends PureComponent {
                                 :
                                 this.state.post && (this.state.role == "chief" && this.state.post.validation == 1) && this.state.post.collaboratorId != this.state.idCollab ?
                                     <div>
-                                        <div className="text-gray-400 font-bold uppercase">
-                                            Demande de congés n° {this.state.post.id}
-                                        </div>
-
                                         <div className="flex flex-col justify-center">
                                             <HolidayCard post={this.state.post} />
                                             <div className="flex justify-center">
-                                                <ButtonComponent
-                                                    type="button"
-                                                    color="bg-indigo-400"
-                                                    colorText="white"
-                                                    body="Renvoyer au collaborateur"
-                                                    logo={faUndoAlt}
-                                                    onClickMethod={() => this.handleValidate(1)}
-                                                />
-                                                <ButtonComponent
-                                                    type="button"
-                                                    color="bg-green-400"
-                                                    colorText="white"
-                                                    body="Valider (CDS)"
-                                                    logo={faCheck}
-                                                    onClickMethod={() => this.handleValidate(2)}
-                                                />
-                                                <ButtonComponent
-                                                    type="button"
-                                                    color="bg-red-600"
-                                                    colorText="white"
-                                                    body="Refuser"
-                                                    logo={faBan}
-                                                    onClickMethod={() => this.handleValidate(0)}
-                                                />
+                                                <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
+                                                    body="Renvoyer au collaborateur" logo={faUndoAlt}
+                                                    onClickMethod={() => this.handleValidate(1)} />
+                                                <ButtonComponent type="button" color="bg-green-400" colorText="white"
+                                                    body="Valider (CDS)" logo={faCheck}
+                                                    onClickMethod={() => this.handleValidate(2)} />
+                                                <ButtonComponent type="button" color="bg-red-600" colorText="white"
+                                                    body="Refuser" logo={faBan}
+                                                    onClickMethod={() => this.handleValidate(0)} />
                                             </div>
                                         </div>
                                     </div>
                                     :
                                     this.state.post && (this.state.role == "basic" && this.state.department == "Ressources Humaines" && this.state.post.validation == 2) && this.state.post.collaboratorId != this.state.idCollab ?
                                         <div>
-                                            <div className="text-gray-400 font-bold uppercase">
-                                                Demande de congés n° {this.state.post.id}
-                                            </div>
-
                                             <div className="flex flex-col justify-center">
                                                 <HolidayCard post={this.state.post} />
                                                 <div className="flex justify-center">
-                                                    <ButtonComponent
-                                                        type="button"
-                                                        color="bg-indigo-400"
-                                                        colorText="white"
-                                                        body="Renvoyer au collaborateur"
-                                                        logo={faUndoAlt}
-                                                        onClickMethod={() => this.handleValidate(1)}
-                                                    />
-                                                    <ButtonComponent
-                                                        type="button"
-                                                        color="bg-green-400"
-                                                        colorText="white"
-                                                        body="Valider (CDS)"
-                                                        logo={faCheck}
-                                                        onClickMethod={() => this.handleValidate(3)}
-                                                    />
-                                                    <ButtonComponent
-                                                        type="button"
-                                                        color="bg-red-600"
-                                                        colorText="white"
-                                                        body="Refuser"
-                                                        logo={faBan}
-                                                        onClickMethod={() => this.handleValidate(0)}
-                                                    />
+                                                    <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
+                                                        body="Renvoyer au collaborateur" logo={faUndoAlt}
+                                                        onClickMethod={() => this.handleValidate(1)} />
+                                                    <ButtonComponent type="button" color="bg-green-400" colorText="white"
+                                                        body="Valider (CDS)" logo={faCheck}
+                                                        onClickMethod={() => this.handleValidate(3)} />
+                                                    <ButtonComponent type="button" color="bg-red-600" colorText="white"
+                                                        body="Refuser" logo={faBan}
+                                                        onClickMethod={() => this.handleValidate(0)} />
                                                 </div>
                                             </div>
                                         </div> :
                                         this.state.post && (this.state.role == "chief" && this.state.department == "Ressources Humaines" && this.state.post.validation == 3) && this.state.post.collaboratorId != this.state.idCollab ?
                                             <div>
-                                                <div className="text-gray-400 font-bold uppercase">
-                                                    Demande de congés n° {this.state.post.id}
-                                                </div>
-
                                                 <div className="flex flex-col justify-center">
                                                     <HolidayCard post={this.state.post} />
                                                     <div className="flex justify-center">
-                                                        < ButtonComponent
-                                                            type="button"
-                                                            color="bg-green-500"
-                                                            colorText="white"
-                                                            body="Valider (RH)"
-                                                            logo={faCalendarCheck}
-                                                            onClickMethod={() => this.handleValidate(4)}
-                                                        />
-                                                        <ButtonComponent
-                                                            type="button"
-                                                            color="bg-red-600"
-                                                            colorText="white"
-                                                            body="Refuser"
-                                                            logo={faBan}
-                                                            onClickMethod={() => this.handleValidate(0)}
-                                                        />
+                                                        < ButtonComponent type="button" color="bg-green-500" colorText="white"
+                                                            body="Valider (RH)" logo={faCalendarCheck}
+                                                            onClickMethod={() => this.handleValidate(4)} />
+                                                        <ButtonComponent type="button" color="bg-red-600" colorText="white"
+                                                            body="Refuser" logo={faBan}
+                                                            onClickMethod={() => this.handleValidate(0)} />
                                                     </div>
                                                 </div>
                                             </div> :
                                             this.state.post && (this.state.role == "cEO" && this.state.post.validation == 3) && this.state.post.collaboratorId != this.state.idCollab ?
                                                 <div>
-                                                    <div className="text-gray-400 font-bold uppercase">
-                                                        Demande de congés n° {this.state.post.id}
-                                                    </div>
                                                     <div className="flex flex-col justify-center">
                                                         <HolidayCard post={this.state.post} />
                                                         <div className="flex justify-center">
-                                                            < ButtonComponent
-                                                                type="button"
-                                                                color="bg-green-500"
-                                                                colorText="white"
-                                                                body="Valider (RH)"
-                                                                logo={faCalendarCheck}
-                                                                onClickMethod={() => this.handleValidate(4)}
-                                                            />
-                                                            <ButtonComponent
-                                                                type="button"
-                                                                color="bg-red-600"
-                                                                colorText="white"
-                                                                body="Refuser"
-                                                                logo={faBan}
-                                                                onClickMethod={() => this.handleValidate(0)}
-                                                            />
+                                                            < ButtonComponent type="button" color="bg-green-500" colorText="white"
+                                                                body="Valider (RH)" logo={faCalendarCheck}
+                                                                onClickMethod={() => this.handleValidate(4)} />
+                                                            <ButtonComponent type="button" color="bg-red-600" colorText="white"
+                                                                body="Refuser" logo={faBan}
+                                                                onClickMethod={() => this.handleValidate(0)} />
                                                         </div>
                                                     </div>
                                                 </div> : null
-                                                // this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && (this.state.post.validation == 1 || this.state.post.validation == 2) ?
-                                                //     <div className="bg-orange-400 text-white">
-                                                //         Demande en traitement
-                                                //     </div>
-                                                //     :
-                                                //     this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && this.state.post.validation == 3 ?
-                                                //         <div className="bg-orange-600 text-white">
-                                                //             Demande en traitement (DRH)
-                                                //         </div>
-                                                //         :
-                                                //         this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && this.state.post.validation == 3 ?
-                                                //             <div className="bg-green-400 text-white">
-                                                //                 Demande validée
-                                                //             </div> :
-                                                //             this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && this.state.post.validation == 0 ?
-                                                //                 <div className="bg-red-400 text-white">
-                                                //                     Demande refusée
-                                                //                 </div>
-                                                //                 :
-                                                //                 <div className="bg-red-400 text-white">
-                                                //                     Demande inexistante ou droits non appropriés
-                                                //                 </div>
+                                // this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && (this.state.post.validation == 1 || this.state.post.validation == 2) ?
+                                //     <div className="bg-orange-400 text-white">
+                                //         Demande en traitement
+                                //     </div>
+                                //     :
+                                //     this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && this.state.post.validation == 3 ?
+                                //         <div className="bg-orange-600 text-white">
+                                //             Demande en traitement (DRH)
+                                //         </div>
+                                //         :
+                                //         this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && this.state.post.validation == 3 ?
+                                //             <div className="bg-green-400 text-white">
+                                //                 Demande validée
+                                //             </div> :
+                                //             this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && this.state.post.validation == 0 ?
+                                //                 <div className="bg-red-400 text-white">
+                                //                     Demande refusée
+                                //                 </div>
+                                //                 :
+                                //                 <div className="bg-red-400 text-white">
+                                //                     Demande inexistante ou droits non appropriés
+                                //                 </div>
                             }
                         </div>
                     </div>

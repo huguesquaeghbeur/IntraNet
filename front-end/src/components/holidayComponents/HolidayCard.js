@@ -26,24 +26,17 @@ class HolidayCard extends Component {
                 this.setState({
                     department: res.data
                 })
-                console.log(this.state.department)
+                
             })
         })
     }
 
     render() {
-        console.log(this.state.collab)
+        
         return (
             <div>
                 {this.props.post !== undefined ? (
-                    <div key={this.props.post.id} className="m-2 p-2
-                    md:px-7
-                    xl:px-8
-                    rounded-[20px]
-                    bg-white
-                    shadow-md
-                    hover:shadow-lg
-                    mb-8">
+                    <div key={this.props.post.id} className="m-2 p-2 md:px-7 xl:px-8 rounded-[20px] bg-white shadow-md hover:shadow-lg mb-8">
                         <div className="flex justify-between">
                             <div>
                                 {(this.props.post.validation === 1) ? (

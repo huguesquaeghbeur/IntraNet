@@ -9,41 +9,47 @@ class HolidayForm extends PureComponent {
         super(props)
         this.state = {
             holiday: this.props.holiday,
+            startDate: this.props.holiday.startDate,
+            startOnMorning: this.props.holiday.startOnMorning,
+            endDate: this.props.holiday.startDate,
+            endOnMorning: this.props.holiday.endOnMorning,
+            leaveType: this.props.holiday.leaveType
         }
     }
 
     componentDidMount() {
-
+        
     }
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
+        console.log(this.state)
     }
-    handleSubmit = (e) => {
-        e.prevent.default();
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        
         const formData = new FormData();
-        if (this.props.holidayId != undefined) {
-            formData.append("id", this.props.holidayId)
-            formData.append('collabId', this.state.post.collaboratorId);
-            formData.append('startDate', this.state.post.startDate);
-            formData.append('startOnMorning', this.state.post.startOnMorning);
-            formData.append('endDate', this.state.post.endDate);
-            formData.append('endOnMorning', this.state.post.endOnMorning);
-            formData.append('leaveType', this.state.post.leaveType);
-            formData.append('halfDayBreakCount', this.state.post.startDate - this.state.post.endDate);
+        if (this.props.holiday.id != undefined) {
+            formData.append('startDate', this.state.startDate);
+            formData.append('startOnMorning', this.state.startOnMorning);
+            formData.append('endDate', this.state.endDate);
+            formData.append('endOnMorning', this.state.endOnMorning);
+            formData.append('leaveType', this.state.leaveType);
         }
-        updateHolidayApi(formData).then(res => {
+        await updateHolidayApi(this.props.holiday.id, formData).then(res => {
             console.log("res.data")
+            console.log(res.data)
             this.setState({
-                post: res.data
+                holiday: res.data
             })
         })
-        console.log(this.state.post)
+        window.location.reload(true)
     }
 
     render() {
+        const { startDate, startOnMorning, endDate, endOnMorning, leaveType, } = this.state;
         return (
             <section className=" py-1 bg-blueGray-50">
                 <div className="w-full lg:w-8/12 px-4 mx-auto mt-6">
@@ -59,7 +65,7 @@ class HolidayForm extends PureComponent {
                             </div>
                         </div>
                         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                            <form>
+                            <form method="PUT" onSubmit={this.handleSubmit}>
                                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                                     Informations du congé
                                 </h6>
@@ -69,7 +75,7 @@ class HolidayForm extends PureComponent {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="leaveType">
                                                 Type de congé
                                             </label>
-                                            <select required defaultValue={this.props.holiday.leaveType ?? ""} onChange={(e) => this.handleChange(e)} name="leaveType" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                            <select required defaultValue={leaveType} onChange={(e) => this.handleChange(e)} name="leaveType" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                                                 <option onChange={(e) => this.handleChange(e)} value="">--- select ---</option>
                                                 <option onChange={(e) => this.handleChange(e)} value="0">Congés payés</option>
                                                 <option onChange={(e) => this.handleChange(e)} value="1">Congé maladie</option>
@@ -99,7 +105,7 @@ class HolidayForm extends PureComponent {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="startDate">
                                                 Date de début
                                             </label>
-                                            <input required defaultValue={this.props.holiday.startDate ?? ""} name="startDate" onChange={(e) => this.handleChange(e)} type="date" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            <input required defaultValue={startDate} name="startDate" onChange={(e) => this.handleChange(e)} type="date" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-6/12 px-4">
@@ -107,7 +113,7 @@ class HolidayForm extends PureComponent {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="startOnMorning">
                                                 Heure de début
                                             </label>
-                                            <select required defaultValue={this.props.holiday.startOnMorning ?? ""} name="startOnMorning" onChange={(e) => this.handleChange(e)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                            <select required defaultValue={startOnMorning} name="startOnMorning" onChange={(e) => this.handleChange(e)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                                                 <option onChange={(e) => this.handleChange(e)} value="true">Matin</option>
                                                 <option onChange={(e) => this.handleChange(e)} value="false">Après-midi</option>
                                             </select>
@@ -118,7 +124,7 @@ class HolidayForm extends PureComponent {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="endDate">
                                                 Date de fin
                                             </label>
-                                            <input required defaultValue={this.props.holiday.endDate ?? ""} name="endDate" onChange={(e) => this.handleChange(e)} type="date" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                            <input required defaultValue={endDate} name="endDate" onChange={(e) => this.handleChange(e)} type="date" className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-6/12 px-4">
@@ -126,7 +132,7 @@ class HolidayForm extends PureComponent {
                                             <label className="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="endOnMorning">
                                                 Heure de fin
                                             </label>
-                                            <select required defaultValue={this.props.holiday.endOnMorning ?? ""} name="endOnMorning" onChange={(e) => this.handleChange(e)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                            <select required defaultValue={endOnMorning} name="endOnMorning" onChange={(e) => this.handleChange(e)} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                                                 <option onChange={(e) => this.handleChange(e)} value="true">Matin</option>
                                                 <option onChange={(e) => this.handleChange(e)} value="false">Après-midi</option>
                                             </select>
@@ -154,7 +160,6 @@ class HolidayForm extends PureComponent {
                                                 colorText="white"
                                                 body="Valider les modifications"
                                                 logo={faCheck}
-                                                onClickMethod={() => this.props.handleSubmit()}
                                             />
                                         </div>
                                     </div>
