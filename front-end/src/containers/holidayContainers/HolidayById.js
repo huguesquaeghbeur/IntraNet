@@ -6,6 +6,8 @@ import { getHolidayRequestById, deleteHolidayApi, validateHolidayApi } from '../
 import { faBackspace, faBan, faCheck, faCalendarCheck, faUndoAlt, faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import HolidayForm from '../../components/holidayComponents/HolidayForm';
 import ConfirmModal from '../../components/holidayComponents/ConfirmModal';
+import { connect } from 'react-redux';
+import { getUser } from '../../redux/actions/userAction';
 
 class HolidayById extends PureComponent {
     constructor(props) {
@@ -14,26 +16,26 @@ class HolidayById extends PureComponent {
             post: {},
             deleted: false,
             collab: {},
-            role: "",
-            department: "",
-            idCollab: "",
             showUpdateForm: false,
             showConfirmModal: false,
         }
     }
 
     componentDidMount = () => {
-        getHolidayRequestById(this.props.holidayId).then(res => {
+        let url = window.location.pathname.slice(9);
+        // this.props.getUser()
+        getHolidayRequestById(url).then(res => {
+            
             this.setState({
                 post: res.data,
                 postId: res.data.id,
-                collab: res.data.collaboratorId
+                collab: res.data.collaboratorId,
             })
-            
         }).catch(error => {
             console.log(error)
         })
     }
+
     updateClickOpenForm = () => {
         this.setState({
             showUpdateForm: true
@@ -45,16 +47,10 @@ class HolidayById extends PureComponent {
         })
     }
 
-    handleRole = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-
     handleDelete = (e) => {
         e.preventDefault();
-
-        deleteHolidayApi(this.props.holidayId).then(res => {
+        let url = window.location.pathname.slice(9);
+        deleteHolidayApi(url).then(res => {
             this.setState({
                 post: "",
                 deleted: true
@@ -83,10 +79,11 @@ class HolidayById extends PureComponent {
 
     handleValidate = async (number) => {
         console.log(number)
+        let url = window.location.pathname.slice(9);
         const formData = new FormData();
         formData.append('validation', number)
 
-        await validateHolidayApi(this.props.holidayId, formData).then(res => {
+        await validateHolidayApi(url, formData).then(res => {
             this.setState({
                 validation: res.data
             })
@@ -95,71 +92,21 @@ class HolidayById extends PureComponent {
     }
 
     render() {
-        
         return (
             <div>
                 <div>
                     <Link to="/holiday/list"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} /></Link>
                 </div>
-                <div className="flex items-center justify-center bg-white">
+
+                {/* <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
-                        <div className="flex justify-center">
-                            <div className="m-2 p-2">
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="department">RH</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="department" value="Ressources Humaines" name="department"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="department">Comptabilité</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="department" value="Comptabilité" name="department"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="department">empty department</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="department" value="" name="department"></input>
-                                </div>
-                            </div>
-                            <div className="m-2 p-2">
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">#1</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="1" name="idCollab"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">#2</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="2" name="idCollab"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">#3</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="3" name="idCollab"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="idCollab">empty id</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="idCollab" value="" name="idCollab"></input>
-                                </div>
-                            </div>
-                            <div className="m-2 p-2">
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="role">Basic</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="role" value="basic" name="role"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="role">CDS</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="role" value="chief" name="role"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="role">PDG</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="role" value="cEO" name="role"></input>
-                                </div>
-                                <div className="p-2">
-                                    <label className="p-2" htmlFor="role">empty role</label>
-                                    <input onChange={(e) => this.handleRole(e)} type="radio" id="role" value="" name="role"></input>
-                                </div>
-                            </div>
-                        </div>
+
                         <div className="flex flex-col">
                             <div className="text-gray-400 font-bold uppercase">
                                 Demande de congés n° {this.state.post.id}
                             </div>
-                            {this.state.post && (this.state.idCollab == this.state.post.collaboratorId) ?
+                            {this.props.user.user != undefined && this.state.post && (this.props.user.user.id == this.state.post.collaboratorId) ?
+                           
                                 <div>
                                     {!this.state.showUpdateForm ?
                                         <div className="flex flex-col justify-center">
@@ -188,7 +135,7 @@ class HolidayById extends PureComponent {
                                     }
                                 </div>
                                 :
-                                this.state.post && (this.state.role == "chief" && this.state.post.validation == 1) && this.state.post.collaboratorId != this.state.idCollab ?
+                                this.props.user.user != undefined && this.state.post && (this.props.user.user.status == 2 && this.state.post.validation == 1) && this.state.post.collaboratorId != this.props.user.user.id ?
                                     <div>
                                         <div className="flex flex-col justify-center">
                                             <HolidayCard post={this.state.post} />
@@ -206,7 +153,7 @@ class HolidayById extends PureComponent {
                                         </div>
                                     </div>
                                     :
-                                    this.state.post && (this.state.role == "basic" && this.state.department == "Ressources Humaines" && this.state.post.validation == 2) && this.state.post.collaboratorId != this.state.idCollab ?
+                                    this.props.user.user != undefined && this.state.post && (this.props.user.user.status == 0 && this.props.user.user.departmentId == 1 && this.state.post.validation == 2) && this.state.post.collaboratorId != this.props.user.user.id ?
                                         <div>
                                             <div className="flex flex-col justify-center">
                                                 <HolidayCard post={this.state.post} />
@@ -223,7 +170,7 @@ class HolidayById extends PureComponent {
                                                 </div>
                                             </div>
                                         </div> :
-                                        this.state.post && (this.state.role == "chief" && this.state.department == "Ressources Humaines" && this.state.post.validation == 3) && this.state.post.collaboratorId != this.state.idCollab ?
+                                        this.props.user.user != undefined && this.state.post && (this.props.user.user.id == 3 && this.props.user.user.departmentId == 1 && this.state.post.validation == 3) && this.state.post.collaboratorId != this.props.user.user.id ?
                                             <div>
                                                 <div className="flex flex-col justify-center">
                                                     <HolidayCard post={this.state.post} />
@@ -237,7 +184,7 @@ class HolidayById extends PureComponent {
                                                     </div>
                                                 </div>
                                             </div> :
-                                            this.state.post && (this.state.role == "cEO" && this.state.post.validation == 3) && this.state.post.collaboratorId != this.state.idCollab ?
+                                            this.props.user.user != undefined && this.state.post && (this.props.user.user.status == 5 && this.state.post.validation == 3) && this.state.post.collaboratorId != this.props.user.user.id ?
                                                 <div>
                                                     <div className="flex flex-col justify-center">
                                                         <HolidayCard post={this.state.post} />
@@ -250,8 +197,8 @@ class HolidayById extends PureComponent {
                                                                 onClickMethod={() => this.handleValidate(0)} />
                                                         </div>
                                                     </div>
-                                                </div> : null
-                                // this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && (this.state.post.validation == 1 || this.state.post.validation == 2) ?
+                                                </div> : null */}
+                                {/* // this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && (this.state.post.validation == 1 || this.state.post.validation == 2) ?
                                 //     <div className="bg-orange-400 text-white">
                                 //         Demande en traitement
                                 //     </div>
@@ -273,17 +220,34 @@ class HolidayById extends PureComponent {
                                 //                 <div className="bg-red-400 text-white">
                                 //                     Demande inexistante ou droits non appropriés
                                 //                 </div>
-                            }
-                        </div>
+                            } */}
+                        {/* </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }
 }
-export default function GetId() {
+
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps")
+    return {
+        user: state.user
+    }
+}
+
+const mapActionToProps = (dispatch) => {
+    console.log("mapActionToProps")
+    return {
+        getUser: () => dispatch(getUser()),
+    }
+}
+
+// export default connect(mapStateToProps, mapActionToProps)(HolidayById);
+
+export default connect(mapStateToProps, mapActionToProps)(function GetId() {
     const { id } = useParams()
     return (
         <HolidayById holidayId={id} />
     )
-}
+})
