@@ -6,9 +6,11 @@ import useCalendar from '../hooks/useCalendar';
 const Calendar = () => {
   const { calendarRows, selectedDate, todayFormatted, daysShort, monthNames, getNextMonth, getPrevMonth } = useCalendar();
 
-  const dateClickHandler = date => {
+  const dateClickHandler = (date) => {
     console.log(date);
   }
+
+  
 
   return(
     <Fragment>
@@ -28,7 +30,7 @@ const Calendar = () => {
         <thead>
           <tr>
             {daysShort.map(day => (
-              <th key={day}>{day}</th>
+              <th  key={day}>{day}</th>
             ))}
           </tr>
         </thead>

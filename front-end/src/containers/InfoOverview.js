@@ -62,6 +62,7 @@ class InfoOverview extends PureComponent {
                             <div>
                             <button type='submit' className='w-30 justify-center py-2 px-4 border boder-transparent rounded-md shadow-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500'>Envoyer</button>
                             
+                            
                             </div>
                         </form>
                     </div>

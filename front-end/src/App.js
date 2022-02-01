@@ -31,7 +31,7 @@ import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentD
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
 import Calendar from "./components/Calendar";
-
+import ReponseInfo from "./components/ReponseInfo";
 
 
 // const localizer = BigCalendar.momentLocalizer(moment)
@@ -87,6 +87,9 @@ function App() {
                     {<Route
                         path="calendar"
                         element={<Calendar />} />}
+                    {<Route
+                        path="infos/:id"
+                        element={<ReponseInfo />} />}
 
 
                 </Routes>

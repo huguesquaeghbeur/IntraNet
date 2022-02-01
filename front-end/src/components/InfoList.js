@@ -1,6 +1,9 @@
 import React, {PureComponent} from 'react';
+import {Link} from 'react-router-dom';
+import '../styles/infolist.css';
 
 import {getAllInfos} from '../services/infoData';
+
 
 class InfoList extends PureComponent{
     constructor(props){
@@ -37,9 +40,14 @@ class InfoList extends PureComponent{
                             <div>
                                 Commentaire : {post.body}
                             </div>
-                            
+                            <Link to={`/infos/${post.id}`} key={this.title}
+                            firstName={this.firstname}>
+                            <button >Répondre</button>
+                            </Link>
                         </div>
                     )}
+                      
+                    
                 </div>
             </div>
         );

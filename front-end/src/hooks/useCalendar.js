@@ -26,6 +26,8 @@ const useCalendar = (daysShort = daysShortArr, monthNames = monthNamesArr) => {
   const rows = 6;
   const cols = 7;
   const calendarRows = {};
+  
+  
 
   for(let i = 1; i < rows + 1; i++) {
     for(let j = 1; j < cols + 1; j++) {

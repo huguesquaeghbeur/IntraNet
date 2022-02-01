@@ -1,5 +1,5 @@
 import { PureComponent } from "react";
-import { feeType } from "../../datas/bill/billBaseData"
+/* import { feeType } from "../../datas/bill/billBaseData" */
 import Select from 'react-select'
 
 export default class FeeLineForm extends PureComponent {

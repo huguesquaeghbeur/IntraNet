@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchAllDepartments, postDepartment, updateDepartment } from '../../redux/actions/departmentAction';
 import { Link } from 'react-router-dom';
 import { DepartmentCard } from '../../components/DptNewFolder/DepartmentCard';
-import { fakeDepartmentPost } from "../../datas/departmentData";
+/* import { fakeDepartmentPost } from "../../datas/departmentData"; */
 export class DepartmentsOverview extends PureComponent {
     constructor(props) {
         super(props)
