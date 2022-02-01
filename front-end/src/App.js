@@ -29,6 +29,8 @@ import Home from "./containers/Home"
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
+import { getRole } from './services/userService'
+import BillsManagement from "./containers/billContainers/BillsManagement";
 // import BigCalendar from 'react-big-calendar';
 // import Year from './Year';
 
@@ -49,8 +51,12 @@ function App() {
                         element={localStorage.getItem("token") !== null ? <BillsOverview /> : <UserLogin />}
                     />
                     <Route
+                        path="management/bills"
+                        element={localStorage.getItem("token") !== null ? <BillsManagement/> : <Error />}
+                    />
+                    <Route
                         path="bills/:id"
-                        element={localStorage.getItem("token") !== null ? <BillById /> :<UserLogin />} />
+                        element={localStorage.getItem("token") !== null ? <BillById /> : <UserLogin />} />
                     <Route
                         path="holiday"
                         element={localStorage.getItem("token") !== null ? <HolidayMenu /> : <UserLogin />}

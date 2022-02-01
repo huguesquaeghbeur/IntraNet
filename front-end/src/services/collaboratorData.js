@@ -18,6 +18,10 @@ export const updateCollaboratorData = (id, data) => {
     return axios.put(baseUrl + '/collaborator/' + id, data)
 }
 
+export const getCollaboratorByDepartmentIdApi = (id) => {
+    return axios.get(baseUrl+"/collaborator/department/"+id) 
+}
+
 export const loginUser = (data) => {
     console.log(data.getAll("email"))
     console.log(data.getAll("password"))

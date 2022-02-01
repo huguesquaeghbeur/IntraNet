@@ -31,6 +31,12 @@ export const updateSpentFromApi=(formData)=>{
     return axios.patch(baseUrl+"/spent",formData)
 } 
 
+export const getBillsByDepartmentApi = (id) => {
+    return axios.get(baseUrl+"/bill/department/"+id)
+}
+export const getBillsByCollaboratorApi = (id) => {
+    return axios.get(baseUrl+"/bill/collaborator/"+id)
+}
 
 export const generateFormDataFromFeeLine = (feeLine) =>{
     console.log(feeLine)
@@ -63,6 +69,3 @@ export const generateFormDataFromBill = bill =>{
     return formData
 }
 
-// export const getBillsByDepartmentId = (id) => {
-//     const 
-// }

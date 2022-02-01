@@ -8,7 +8,6 @@ export const tokenToFormData = () => {
         window.location.reload();
     const token = localStorage.getItem('token')
     const decoded = jwt_decode(token)
-    console.log(decoded)
     const formData = new FormData()
     formData.append("email", decoded[baseUrl+"emailaddress"])
     formData.append("password", decoded[baseUrl+"authentication"])
@@ -19,8 +18,6 @@ export const getRole = () => {
     if(localStorage.getItem('token')===null)
         window.location.reload();
     const token = localStorage.getItem('token')
-    console.log(token)
     const decoded = jwt_decode(token)
-    console.log(decoded[roleUrl])
     return decoded[roleUrl]
 }

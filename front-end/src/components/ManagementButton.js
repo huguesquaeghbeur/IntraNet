@@ -10,7 +10,7 @@ function classNames(...classes) {
 
 export default function Management(props) {
     const currentUser = props.currentUser;
-    console.log(currentUser);
+
     return (
         <Menu as="div" className="relative inline-block text-center mt-1">
             <div>
@@ -107,7 +107,7 @@ export default function Management(props) {
                         {currentUser === "HRM" ?
                             <Menu.Item>
                                 {({ active }) => (
-                                    <Link to="/bills"
+                                    <Link to="management/bills"
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-white',
                                             'block px-4 py-2 text-sm'
@@ -130,7 +130,7 @@ export default function Management(props) {
                         {currentUser === "ProjectChief" ?
                             <Menu.Item>
                                 {({ active }) => (
-                                    <Link to="/bills"
+                                    <Link to="management/bills"
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-white',
                                             'block px-4 py-2 text-sm'
@@ -153,18 +153,20 @@ export default function Management(props) {
 
 
                         {currentUser === "DepartmentChief" ?
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link to="/bills"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Note de frais
-                                    </Link>
-                                )}
-                            </Menu.Item>
+                            <div>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/management/bills"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Note de frais
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </div>
                             : null}
 
 

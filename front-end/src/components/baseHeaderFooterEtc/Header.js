@@ -18,15 +18,11 @@ class HeaderBanner extends PureComponent {
         if (localStorage.getItem('token') !== null)
             this.setState({
                 role: getRole()
-            }, () => {
-                console.log(this.state.role)
             })
-
     }
 
 
     handleLogoutClick() {
-        console.log("handle click")
         this.props.logout()
         window.location.reload(false);
     }
@@ -64,7 +60,7 @@ class HeaderBanner extends PureComponent {
                                             déconnexion
                                         </button>
                                     </Link>
-                                    {this.state.role !== "basic" && this.state.role !== undefined ? <Management currentUser={this.state.role} /> : null}
+                                    {this.state.role !== "Basic" && this.state.role !== undefined ? <Management currentUser={this.state.role} /> : null}
 
                                 </div>
                             </div>

@@ -114,8 +114,11 @@ namespace IntraNetAPI.Controllers
             return NotFound();
 
         }
+
+        [HttpGet("department/{departmentId}")]
+        public IActionResult GetByDepartmentId(int departmentId)
+        {
+            return Ok(_data.Collaborators.Include(c => c.Bills).ThenInclude(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Proofs).Include(c => c.Holidays).Include(c => c.Missions).Where(c=> c.DepartmentId==departmentId).ToList());
+        }
     }
-
-
-
 }

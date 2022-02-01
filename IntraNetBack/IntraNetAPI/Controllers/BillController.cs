@@ -22,13 +22,15 @@ namespace IntraNetAPI.Controllers
         IRepository<Collaborator> _collaboratorRepository;
         UploadService _uploadService;
         FormatService _formatService;
-        public BillController(FormatService formatService, IRepository<Bill> billRepository, UploadService uploadService, IRepository<Mission> missionRepository, IRepository<Collaborator> collaboratorRepository)
+        IRepository<Department> _departmentRepository;
+        public BillController(IRepository<Department> departmentRepository, FormatService formatService, IRepository<Bill> billRepository, UploadService uploadService, IRepository<Mission> missionRepository, IRepository<Collaborator> collaboratorRepository)
         {
             _billRepository = billRepository;
             _missionRepository = missionRepository;
             _collaboratorRepository = collaboratorRepository;
             _uploadService = uploadService;
             _formatService = formatService;
+            _departmentRepository = departmentRepository;
         }
         [HttpGet]
         public IActionResult Get()
@@ -43,11 +45,23 @@ namespace IntraNetAPI.Controllers
                 return Ok(bill);
             return NotFound(new { Message = "bill not found" });
         }
-        //[HttpGet("department")]
-        //public IActionResult GetByDepartment([FromForm] int id)
-        //{
-        //    return Ok(_billRepository.Search(b=>b.De)
-        //}
+        [HttpGet("department/{id}")]
+        public IActionResult GetByDepartment(int id)
+        {
+            Department department = _departmentRepository.FinById(id);
+            if (department != null)
+                return Ok(_billRepository.Search(b=>b.Collaborator.DepartmentId==id && b.IsSubmitted));
+            return NotFound(new { Message = "Department not found" });
+        }
+        [HttpGet("collaborator/{id}")]
+        public IActionResult GetByCollaborator(int id)
+        {
+            Collaborator collaborator = _collaboratorRepository.FinById(id);
+            if (collaborator != null)
+                return Ok(_billRepository.Search(b => b.Collaborator.Id == id ));
+            return NotFound(new { Message = "Collaborator not found" });
+        }
+
         [HttpPost]
         public IActionResult Post([FromForm]int collabId)
             {

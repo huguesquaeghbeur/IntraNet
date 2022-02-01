@@ -15,6 +15,9 @@ export const END_UPDATING_SPENT = "END_UPDATING_SPENT"
 export const ERROR_UPDATING_SPENT = "ERROR_UPDATING_SPENT"
 export const END_GETTING_BILLS_BY_DEPARTMENTID = "END_GETTING_BILLS_BY_DEPARTMENTID"
 export const ERROR_GETTING_BILLS_BY_DEPARTMENTID = "ERROR_GETTING_BILLS_BY_DEPARTMENTID"
+export const END_GETTING_BILLS_BY_COLLABORATOR = "END_GETTING_BILLS_BY_COLLABORATOR"
+export const ERROR_GETTING_BILLS_BY_COLLABORATOR = "ERROR_GETTING_BILLS_BY_ID"
+
 
 const initialState = {
     isLoading: false,
@@ -24,6 +27,7 @@ const initialState = {
 }
 
 export default function billsReducer(state = initialState, action) {
+    console.log(action.type)
     switch (action.type) {
         case IS_LOADING:
             return {
@@ -73,6 +77,9 @@ export default function billsReducer(state = initialState, action) {
                 error: action.error
             }
         case END_DELETING_BILL:
+            console.log("action.res")
+
+            console.log(action.res)
             if (action.res.id > 0) {
                 return {
                     ...state,
@@ -150,6 +157,31 @@ export default function billsReducer(state = initialState, action) {
                 // } : b)
             }
         case ERROR_UPDATING_SPENT:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error
+            }
+        case END_GETTING_BILLS_BY_DEPARTMENTID:
+            return {
+                ...state,
+                isLoading: false,
+                bills: action.bills
+            }
+        case ERROR_GETTING_BILLS_BY_DEPARTMENTID:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.error
+            }
+        case END_GETTING_BILLS_BY_COLLABORATOR:
+            console.log(action)
+            return {
+                ...state,
+                isLoading: false,
+                bills: action.bills
+            }
+        case ERROR_GETTING_BILLS_BY_COLLABORATOR:
             return {
                 ...state,
                 isLoading: false,

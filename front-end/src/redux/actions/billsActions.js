@@ -9,8 +9,12 @@ import {
     generateFormDataFromBill,
     generateFormDataFromFeeLine,
     updateSpentFromApi,
-    // getBillsByDepartmentApi
+    getBillsByDepartmentApi,
+    getBillsByCollaboratorApi
 } from "../../services/billsService";
+import {
+    getUserFromToken
+} from "../../services/collaboratorData"
 import {
     IS_LOADING,
     END_GETTING_ALL_BILLS,
@@ -29,6 +33,8 @@ import {
     ERROR_UPDATING_SPENT,
     END_GETTING_BILLS_BY_DEPARTMENTID,
     ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+    END_GETTING_BILLS_BY_COLLABORATOR,
+    ERROR_GETTING_BILLS_BY_COLLABORATOR
 } from "../reducers/billsReducer"
 
 export const deleteSpent = (spentId, billId) => {
@@ -62,18 +68,25 @@ export const deleteSpent = (spentId, billId) => {
 
 export const deleteBill = (id) => {
     console.log("dans l deleteBill")
+    console.log(id)
 
     return (dispatch) => {
+        console.log("dans l dispatch")
+
         dispatch({
             type: IS_LOADING,
             value: true
         })
         deleteBillFromApi(id).then(res => {
+            console.log("dans l res")
+            console.log(res)
             dispatch({
                 type: END_DELETING_BILL,
                 res: res.data
             })
         }).catch(err => {
+            console.log("dans l err")
+
             dispatch({
                 type: ERROR_DELETING_BILL,
                 error: err
@@ -204,25 +217,53 @@ export const getBillById = (id) => {
     }
 }
 
-export const getBillsByDepartmentId = (id) => {
+
+
+export const getBillsByCollaborator = () => {
     return (dispatch) => {
         dispatch({
             type: IS_LOADING,
             value: true
         })
-        getBillsByDepartmentApi(id).then(res => {
-            console.log("action")
-            console.log(res)
+        getUserFromToken().then(res => {
+            getBillsByCollaboratorApi(res.data.collaborator.id).then(res => {
+                console.log(res)
 
-            dispatch({
-                type: END_GETTING_BILLS_BY_DEPARTMENTID,
-                bills: res.data
+                dispatch({
+                    type: END_GETTING_BILLS_BY_COLLABORATOR,
+                    bills: res.data
+                })
+            }).catch(err => {
+                dispatch({
+                    type: ERROR_GETTING_BILLS_BY_COLLABORATOR,
+                    error: err
+                })
             })
-        }).catch(err => {
-            dispatch({
-                type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
-                error: err
+        })
+
+    }
+}
+
+export const getBillsByDepartment = () => {
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        getUserFromToken().then(res => {
+            getBillsByDepartmentApi(res.data.collaborator.departmentId).then(res => {
+                dispatch({
+                    type: END_GETTING_BILLS_BY_DEPARTMENTID,
+                    bills: res.data
+                })
+            }).catch(err => {
+                dispatch({
+                    type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+                    error: err
+                })
             })
         })
     }
 }
+
+
