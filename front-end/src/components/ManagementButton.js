@@ -67,6 +67,19 @@ export default function Management(props) {
                                         </Link>
                                     )}
                                 </Menu.Item>
+
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/holiday"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Congés
+                                        </Link>
+                                    )}
+                                </Menu.Item>
                             </div>
                             : null}
 
@@ -80,18 +93,32 @@ export default function Management(props) {
 
 
                         {currentUser === "CFO" ?
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link to="/bills"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Note de frais
-                                    </Link>
-                                )}
-                            </Menu.Item>
+                            <div>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/bills"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Note de frais
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/holiday"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Congés
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </div>
                             : null}
 
 
@@ -105,18 +132,33 @@ export default function Management(props) {
 
 
                         {currentUser === "HRM" ?
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link to="/bills"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Note de frais
-                                    </Link>
-                                )}
-                            </Menu.Item>
+                            <div>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/bills"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Note de frais
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/holiday"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Congés
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </div>
                             : null}
 
 
@@ -128,18 +170,33 @@ export default function Management(props) {
 
 
                         {currentUser === "ProjectChief" ?
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link to="/bills"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Note de frais
-                                    </Link>
-                                )}
-                            </Menu.Item>
+                            <div>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/bills"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Note de frais
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/holiday"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Congés
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </div>
                             : null}
 
 
@@ -153,18 +210,33 @@ export default function Management(props) {
 
 
                         {currentUser === "DepartmentChief" ?
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link to="/bills"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Note de frais
-                                    </Link>
-                                )}
-                            </Menu.Item>
+                            <div>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/bills"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Note de frais
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/holiday"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Congés
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </div>
                             : null}
 
 
