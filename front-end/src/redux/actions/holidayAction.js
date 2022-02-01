@@ -31,17 +31,6 @@ export const getHolidaysFromApi = () => {
                 error: error
             })
         })
-        // getAllHolidays().then(res => {
-        //     dispatch({
-        //         type: END_FETCHING_DATA,
-        //         holidays: res.data
-        //     })
-        // }).catch(error => {
-        //     dispatch({
-        //         type: ERROR_FETCHING_DATA,
-        //         error: error
-        //     })
-        // });
     }
 };
 
@@ -63,15 +52,6 @@ export const postRequestHolidayInApi = (holidayObj) => {
                 error: error
             })
         })
-        // postHolidayData(holidayObj).then(res => {
-        //     console.log(res)
-        //     dispatch({
-        //         type: ADD_REQUEST_HOLIDAY_ACTION,
-        //         payload: res.data
-        //     })
-        // }).catch(error => {
-        //     console.log(error)
-        // });
     }
 }
 
@@ -94,19 +74,6 @@ export const getHolidayById = (id) => {
                 error: error
             })
         })
-        // getHolidayRequestById(id).then(res => {
-        //     console.log(res.data)
-        //     dispatch({
-        //         type: END_FETCHING_HOLIDAY_DATA_BY_ID,
-        //         holiday: res.data
-        //     })
-        // }).catch(error => {
-        //     console.log(error)
-        //     dispatch({
-        //         type: ERROR_FETCHING_HOLIDAY_DATA_BY_ID,
-        //         error: error
-        //     })
-        // })
     }
 }
 

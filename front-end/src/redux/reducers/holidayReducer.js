@@ -5,7 +5,7 @@ const initialState = {
     isLoading: false,
     holidays: [],
     holiday: [],
-    error: undefined
+    error: undefined,
 };
 
 export const HolidayReducer = (state = initialState, action) => {
@@ -21,7 +21,7 @@ export const HolidayReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 holidays: action.holidays,
-                error: undefined
+                error: undefined,
             }
             break;
         case ERROR_FETCHING_DATA:

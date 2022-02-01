@@ -14,13 +14,12 @@ class HolidayList extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
-            department: "",
             allDepartment: {},
         }
     }
 
-    componentDidMount(){
-        this.props.getUser();
+    componentDidMount = async () => {
+        await this.props.getUser();
         this.props.getAllHolidaysFromApi();
         getAllDepartments().then(res => {
             this.setState({
@@ -33,11 +32,10 @@ class HolidayList extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(this.props.user)
     }
 
     render() {
-        console.log(this.props.user.user)
+        console.log(this.props.user)
         return (
             <div>
                 <div>
@@ -57,26 +55,26 @@ class HolidayList extends PureComponent {
                             </div>
                             <div className="flex flex-row flex-wrap justify-around">
                                 {/* need to fix department filter */}
-                                {this.props.user.user.status == 2 ?
+                                {this.props.user.user != undefined && this.props.user.user.status == 2 ?
                                     this.props.holidays.filter(h => h.validation == 1).filter(h => h.collaboratorId != this.props.user.user.id).map(filteredHoliday => (
                                         <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
                                             <HolidayCard post={filteredHoliday} />
                                         </Link>))
                                     : null}
-                                {this.props.user.user.status == 0 && this.props.user.user.departmentId == 1 ?
+                                {this.props.user.user != undefined && this.props.user.user.status == 0 && this.props.user.user.departmentId == 1 ?
                                     this.props.holidays.filter(h => h.validation == 2).filter(h => h.collaboratorId != this.props.user.user.id).map(filteredHoliday => (
                                         <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
                                             <HolidayCard post={filteredHoliday} />
                                         </Link>))
                                     : null}
                                 {/* need to fix exception between HRM - CEO */}
-                                {this.props.user.user.status == 3 && this.props.user.user.departmentId == 1 ?
+                                {this.props.user.user != undefined && this.props.user.user.status == 3 && this.props.user.user.departmentId == 1 ?
                                     this.props.holidays.filter(h => h.validation == 3).filter(h => h.collaboratorId != this.props.user.user.id).map(filteredHoliday => (
                                         <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
                                             <HolidayCard post={filteredHoliday} />
                                         </Link>))
                                     : null}
-                                {this.props.user.status == 5 ?
+                                {this.props.user.user != undefined && this.props.user.status == 5 ?
                                     this.props.holidays.filter(h => h.validation == 3).filter(h => h.collaboratorId != this.props.user.user.id).map(filteredHoliday => (
                                         <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
                                             <HolidayCard post={filteredHoliday} />

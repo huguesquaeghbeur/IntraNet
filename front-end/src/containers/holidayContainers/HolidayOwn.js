@@ -15,8 +15,8 @@ class HolidayOwn extends PureComponent {
     }
 
 
-    componentDidMount = () => {
-        this.props.getUser();
+    componentDidMount = async () => {
+        await this.props.getUser();
         this.props.getAllHolidaysFromApi();
     }
     handleRole = (e) => {
@@ -26,7 +26,7 @@ class HolidayOwn extends PureComponent {
     }
 
     render() {
-        console.log(this.props.user.user.id)
+        console.log(this.props.user)
         return (
             <div>
                 <div>
@@ -43,7 +43,7 @@ class HolidayOwn extends PureComponent {
                                 Historique des demande de congés en cours 
                             </div>
                             <div className="flex flex-row flex-wrap justify-around">
-                                {this.props.user.user.id && this.props.holidays.filter(h => h.collaboratorId == this.props.user.user.id) ?
+                                {this.props.user.user != undefined && this.props.user.user.id && this.props.holidays.filter(h => h.collaboratorId == this.props.user.user.id) ?
                                     this.props.holidays.filter(h => h.collaboratorId == this.props.user.user.id).map(filteredHoliday => (
                                         <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
                                             <HolidayCard post={filteredHoliday} />
