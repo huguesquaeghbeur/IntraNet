@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 // import { getCollaborator } from "../redux/actions/collaboratorAction";
 // import { postCollaboratorData } from "../services/collaboratorData";
 import { getDepartmentById } from "../../../redux/actions/departmentAction"
+import { getDepartmentRequestById } from "../../../services/departmentData";
 
 import "../../../styles/formDptStyle.css";
-import { getDepartmentRequestById } from "../../../services/departmentData";
 
 
 

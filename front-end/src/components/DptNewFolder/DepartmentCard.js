@@ -67,6 +67,9 @@ export class DepartmentCard extends PureComponent {
                                 <FontAwesomeIcon icon={faTrashAlt} />
                             </button> : null
                         }
+
+
+                        
                     </div>
                 </div>
             </div>

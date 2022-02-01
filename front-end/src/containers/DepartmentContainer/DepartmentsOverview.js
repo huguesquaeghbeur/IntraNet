@@ -100,7 +100,7 @@ export class DepartmentsOverview extends PureComponent {
                         DepartmentsList
                     </a> */}
                 </div>
-                <div>là va y avoir le new truc qui va suivre...</div>
+                <div>là va y avoir le new truc qui va suivre.....</div>
                 <br /><hr />
                 <div>
                     <Link to="/departments/newview" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-red-400 hover:text-green-200 mr-4'>New View Dpt</Link>

@@ -95,6 +95,7 @@ export class DepartmentNewView extends PureComponent {
             //             closeConfirmationModalWindow={this.closeConfirmationModalWindow}
             //         /> : null}
 
+            
             //         <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} /></div>) : null}</div>
             //     </div>
             // </section>
