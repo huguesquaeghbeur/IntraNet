@@ -12,7 +12,7 @@ export default function Management(props) {
     const currentUser = props.currentUser;
     console.log(currentUser);
     return (
-        <Menu as="div" className="relative inline-block text-right">
+        <Menu as="div" className="relative inline-block text-center mt-1">
             <div>
                 <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-700 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-700 focus:ring-orange-500">
                     Gestions
@@ -29,36 +29,57 @@ export default function Management(props) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                {currentUser === "CEO" && (
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 text-white 
+                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-700 text-white 
                     ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                        <div className="py-1">
+                    <div className="py-1">
 
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link to="/departments"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Services
-                                    </Link>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link to="/collaborator"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Collaborateurs
-                                    </Link>
-                                )}
-                            </Menu.Item>
+
+                        {/* 
+                                 Les onglets du PDG 
+                    */}
+
+
+                        {currentUser === "CEO" ?
+                            <div>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/departments"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Services
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link to="/collaborator"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Collaborateurs
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </div>
+                            : null}
+
+
+
+                        {/* 
+                                 Les onglets du directeur financier 
+                    */}
+
+
+
+
+                        {currentUser === "CFO" ?
                             <Menu.Item>
                                 {({ active }) => (
                                     <Link to="/bills"
@@ -71,10 +92,85 @@ export default function Management(props) {
                                     </Link>
                                 )}
                             </Menu.Item>
+                            : null}
 
-                        </div>
-                    </Menu.Items>
-                )}
+
+
+
+                        {/* 
+                                 Les onglets de la DRH 
+                    */}
+
+
+
+
+                        {currentUser === "HRM" ?
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <Link to="/bills"
+                                        className={classNames(
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                            'block px-4 py-2 text-sm'
+                                        )}
+                                    >
+                                        Note de frais
+                                    </Link>
+                                )}
+                            </Menu.Item>
+                            : null}
+
+
+
+                        {/* 
+                                 Les onglets dU chef de projet 
+                    */}
+
+
+
+                        {currentUser === "ProjectChief" ?
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <Link to="/bills"
+                                        className={classNames(
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                            'block px-4 py-2 text-sm'
+                                        )}
+                                    >
+                                        Note de frais
+                                    </Link>
+                                )}
+                            </Menu.Item>
+                            : null}
+
+
+
+
+                        {/* 
+                                 Les onglets du chef de service 
+                    */}
+
+
+
+
+                        {currentUser === "DepartmentChief" ?
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <Link to="/bills"
+                                        className={classNames(
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                            'block px-4 py-2 text-sm'
+                                        )}
+                                    >
+                                        Note de frais
+                                    </Link>
+                                )}
+                            </Menu.Item>
+                            : null}
+
+
+
+                    </div>
+                </Menu.Items>
             </Transition>
         </Menu>
     )

@@ -22,6 +22,7 @@ namespace IntraNetAPI.Tools
             services.AddTransient<UploadService>();
             services.AddScoped<LoginService>();
             services.AddScoped<FormatService>();
+
         }
     }
 }

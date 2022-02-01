@@ -5,11 +5,14 @@ import { useState } from "react";
 import { FeeLine } from '../../components/billComponents/FeeLine'
 import AddFeeLineModalWindow from '../../components/billComponents/AddFeeLineModalWindow'
 import { getCollaboratorById } from "../../services/collaboratorData"
-import { updateBillApi } from '../../services/billsService'
+import { generateFormDataFromFeeLine, addFeeLineToBillApi } from '../../services/billsService'
 import { connect } from 'react-redux';
 import { deleteSpent, getBillById } from '../../redux/actions/billsActions'
 import { get } from "react-hook-form";
 import { deleteSpentFromApi, getBillByIdApi, updateSpentFromApi } from "../../services/billsService"
+
+
+// childs component : billComponent/FeeLineForm & billComponent/AddFeeLineModalWindow
 
 class BillByIdComponent extends PureComponent {
     constructor(props) {
@@ -28,48 +31,36 @@ class BillByIdComponent extends PureComponent {
             })
         })
     }
-
     handleAddFeeLineClick = () => {
         this.setState({
             isShowingForm: true
         })
     }
-
     handleCloseFeeLineForm = () => {
         this.setState({
             isShowingForm: false,
             spentId: undefined
         })
     }
-
     SaveFeeLine = (feeLine) => {
-        updateBillApi(feeLine).then(() => {
-            getBillByIdApi(this.props.billId).then((res) => {
-                this.setState({
-                    bill: res.data,
-                    billId: res.data.id,
-                    spents: res.data.spents,
-                    spentId: undefined,
-                    isShowingForm: false
-                })
-            })
+        const formData = generateFormDataFromFeeLine(feeLine)
+        addFeeLineToBillApi(formData).then((res) => {
+            this.updateState(res.data, false)
         })
     }
-
-    SubmitFeeLine = (feeLine) => {
-        updateBillApi(feeLine).then(() => {
-            getBillByIdApi(this.props.billId).then((res) => {
-                this.setState({
-                    bill: res.data,
-                    billId: res.data.id,
-                    spents: res.data.spents,
-                    isShowingForm: false
-                })
-            })
+    changeValidateLevel = (feeLine) => {
+        const formData = generateFormDataFromFeeLine(feeLine)
+        updateSpentFromApi(formData).then(res => {
+            this.updateState(res.data, true)
         })
     }
-
-    handleDelete = (i) => {
+    UpdateFeeLine = (feeLine) => {
+        const formData = generateFormDataFromFeeLine(feeLine)
+        updateSpentFromApi(formData).then(res => {
+            this.updateState(res.data, true)
+        })
+    }
+    handleDeleteClick = (i) => {
         const spents = this.state.spents.filter(s => s.id != i)
         deleteSpentFromApi(i).then(res => {
             this.setState({
@@ -81,45 +72,39 @@ class BillByIdComponent extends PureComponent {
             })
         })
     }
-
     handleModifyClick = (i) => {
         this.setState({
             isShowingForm: true,
             spentId: i,
         })
     }
+    updateState(apiRes, isFeeLineExist) {
+        let spents = undefined
 
-    UpdateFeeLine = (formData) => {
-        const spents = this.state.spents.map(s => s.id != formData.get("id") ? s : {
-            commentary: formData.get("commentary"),
-            feeType: formData.get("feeType"),
-            expenseDate: formData.get("expenseDate"),
-            missionId: formData.get("missionId"),
-            isExactAmount: formData.get("isExactAmount"),
-            advanceCash: formData.get("advanceCash"),
-            amount: formData.get("amount"),
-            id: formData.get("id")
-        })
-        updateSpentFromApi(formData).then(res => {
-            const bill ={
-                collaboratorId:this.state.bill.collaboratorId,
-                spents: spents,
-                id:this.state.bill.id,
-                isSubmitted:this.state.bill.isSubmitted,
-                submissionDate:this.state.bill.submissionDate
-            } 
+        if (isFeeLineExist) {
+            spents = this.state.spents.map(s => s.id != apiRes.spent.id ? s : apiRes.spent)
+        } else {
+            spents = this.state.spents
+            spents.unshift(apiRes.spent)
+        }
+
+        const bill = {
+            ...this.state.bill,
+            spents: spents
+        }
+        
+        this.setState({
+            spents: undefined,
+            spentId: undefined,
+            bill: undefined
+        }, () => {
             this.setState({
-                spents: undefined,
-                spentId: undefined,
-                bill:undefined
-            }, () => {
-                this.setState({
-                    spents: spents,
-                    isShowingForm: false,
-                    bill:bill
-                })
+                spents: spents,
+                isShowingForm: false,
+                bill: bill
             })
-        })
+        }
+        )
     }
 
     render() {
@@ -143,7 +128,7 @@ class BillByIdComponent extends PureComponent {
                             UpdateFeeLine={this.UpdateFeeLine}
                             spentId={this.state.spentId}
                         /> : null}
-                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} delete={this.handleDelete} modifyClick={this.handleModifyClick} />) : null}</div>
+                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => <FeeLine key={index} FeeLine={spent} Index={index} handleDeleteClick={this.handleDeleteClick} changeValidateLevel={this.changeValidateLevel} modifyClick={this.handleModifyClick} submitClick={this.submitFeeLine} />) : null}</div>
                 </div>
             </section>
         )
@@ -151,7 +136,6 @@ class BillByIdComponent extends PureComponent {
 }
 
 export default function GetId() {
-    console.log("dans le get")
     const { id } = useParams()
     return (
         <BillByIdComponent

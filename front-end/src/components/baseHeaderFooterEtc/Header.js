@@ -69,4 +69,18 @@ const HeaderBanner = () => {
     );
 }
 
-export default HeaderBanner;
+const mapsActionToProps = (dispatch) => {
+    return {
+        logout: () => dispatch(logout()),
+        getUser: () => dispatch(getUser())
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user.user,
+        isLoading: state.user.isLoading
+    }
+}
+
+export default connect(mapStateToProps, mapsActionToProps)(HeaderBanner)

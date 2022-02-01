@@ -37,11 +37,11 @@ namespace IntraNetAPI.Repositories
         }
         public IEnumerable<Collaborator> Search(Expression<Func<Collaborator, bool>> predicate)
         {
-            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Where(predicate);
+            return _dataContext.Collaborators.Include(c => c.Bills).ThenInclude(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Proofs).Include(c => c.Holidays).Include(c => c.Missions).Where(predicate);
         }
         public Collaborator SearchOne(Expression<Func<Collaborator, bool>> searchMethode)
         {
-            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).Include(c => c.Department).SingleOrDefault(searchMethode);
+            return _dataContext.Collaborators.Include(c => c.Bills).ThenInclude(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Proofs).Include(c => c.Holidays).Include(c => c.Missions).Where(searchMethode).FirstOrDefault();
         }
         public bool Update(Collaborator collaborator)
         {

@@ -2,10 +2,14 @@ import { type } from "@testing-library/user-event/dist/type";
 import {
     getAllBills,
     createBill,
-    updateBillApi,
     getBillByIdApi,
     deleteBillFromApi,
-    deleteSpentFromApi
+    deleteSpentFromApi,
+    updateBillApi,
+    generateFormDataFromBill,
+    generateFormDataFromFeeLine,
+    updateSpentFromApi,
+    // getBillsByDepartmentApi
 } from "../../services/billsService";
 import {
     IS_LOADING,
@@ -18,7 +22,13 @@ import {
     END_DELETING_BILL,
     ERROR_DELETING_BILL,
     END_DELETING_SPENT,
-    ERROR_DELETING_SPENT
+    ERROR_DELETING_SPENT,
+    END_SENDING_BILL,
+    ERROR_SENDING_BILL,
+    END_UPDATING_SPENT,
+    ERROR_UPDATING_SPENT,
+    END_GETTING_BILLS_BY_DEPARTMENTID,
+    ERROR_GETTING_BILLS_BY_DEPARTMENTID,
 } from "../reducers/billsReducer"
 
 export const deleteSpent = (spentId, billId) => {
@@ -39,12 +49,12 @@ export const deleteSpent = (spentId, billId) => {
                 type: END_DELETING_SPENT,
                 res: { spentId: res.data.id, billId: billId }
             })
-        }).catch(err=>{
+        }).catch(err => {
             console.log("dans le err")
             console.log(err)
             dispatch({
                 type: ERROR_DELETING_SPENT,
-                error:err
+                error: err
             })
         })
     }
@@ -123,10 +133,51 @@ export function postBill(bill) {
 
 }
 
-export function updateBill(bill) {
-    updateBillApi(bill).then(res => {
-    }).catch(error => {
-    })
+export function sendBill(bill) {
+    const formData = generateFormDataFromBill(bill)
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        updateBillApi(formData).then(res => {
+            dispatch({
+                type: END_SENDING_BILL,
+                bill: res.data.bill
+            })
+            console.log("dans le res")
+            console.log(res.data.bill)
+        }).catch(error => {
+            console.log("dans le err")
+            console.log(error)
+            dispatch({
+                type: ERROR_SENDING_BILL,
+                error: error
+            })
+        })
+    }
+}
+
+export function updateSpent(feeLine) {
+    console.log("dans le update spent actions")
+    const formData = generateFormDataFromFeeLine(feeLine)
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        updateSpentFromApi(formData).then(res => {
+            dispatch({
+                type: END_UPDATING_SPENT,
+                spent: res.data.spent
+            })
+        }).catch(err => {
+            dispatch({
+                type: ERROR_UPDATING_SPENT,
+                error: err
+            })
+        })
+    }
 }
 
 export const getBillById = (id) => {
@@ -153,4 +204,25 @@ export const getBillById = (id) => {
     }
 }
 
+export const getBillsByDepartmentId = (id) => {
+    return (dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            value: true
+        })
+        getBillsByDepartmentApi(id).then(res => {
+            console.log("action")
+            console.log(res)
 
+            dispatch({
+                type: END_GETTING_BILLS_BY_DEPARTMENTID,
+                bills: res.data
+            })
+        }).catch(err => {
+            dispatch({
+                type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+                error: err
+            })
+        })
+    }
+}

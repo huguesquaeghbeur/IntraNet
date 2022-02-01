@@ -12,7 +12,7 @@ using static IntraNetAPI.Models.Collaborator;
 
 namespace IntraNetAPI.Controllers
 {
-    [EnableCors("specialOrigin")]
+    [EnableCors("allConnections")]
     [Route("intranet/v1/login")]
     public class UserController : Controller
     {
@@ -28,13 +28,13 @@ namespace IntraNetAPI.Controllers
         [HttpPost]
         public IActionResult SubmitFormLogin([FromForm] string email, [FromForm] string password, [FromForm] StatusEnum status)
         {
-            //Collaborator collaborator = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password);
-            string token = _loginService.GenerateToken(email, password, status);
-            if (token != null /*&& collaborator != null*/)
+            Collaborator collaborator = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password);
+            if(collaborator != null )
             {
-                return Ok(new { Token = token/*, Collaborator = collaborator*/ });
+                string token = _loginService.GenerateToken(collaborator);
+                return Ok(new { Token = token, Collaborator = collaborator });
             }
             return NotFound();
         }
-    }
+    }   
 }

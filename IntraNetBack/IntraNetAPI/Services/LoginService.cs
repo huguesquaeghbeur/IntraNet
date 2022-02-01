@@ -15,43 +15,39 @@ namespace IntraNetAPI.Services
     public class LoginService
     {
         private IRepository<Collaborator> _collaboratorRepository;
-        private IHttpContextAccessor _accessor;
+        //private IHttpContextAccessor _accessor;
 
-        public LoginService(IRepository<Collaborator> collaboratorRepository, IHttpContextAccessor accessor)
+        public LoginService(IRepository<Collaborator> collaboratorRepository/*, IHttpContextAccessor accessor*/)
         {
             _collaboratorRepository = collaboratorRepository;
-            _accessor = accessor;
+            //_accessor = accessor;
         }
 
-        public bool Login(string email, string password)
-        {
-            Collaborator c = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password);
-            if (c != null)
-            {
-                _accessor.HttpContext.Session.SetString("isLogged", "true");
-                return true;
-            }
-            return false;
-        }
+        //public bool Login(string email, string password)
+        //{
+        //    Collaborator c = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password);
+        //    if (c != null)
+        //    {
+        //        _accessor.HttpContext.Session.SetString("isLogged", "true");
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
-        public bool IsLogged()
-        {
-            if (bool.TryParse(_accessor.HttpContext.Session.GetString("isLogged"), out bool isLogged))
-            {
-                if (isLogged)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        //public bool IsLogged()
+        //{
+        //    if (bool.TryParse(_accessor.HttpContext.Session.GetString("isLogged"), out bool isLogged))
+        //    {
+        //        if (isLogged)
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
-        public string GenerateToken(string email, string password, StatusEnum status)
+        public string GenerateToken(Collaborator c)
         {
-            //on vérifie l'email et le mot de passe dans la DB
-            Collaborator c = _collaboratorRepository.SearchOne(c => c.Email == email && c.Password == password && c.Status == status);
-            if (c != null)
-            {
                 List<Claim> claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.Email, c.Email),
@@ -62,11 +58,10 @@ namespace IntraNetAPI.Services
                 SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("voici donc une clé de sécurité d'une qualité exceptionnelle")), SecurityAlgorithms.HmacSha256);
 
                 // Création du Token
-                JwtSecurityToken jwt = new JwtSecurityToken(issuer: "infinIT", audience: "infinIT", claims: claims, signingCredentials: signingCredentials, expires: DateTime.Now.AddMinutes(120));
+                JwtSecurityToken jwt = new JwtSecurityToken(issuer: "infinIT", audience: "infinIT", claims: claims, signingCredentials: signingCredentials, expires: DateTime.Now.AddMinutes(1));
 
                 return new JwtSecurityTokenHandler().WriteToken(jwt);
             }
-            return null;
-        }
+
     }
 }
