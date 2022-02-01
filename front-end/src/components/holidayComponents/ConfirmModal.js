@@ -7,7 +7,7 @@ class ConfirmModal extends PureComponent {
         super(props)
     }
     handleConfirm = () => {
-        this.props.delete();
+        this.props.confirm();
     }
     handleCancel = () => {
         this.props.cancel();
