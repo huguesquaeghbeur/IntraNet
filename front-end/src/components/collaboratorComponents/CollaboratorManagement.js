@@ -6,6 +6,7 @@ class ManagementCollaborator extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
+            success: ''
         }
     }
 
@@ -55,7 +56,8 @@ class ManagementCollaborator extends PureComponent {
         formdata.append('isAdmin', this.state.isAdmin);
         updateCollaboratorData(this.props.collaboratorId, formdata).then(response => {
             this.setState({
-                message: response.data.message
+                message: response.data.message,
+                success: response.data.success
             })
             console.log(this.state.message)
         })
@@ -103,10 +105,8 @@ class ManagementCollaborator extends PureComponent {
                             <button type="submit" onClick={this.handleSubmitUpdate}className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500">
                                 Modifier
                             </button>
-                            <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
-                                Supprimer
-                            </button>
                         </div>
+                        {this.state.status === true && this.state.message ? (<div className="justify-center bg-green-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-green-500 dark:focus:border-green-500">{this.state.message}</div>) : (<div className="text-sm rounded-lg dark:bg-red-300 ">{this.state.message}</div>)}
                     </div>
                 </div>
             </div>

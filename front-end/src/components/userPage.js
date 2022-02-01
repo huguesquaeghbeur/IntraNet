@@ -34,7 +34,7 @@ class UserLogin extends PureComponent {
     render() {
         return (
             <div>
-                <h1 className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">Connexion</h1>
+                <h1 className="italic text-3xl mb-5 text-center">Connexion</h1>
                 <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                     <form className="mb-0 space-y-6" onSubmit={this.handleSubmit} >
                         <label htmlFor="email"
@@ -45,7 +45,7 @@ class UserLogin extends PureComponent {
                             name="email"
                             onChange={this.handleChange}
                             value={this.state.email}
-                            className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                            className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                             required />
                         <label htmlFor="password"
                             className="block text-sm font-medium text-gray-700">
@@ -55,7 +55,7 @@ class UserLogin extends PureComponent {
                             name="password"
                             onChange={this.handleChange}
                             value={this.state.password}
-                            className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                            className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                             required />
                         <div>
                             <label htmlFor="status" className="block text-sm font-medium text-gray-700">Fonction au sein de l'entreprise</label>
@@ -63,7 +63,7 @@ class UserLogin extends PureComponent {
                                 <select name="status"
                                     onChange={this.handleChange}
                                     value={this.state.status}
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500">
                                     <option value="" onChange={this.handleChange}>--Select--</option>
                                     <option value="0" onChange={this.handleChange}>Collaborateur</option>
                                     <option value="1" onChange={this.handleChange}>chef de projet</option>

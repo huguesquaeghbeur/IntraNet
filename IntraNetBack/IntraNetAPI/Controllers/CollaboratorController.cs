@@ -67,9 +67,9 @@ namespace IntraNetAPI.Controllers
             _data.Collaborators.Add(collaborator);
             if (_data.SaveChanges() > 0)
             {
-                return Ok(new { Message = "Collaborator added", Collaborator = collaborator });
+                return Ok(new { Success = true, Message = "Collaborateur ajouter avec succés", Collaborator = collaborator });
             }
-            return Ok(new { Message = "Error" });
+            return Ok(new { Success = false, Message = "Une erreur est survenue" });
         }
 
         [HttpPut("{id}")]
@@ -87,9 +87,9 @@ namespace IntraNetAPI.Controllers
 
                 if (_data.SaveChanges() > 0)
                 {
-                    return Ok(new { Message = "Colaborator updated" });
+                    return Ok(new { Success = true, Message = "Colaborateur mis à jour" });
                 }
-                return Ok(new { Message = "Error" });
+                return Ok(new { Success = false, Message = "Une erreur est survenue" });
             }
             return NotFound();
         }
@@ -103,7 +103,7 @@ namespace IntraNetAPI.Controllers
                 _data.Collaborators.Remove(collaborator);
                 if (_data.SaveChanges() > 0)
                 {
-                    return Ok(new { Message = "Collaborator deleted" });
+                    return Ok(new { Message = "Collaborateur " });
                 }
                 return Ok(new { Message = "Error" });
             }

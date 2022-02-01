@@ -4,9 +4,10 @@
     "\\IntraNetBack",
     "\\IntraNetBack\\IntraNetAPI",
     "\\IntraNetBack\\IntraNetAPI\\Controllers",
+    "\\IntraNetBack\\IntraNetAPI\\Models",
     "\\IntraNetBack\\IntraNetAPI\\Repositories",
     "\\IntraNetBack\\IntraNetAPI\\Services"
   ],
-  "SelectedNode": "\\IntraNetBack\\IntraNetBack.sln",
+  "SelectedNode": "\\IntraNetBack\\IntraNetAPI\\Repositories\\BillRepository.cs",
   "PreviewInSolutionExplorer": false
 }

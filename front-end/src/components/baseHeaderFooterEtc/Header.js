@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import "../baseHeaderFooterEtc/Header.css"
 import { Link } from 'react-router-dom';
 import { getUser, deconnect } from "../../services/collaboratorData";
+import Management from "../ManagementButton";
 
 const HeaderBanner = () => {
     const [currentUser, setCurrentUser] = useState("");
@@ -45,22 +46,22 @@ const HeaderBanner = () => {
                 </div>
 
                 <div className='w-full block flex-grow lg:flex lg:items-center lg:w-auto'>
-                    <div className='text-sm lg:flex-grow'>
+                    <div className='text-sm lg:flex-grow flex flex-between'>
                        
                         {currentUser === "CEO" ? (
                             <div>
-                                <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Services | </Link>
+                                <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Services</Link>
 
-                                <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborateurs | </Link>
+                                <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborateurs</Link>
 
-                                <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Note de frais |</Link>
+                                <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Note de frais</Link>
 
                                 <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4' onClick={closeApp}>Déconnexion</Link>
                             </div>
                         ) : (
                             <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Acceuil</Link>
                         )}
-
+                        <Management currentUser={currentUser} />
                     </div>
                 </div>
             </nav>

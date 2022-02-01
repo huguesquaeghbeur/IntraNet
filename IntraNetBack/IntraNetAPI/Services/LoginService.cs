@@ -62,7 +62,7 @@ namespace IntraNetAPI.Services
                 SigningCredentials signingCredentials = new SigningCredentials(new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("voici donc une clé de sécurité d'une qualité exceptionnelle")), SecurityAlgorithms.HmacSha256);
 
                 // Création du Token
-                JwtSecurityToken jwt = new JwtSecurityToken(issuer: "infinIT", audience: "infinIT", claims: claims, signingCredentials: signingCredentials, expires: DateTime.Now.AddMinutes(1));
+                JwtSecurityToken jwt = new JwtSecurityToken(issuer: "infinIT", audience: "infinIT", claims: claims, signingCredentials: signingCredentials, expires: DateTime.Now.AddMinutes(120));
 
                 return new JwtSecurityTokenHandler().WriteToken(jwt);
             }

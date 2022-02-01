@@ -43,7 +43,7 @@ namespace IntraNetAPI
             {
                 options.AddPolicy("allConnections", builder =>
                 {
-                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {
@@ -69,7 +69,7 @@ namespace IntraNetAPI
             {
                 options.AddPolicy("protected", police =>
                 {
-                    police.RequireClaim(ClaimTypes.Role, "Admin");
+                    police.RequireClaim(ClaimTypes.Role, "CEO");
                 });
             });
         }
