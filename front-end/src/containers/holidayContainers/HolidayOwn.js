@@ -38,7 +38,7 @@ class HolidayOwn extends PureComponent {
                         </div>
 
                         <div className="flex flex-col">
-                            <div className="text-gray-400 font-bold uppercase">
+                            <div className="text-gray-400 font-bold uppercase text-center">
                                 Historique des demande de congés en cours 
                             </div>
                             <div className="flex flex-row flex-wrap justify-around">

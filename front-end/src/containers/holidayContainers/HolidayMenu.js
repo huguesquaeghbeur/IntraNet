@@ -28,8 +28,8 @@ class HolidayMenu extends PureComponent {
                         </div>
                         :
                         <div className="flex flex-col">
-                            <div className="text-gray-400 font-bold uppercase">
-                                Gestion des congés
+                            <div className="text-gray-400 font-bold uppercase text-center">
+                                Gestion des congès
                             </div>
 
                             <div className="flex flex-col items-stretch mt-5">

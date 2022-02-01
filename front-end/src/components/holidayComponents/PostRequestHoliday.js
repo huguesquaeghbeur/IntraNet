@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { postHolidayData } from '../../services/holidayData';
 import AlertComponent from '../toolComponents/AlertComponent';
-import { faBan, faCheckCircle, faPaperPlane, faSave, faWindowClose, faBackspace } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faPaperPlane, faSave, faWindowClose, faBackspace, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ButtonComponent from '../toolComponents/ButtonComponent';
 import { getUser } from '../../redux/actions/userAction';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class PostRequestHoliday extends PureComponent {
     constructor(props) {
@@ -23,7 +24,7 @@ class PostRequestHoliday extends PureComponent {
         alertC: 0,
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getUser()
     }
     handleChange = (e) => {
@@ -97,13 +98,13 @@ class PostRequestHoliday extends PureComponent {
                             : null}
 
                         <div className="flex flex-col">
-                            <div className="text-gray-400 font-bold uppercase">
+                            <div className="text-gray-400 font-bold uppercase w-screen text-center">
                                 Nouvelle demande de congé
                             </div>
                             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                                 <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
                                     <form id="create_holiday_request" className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit}>
-                                       
+
                                         <div>
                                             <label htmlFor="leaveType" className="block text-sm font-medium text-gray-700">Type de congés</label>
                                             <div className="mt-1">
@@ -170,21 +171,30 @@ class PostRequestHoliday extends PureComponent {
                                         <div className="flex flex-row justify-around">
                                             <div>
                                                 <a href="#top">
-                                                    <ButtonComponent type="button" color="bg-red-400" colorText="white"
+                                                    {/* <ButtonComponent type="button" color="bg-red-400" colorText="white"
                                                         body="Annuler" logo={faBan}
-                                                        onClickMethod={this.handleCancel} />
+                                                        onClickMethod={this.handleCancel} /> */}
+                                                    <button onClick={this.handleCancel} className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                                        <FontAwesomeIcon icon={faTrash} />
+                                                    </button>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="#top">
-                                                    <ButtonComponent type="button" color="bg-indigo-500" colorText="white"
-                                                        body="Sauvegarder" logo={faSave} />
+                                                    {/* <ButtonComponent type="button" color="bg-indigo-500" colorText="white"
+                                                        body="Sauvegarder" logo={faSave} /> */}
+                                                    <button onClick={this.handleCancel} className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                                        <FontAwesomeIcon icon={faSave} />
+                                                    </button>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="#top">
-                                                    <ButtonComponent type="submit" color="bg-green-500" colorText="white"
-                                                        body="Soumettre" logo={faPaperPlane} />
+                                                    {/* <ButtonComponent type="submit" color="bg-green-500" colorText="white"
+                                                        body="Soumettre" logo={faPaperPlane} /> */}
+                                                        <button onClick={this.handleCancel} className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                                        <FontAwesomeIcon icon={faPaperPlane} />
+                                                    </button>
                                                 </a>
                                             </div>
                                         </div>
@@ -203,11 +213,11 @@ const mapStateToProps = (state) => {
     return {
         user: state.user
     }
-} 
+}
 
 const mapActionToProps = (dispatch) => {
     return {
-        getUser : () => dispatch(getUser()),
+        getUser: () => dispatch(getUser()),
     }
 }
 

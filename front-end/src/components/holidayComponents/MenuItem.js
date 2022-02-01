@@ -11,9 +11,9 @@ class MenuItem extends PureComponent {
                     transition-all duration-200 delay-100">
 
                 {/* <!-- Nav Icon --> */}
-                <div className="rounded-xl bg-blue-100 px-3 py-2 md:py-4">
+                <div className="rounded-xl bg-slate-300 px-3 py-2 md:py-4">
                     <FontAwesomeIcon icon={this.props.icon} className="mx-auto 
-                            text-indigo-900 text-2xl md:text-3xl"/>
+                            text-gray-700 text-2xl md:text-3xl"/>
                 </div>
 
                 {/* <!-- Text --> */}

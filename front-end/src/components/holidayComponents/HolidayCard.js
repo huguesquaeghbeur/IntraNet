@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getCollaborator } from '../../redux/actions/collaboratorAction';
 import { getCollaboratorById } from '../../services/collaboratorData';
 import { getDepartmentRequestById } from '../../services/departmentData';
+import { dateFormat } from '../../services/formatService';
 
 class HolidayCard extends Component {
     constructor(props) {
@@ -52,14 +53,14 @@ class HolidayCard extends Component {
                                         <div className="text-sm px-3 bg-red-200 text-red-800 rounded-full"><FontAwesomeIcon icon={faTimesCircle} /> Refusé</div>
                                     ) : null}
                             </div>
-                            <div className="rounded-xl bg-blue-200 text-blue-400 p-1 m-1">
+                            <div className="rounded-xl bg-slate-300 text-slate-700 p-1 m-1">
                                 # {this.props.post.id}
                             </div>
                         </div>
                         <div className="flex justify-center">
-                            Collaborateur : <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
+                            <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
                         </div>
-                        <div className="text-blue-500 pl-8 pt-2">
+                        <div className="text-blue-500 pt-2 text-center">
                             <b>
                                 {this.props.post.leaveType === 0 ? (
                                     <span>Congé payé <FontAwesomeIcon icon={faDollarSign} /></span>
@@ -74,18 +75,18 @@ class HolidayCard extends Component {
                         </div>
                         <div className="flex flex-col justify-around">
                             <div className="pt-2 flex justify-center">
-                                Début : <b className="pl-1">{this.props.post.startDate}</b>
+                                Début : <b className="pl-1">{dateFormat(this.props.post.startDate)}</b>
                             </div>
                             <div className="flex justify-center">
                                 <b>{this.props.post.startOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="text-orange-500">Après-midi</div>}</b>
                             </div>
                             <div className="flex justify-center">
-                                Fin : <b className="pl-1">{this.props.post.endDate}</b>
+                                Fin : <b className="pl-1">{dateFormat(this.props.post.endDate)}</b>
                             </div>
                             <div className="flex justify-center pb-2">
                                 <b>{this.props.post.endOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="text-orange-500">Après-midi</div>}</b>
                             </div>
-                            <div className="rounded-xl bg-indigo-200 flex justify-center mt-4">
+                            <div className="rounded-xl bg-slate-300 flex justify-center mt-4">
                                 Jours cumulés : <b>{(this.props.post.halfDayBreakCount / 2).toString()}</b>
                             </div>
                         </div>
