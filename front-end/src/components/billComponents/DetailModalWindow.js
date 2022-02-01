@@ -2,6 +2,8 @@ import { PureComponent } from "react"
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FeeLine } from "./FeeLine";
+import {ValidateLevel} from '../../datas/bill/billBaseData'
+
 // parent container : billContainers/BillsOverview
 
 export default class DetailModalWindow extends PureComponent {
@@ -11,6 +13,9 @@ export default class DetailModalWindow extends PureComponent {
             bill: this.props.bills.filter(b => b.id == this.props.billId)
         }
 
+    }
+    componentDidMount(){
+        console.log( ValidateLevel[this.props.user.status])
     }
     handleCancelAction() {
         this.props.closeConfirmationModalWindow()
@@ -38,8 +43,22 @@ export default class DetailModalWindow extends PureComponent {
                             {/*body*/}
                             <div className="modal-body   relative  bg-gray-100 overflow-y-scroll max-h-96 ">
                                 <p className="text-center my-5 text-blueGray-500 text-lg leading-relaxed">
-                                    <div className="flex flex-wrap justify-around ">{this.state.bill[0] !== undefined ? this.state.bill[0].spents.map((spent, index) => <div className="mb-5" key={index}>
-                                        <FeeLine key={index} FeeLine={spent} Index={index} handleDeleteClick={this.handleDeleteClick} changeValidateLevel={this.props.changeValidateLevel} modifyClick={this.handleModifyClick} submitClick={this.submitFeeLine} /></div>) : null}
+                                    <div className="flex flex-wrap justify-around ">{this.state.bill[0] !== undefined ? this.state.bill[0].spents.map((spent, index) =>
+                                        spent.validate ==  ValidateLevel[this.props.user.status] ?
+                                            <div className="mb-5" key={index}>
+                                                <FeeLine
+                                                    key={index}
+                                                    FeeLine={spent}
+                                                    Index={index}
+                                                    handleDeleteClick={this.handleDeleteClick}
+                                                    changeValidateLevel={this.props.changeValidateLevel}
+                                                    modifyClick={this.handleModifyClick}
+                                                    submitClick={this.submitFeeLine}
+                                                    inManagement={true} 
+                                                    />
+                                                    </div>
+                                            : null)
+                                        : null}
                                     </div>
                                 </p>
                             </div>

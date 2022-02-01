@@ -24,6 +24,7 @@ export class BillsOverview extends PureComponent {
 
     componentDidMount() {
         this.props.getBillsByDepartment()
+        this.props.getUser()
     }
 
     closeConfirmationModalWindow = () => {
@@ -75,13 +76,24 @@ export class BillsOverview extends PureComponent {
                 </div>
 
                 <div className="">
-                    {this.state.showDetail ? <DetailModalWindow
+                    {this.state.showDetail ? 
+                    <DetailModalWindow
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                         changeValidateLevel={this.changeValidateLevel}
                         billId={this.state.billId}
                         bills={this.props.bills}
+                        user={this.props.user}
                     /> : null}
-                        <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} showDetail={this.showDetailModalWindow} /></div>) : null}</div>
+                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) =>
+                        bill.spents.length > 0 ?
+                            <div className="mb-5" key={index}>
+                                <BillCard bill={bill}
+                                    sendBill={this.sendBill}
+                                    showConfirmation={this.showConfirmationModalWindow}
+                                    showDetail={this.showDetailModalWindow}
+                                    inManagement={true}
+                                /></div>
+                            : null) : null}</div>
                 </div>
             </section>
         )

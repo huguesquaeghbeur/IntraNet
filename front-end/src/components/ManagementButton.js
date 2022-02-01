@@ -57,6 +57,19 @@ export default function Management(props) {
 
                                 <Menu.Item>
                                     {({ active }) => (
+                                        <Link to="/management/bills"
+                                            className={classNames(
+                                                active ? 'bg-gray-100 text-gray-900' : 'text-white',
+                                                'block px-4 py-2 text-sm'
+                                            )}
+                                        >
+                                            Note de frais
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+
+                                <Menu.Item>
+                                    {({ active }) => (
                                         <Link to="/collaborator"
                                             className={classNames(
                                                 active ? 'bg-gray-100 text-gray-900' : 'text-white',
@@ -82,7 +95,7 @@ export default function Management(props) {
                         {currentUser === "CFO" ?
                             <Menu.Item>
                                 {({ active }) => (
-                                    <Link to="/bills"
+                                    <Link to="/management/bills"
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-white',
                                             'block px-4 py-2 text-sm'

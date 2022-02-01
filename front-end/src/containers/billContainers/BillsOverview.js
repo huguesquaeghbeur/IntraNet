@@ -1,6 +1,6 @@
 import { PureComponent } from "react"
 import { connect } from 'react-redux';
-import { fetchAllBills, postBill, sendBill, updateSpent, getBillsByDepartment,getBillsByCollaborator, deleteBill } from '../../redux/actions/billsActions'
+import { fetchAllBills, postBill, sendBill, updateSpent, getBillsByDepartment, getBillsByCollaborator, deleteBill } from '../../redux/actions/billsActions'
 import { getUser } from '../../redux/actions/userAction'
 import { getCollaboratorByDepartmentId } from '../../redux/actions/collaboratorAction'
 import { BillCard } from "../../components/billComponents/BillCard";
@@ -26,12 +26,13 @@ export class BillsOverview extends PureComponent {
 
     componentDidMount() {
         this.props.getBillsByCollaborator()
+        this.props.getUser()
     }
 
 
     handleCreateBillClick = () => {
         const formData = new FormData()
-        formData.append("collabId", 1)
+        formData.append("collabId", this.props.user.id)
         this.props.postBill(formData)
     }
 
@@ -49,8 +50,6 @@ export class BillsOverview extends PureComponent {
             bill.isSubmitted = true
             this.props.sendBill(bill)
         }
-        else
-            console.log("dans le else")
     }
     closeConfirmationModalWindow = () => {
         this.setState({
@@ -105,7 +104,15 @@ export class BillsOverview extends PureComponent {
                         showConfirmation={this.showConfirmationModalWindow}
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                     /> : null}
-                        <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} sendBill={this.sendBill} showConfirmation={this.showConfirmationModalWindow} showDetail={this.showDetailModalWindow} /></div>) : null}</div>
+                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) =>
+                        <div className="mb-5" key={index}>
+                            <BillCard bill={bill}
+                                sendBill={this.sendBill}
+                                showConfirmation={this.showConfirmationModalWindow}
+                                showDetail={this.showDetailModalWindow}
+                                inManagement={false} 
+                                />
+                        </div>) : null}</div>
 
                 </div>
             </section>
@@ -132,7 +139,7 @@ const mapActionToProps = (dispatch) => {
         getUser: () => dispatch(getUser()),
         getCollaboratorByDepartmentId: (id) => dispatch(getCollaboratorByDepartmentId(id)),
         getBillsByDepartment: (id) => dispatch(getBillsByDepartment(id)),
-        getBillsByCollaborator : (id) => dispatch(getBillsByCollaborator(id))
+        getBillsByCollaborator: (id) => dispatch(getBillsByCollaborator(id))
     }
 }
 export default connect(mapStateToProps, mapActionToProps)(BillsOverview)

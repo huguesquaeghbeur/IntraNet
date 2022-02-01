@@ -45,8 +45,10 @@ export class FeeLine extends PureComponent {
                 <div className="px-6 py-4 ">
                     <div className="flex justify-between">
                         <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800"><b>{dateFormat(this.state.FeeLine.expenseDate) !== undefined ? dateFormat(this.state.FeeLine.expenseDate) : "Date à binder"}</b></p>
-                        <p><b>{this.state.FeeLine.validate > 1 ? "En cours de validation" : ""}</b></p>
-                        <p><b>{this.state.FeeLine.validate == 0 ? "Demande refusée" : ""}</b></p>
+                        <p><b>{this.state.FeeLine.validate > 1 && this.state.FeeLine.validate < 4  ? "En validation" : ""}</b></p>
+                        <p><b>{this.state.FeeLine.validate == 0 ? "Refusée" : ""}</b></p>
+                        <p><b>{this.state.FeeLine.validate == 4 ? "Validée" : ""}</b></p>
+
                     </div>
                     <hr />
                     <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800">{this.state.FeeLine.missionId !== undefined ? `Mission id : ${this.props.FeeLine.missionId}` : null} </p>
@@ -58,11 +60,11 @@ export class FeeLine extends PureComponent {
                             <button onClick={() => this.handleViewClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                 <FontAwesomeIcon icon={faEye} />
                             </button> : null} */}
-                        {(this.state.FeeLine.validate > 1) ?
+                        {(this.props.inManagement && this.state.FeeLine.validate < 4 )  ?
                             <button onClick={() => this.handleRejectClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                 <FontAwesomeIcon icon={faBan} />
                             </button> : null}
-                        {(!(this.state.FeeLine.validate < 1) && this.state.FeeLine.validate < 5) ?
+                        {(this.props.inManagement && this.state.FeeLine.validate < 4 )  || (!this.props.inManagement && this.state.FeeLine.validate == 1 ) ?
                             <button onClick={() => this.handleSubmitClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                 <FontAwesomeIcon icon={faCheck} />
                             </button> : null}
@@ -74,7 +76,6 @@ export class FeeLine extends PureComponent {
                             <button onClick={() => this.handleDeleteClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                 <FontAwesomeIcon icon={faTrashAlt} />
                             </button> : null}
-
                     </div>
                 </div>
             </div>

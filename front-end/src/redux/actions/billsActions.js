@@ -132,11 +132,14 @@ export function postBill(bill) {
             value: true
         })
         createBill(bill).then(res => {
+            console.log(res)
             dispatch({
                 type: END_ADDING_BILL,
                 bill: res.data.bill
             })
         }).catch(error => {
+            console.log(error)
+
             dispatch({
                 type: ERROR_ADDING_BILL,
                 error: error
