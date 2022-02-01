@@ -16,7 +16,6 @@ class HolidayMenu extends PureComponent {
     }
 
     render() {
-        console.log(this.props)
         return (
             // <!-- Page Container -->
             <div className="flex items-center justify-center bg-white">

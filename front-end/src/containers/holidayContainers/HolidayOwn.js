@@ -26,7 +26,6 @@ class HolidayOwn extends PureComponent {
     }
 
     render() {
-        console.log(this.props.user)
         return (
             <div>
                 <div>

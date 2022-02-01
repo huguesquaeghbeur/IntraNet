@@ -30,7 +30,6 @@ class PostRequestHoliday extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(this.props.user.user.status)
     }
 
     handleCancel = () => {
@@ -63,7 +62,6 @@ class PostRequestHoliday extends PureComponent {
             this.setState({
                 posts: res.data
             })
-            console.log(res.data)
         })
 
         this.setState({
@@ -79,7 +77,6 @@ class PostRequestHoliday extends PureComponent {
     }
 
     render() {
-        console.log(this.props.user.user)
         const { startDate, startOnMorning, endDate, endOnMorning, leaveType, halfDayBreakCount, alertC } = this.state;
         return (
             <div>
