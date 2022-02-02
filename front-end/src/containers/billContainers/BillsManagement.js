@@ -12,6 +12,8 @@ import { getDateNowForBdd, dateFormat } from '../../services/formatService'
 import { generateFormDataFromFeeLine } from '../../services/billsService'
 import { getRole } from "../../services/userService";
 import { Navigate } from "react-router-dom";
+import { ValidateLevel } from '../../datas/bill/billBaseData'
+
 
 export class BillsOverview extends PureComponent {
     constructor(props) {
@@ -63,7 +65,6 @@ export class BillsOverview extends PureComponent {
     }
 
     render() {
-
         return (
             <section>
                 {this.props.management && getRole() == "Basic" ? <Navigate to="/" /> : null}
@@ -76,16 +77,16 @@ export class BillsOverview extends PureComponent {
                 </div>
 
                 <div className="">
-                    {this.state.showDetail ? 
-                    <DetailModalWindow
-                        closeConfirmationModalWindow={this.closeConfirmationModalWindow}
-                        changeValidateLevel={this.changeValidateLevel}
-                        billId={this.state.billId}
-                        bills={this.props.bills}
-                        user={this.props.user}
-                    /> : null}
+                    {this.state.showDetail ?
+                        <DetailModalWindow
+                            closeConfirmationModalWindow={this.closeConfirmationModalWindow}
+                            changeValidateLevel={this.changeValidateLevel}
+                            billId={this.state.billId}
+                            bills={this.props.bills}
+                            user={this.props.user}
+                        /> : null}
                     <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) =>
-                        bill.spents.length > 0 ?
+                        bill.spents.length > 0  ?
                             <div className="mb-5" key={index}>
                                 <BillCard bill={bill}
                                     sendBill={this.sendBill}
@@ -93,7 +94,8 @@ export class BillsOverview extends PureComponent {
                                     showDetail={this.showDetailModalWindow}
                                     inManagement={true}
                                 /></div>
-                            : null) : null}</div>
+                            : null) 
+                            : null}</div>
                 </div>
             </section>
         )

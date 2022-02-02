@@ -10,8 +10,13 @@ import {
     generateFormDataFromFeeLine,
     updateSpentFromApi,
     getBillsByDepartmentApi,
-    getBillsByCollaboratorApi
+    getBillsByCollaboratorApi,
+    getBillsForHRMApi,
+    getBillsForCEOApi
 } from "../../services/billsService";
+import {
+    getRole,
+} from '../../services/userService'
 import {
     getUserFromToken
 } from "../../services/collaboratorData"
@@ -228,8 +233,25 @@ export const getBillsByCollaborator = () => {
             type: IS_LOADING,
             value: true
         })
-        getUserFromToken().then(res => {
-            getBillsByCollaboratorApi(res.data.collaborator.id).then(res => {
+
+        if(getRole=="DepartmentChief"){
+            getUserFromToken().then(res => {
+                getBillsByCollaboratorApi(res.data.collaborator.id).then(res => {
+                    console.log(res)
+    
+                    dispatch({
+                        type: END_GETTING_BILLS_BY_COLLABORATOR,
+                        bills: res.data
+                    })
+                }).catch(err => {
+                    dispatch({
+                        type: ERROR_GETTING_BILLS_BY_COLLABORATOR,
+                        error: err
+                    })
+                })
+            })
+        }else if (getRole=="HRM") {
+            getBillsForHRMApi(res.data.collaborator.id).then(res => {
                 console.log(res)
 
                 dispatch({
@@ -242,7 +264,22 @@ export const getBillsByCollaborator = () => {
                     error: err
                 })
             })
-        })
+        }else if (getRole=="CEO") {
+            getBillsForCEOApi(res.data.collaborator.id).then(res => {
+                console.log(res)
+
+                dispatch({
+                    type: END_GETTING_BILLS_BY_COLLABORATOR,
+                    bills: res.data
+                })
+            }).catch(err => {
+                dispatch({
+                    type: ERROR_GETTING_BILLS_BY_COLLABORATOR,
+                    error: err
+                })
+            })
+        }
+
 
     }
 }

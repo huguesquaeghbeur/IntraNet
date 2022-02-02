@@ -38,6 +38,13 @@ export const getBillsByCollaboratorApi = (id) => {
     return axios.get(baseUrl+"/bill/collaborator/"+id)
 }
 
+export const getBillsForHRMApi = () => {
+    return axios.get(baseUrl+"/bill/HrmManagament/")
+}
+export const getBillsForCEOApi = () => {
+    return axios.get(baseUrl+"/bill/CeoManagament/")
+}
+
 export const generateFormDataFromFeeLine = (feeLine) =>{
     console.log(feeLine)
     const formData = new FormData()

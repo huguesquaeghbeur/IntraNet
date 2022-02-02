@@ -14,9 +14,7 @@ export default class DetailModalWindow extends PureComponent {
         }
 
     }
-    componentDidMount(){
-        console.log( ValidateLevel[this.props.user.status])
-    }
+
     handleCancelAction() {
         this.props.closeConfirmationModalWindow()
     }

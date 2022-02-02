@@ -58,8 +58,21 @@ namespace IntraNetAPI.Controllers
         {
             Collaborator collaborator = _collaboratorRepository.FinById(id);
             if (collaborator != null)
-                return Ok(_billRepository.Search(b => b.Collaborator.Id == id ));
+                if (collaborator.Status == Collaborator.StatusEnum.DepartmentChief)
+                    return Ok(_billRepository.Search(b => b.Collaborator.Id == id ));
             return NotFound(new { Message = "Collaborator not found" });
+        }
+
+        [HttpGet("HrmManagament")]
+        public IActionResult GetForHrm()
+        {
+                return Ok(_billRepository.Search(b => (b.Collaborator.DepartmentId == 3 && b.IsSubmitted) || (b.Collaborator.Status == Collaborator.StatusEnum.CEO && b.IsSubmitted) || (b.Collaborator.Status == Collaborator.StatusEnum.CFO && b.IsSubmitted)));
+        }
+
+        [HttpGet("CeoManagament")]
+        public IActionResult GetForCfo()
+        {
+            return Ok(_billRepository.Search(b => (b.Collaborator.Status == Collaborator.StatusEnum.HRM && b.IsSubmitted)));
         }
 
         [HttpPost]

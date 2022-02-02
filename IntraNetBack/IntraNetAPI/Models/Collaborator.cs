@@ -46,6 +46,5 @@ namespace IntraNetAPI.Models
             CFO,
             CEO
         }
-
     }
 }
