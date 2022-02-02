@@ -45,8 +45,8 @@ export function getUser() {
             value: true
         })
         getUserFromToken().then(res => {
-            console.log("dans le res")
-            console.log(res)
+            // console.log("dans le res")
+            // console.log(res)
             dispatch({
                 type: END_GETTING_USER,
                 user: res.data.collaborator,

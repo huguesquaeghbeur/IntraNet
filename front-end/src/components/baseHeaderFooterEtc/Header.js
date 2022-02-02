@@ -51,6 +51,7 @@ class HeaderBanner extends PureComponent {
                                     <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Departments</Link>
                                     <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborators</Link>
                                     <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Bills</Link>
+                                    <Link to="/holiday" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Holidays</Link>
                                 </div>
                                 <div className='flex flex-col'>
                                     <Link to="/"  >
