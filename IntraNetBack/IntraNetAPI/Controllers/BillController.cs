@@ -60,6 +60,8 @@ namespace IntraNetAPI.Controllers
             if (collaborator != null)
                 if (collaborator.Status == Collaborator.StatusEnum.DepartmentChief)
                     return Ok(_billRepository.Search(b => b.Collaborator.Id == id ));
+                else
+                    return NotFound(new { Message = "Collaborator is not a department chief" });
             return NotFound(new { Message = "Collaborator not found" });
         }
 

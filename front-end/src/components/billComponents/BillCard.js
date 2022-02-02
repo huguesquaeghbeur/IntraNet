@@ -15,6 +15,7 @@ export class BillCard extends PureComponent {
         this.state = {
         }
     }
+
     getTotal() {
         var temp = 0
         if (this.props.bill.spents !== null)

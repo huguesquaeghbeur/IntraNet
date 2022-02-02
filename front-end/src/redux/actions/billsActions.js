@@ -233,26 +233,9 @@ export const getBillsByCollaborator = () => {
             type: IS_LOADING,
             value: true
         })
-
-        if(getRole=="DepartmentChief"){
-            getUserFromToken().then(res => {
-                getBillsByCollaboratorApi(res.data.collaborator.id).then(res => {
-                    console.log(res)
-    
-                    dispatch({
-                        type: END_GETTING_BILLS_BY_COLLABORATOR,
-                        bills: res.data
-                    })
-                }).catch(err => {
-                    dispatch({
-                        type: ERROR_GETTING_BILLS_BY_COLLABORATOR,
-                        error: err
-                    })
-                })
-            })
-        }else if (getRole=="HRM") {
-            getBillsForHRMApi(res.data.collaborator.id).then(res => {
-                console.log(res)
+        getUserFromToken().then(res => {
+            console.log(res.data.collaborator.id)
+            getBillsByCollaboratorApi(res.data.collaborator.id).then(res => {
 
                 dispatch({
                     type: END_GETTING_BILLS_BY_COLLABORATOR,
@@ -264,22 +247,7 @@ export const getBillsByCollaborator = () => {
                     error: err
                 })
             })
-        }else if (getRole=="CEO") {
-            getBillsForCEOApi(res.data.collaborator.id).then(res => {
-                console.log(res)
-
-                dispatch({
-                    type: END_GETTING_BILLS_BY_COLLABORATOR,
-                    bills: res.data
-                })
-            }).catch(err => {
-                dispatch({
-                    type: ERROR_GETTING_BILLS_BY_COLLABORATOR,
-                    error: err
-                })
-            })
-        }
-
+        })
 
     }
 }
@@ -291,19 +259,52 @@ export const getBillsByDepartment = () => {
             value: true
         })
         getUserFromToken().then(res => {
-            getBillsByDepartmentApi(res.data.collaborator.departmentId).then(res => {
-                dispatch({
-                    type: END_GETTING_BILLS_BY_DEPARTMENTID,
-                    bills: res.data
+            console.log(res)
+            if (res.data.collaborator.status == 2) {
+                getBillsByDepartmentApi(res.data.collaborator.departmentId).then(res => {
+                    console.log(res.data)
+
+                    dispatch({
+                        type: END_GETTING_BILLS_BY_DEPARTMENTID,
+                        bills: res.data
+                    })
+                }).catch(err => {
+                    dispatch({
+                        type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+                        error: err
+                    })
                 })
-            }).catch(err => {
-                dispatch({
-                    type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
-                    error: err
+            } else if (res.data.collaborator.status == 3) {
+                getBillsForHRMApi().then(res => {
+                    console.log(res)
+
+                    dispatch({
+                        type: END_GETTING_BILLS_BY_DEPARTMENTID,
+                        bills: res.data
+                    })
+                }).catch(err => {
+                    dispatch({
+                        type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+                        error: err
+                    })
                 })
-            })
+            } else if (res.data.collaborator.status == 5) {
+                getBillsForCEOApi().then(res => {
+                    console.log(res)
+                    dispatch({
+                        type: END_GETTING_BILLS_BY_DEPARTMENTID,
+                        bills: res.data
+                    })
+                }).catch(err => {
+                    dispatch({
+                        type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+                        error: err
+                    })
+                })
+            }
         })
     }
 }
+
 
 

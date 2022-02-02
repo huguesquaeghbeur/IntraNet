@@ -29,6 +29,7 @@ export class BillsOverview extends PureComponent {
         this.props.getUser()
     }
 
+
     closeConfirmationModalWindow = () => {
         this.setState({
             showConfirmation: false,
@@ -85,16 +86,18 @@ export class BillsOverview extends PureComponent {
                             bills={this.props.bills}
                             user={this.props.user}
                         /> : null}
-                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) =>
-                        bill.spents.length > 0  ?
-                            <div className="mb-5" key={index}>
-                                <BillCard bill={bill}
-                                    sendBill={this.sendBill}
-                                    showConfirmation={this.showConfirmationModalWindow}
-                                    showDetail={this.showDetailModalWindow}
-                                    inManagement={true}
-                                /></div>
-                            : null) 
+                    <div className="flex flex-wrap justify-around ">
+                        {this.props.bills !== undefined ?
+                            this.props.bills.map((bill, index) =>
+                                bill.spents.length > 0 ?
+                                    <div className="mb-5" key={index}>
+                                        <BillCard bill={bill}
+                                            sendBill={this.sendBill}
+                                            showConfirmation={this.showConfirmationModalWindow}
+                                            showDetail={this.showDetailModalWindow}
+                                            inManagement={true}
+                                        /></div>
+                                    : null)
                             : null}</div>
                 </div>
             </section>

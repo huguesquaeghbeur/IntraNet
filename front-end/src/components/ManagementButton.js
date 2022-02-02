@@ -148,7 +148,7 @@ export default function Management(props) {
                             <div>
                                 <Menu.Item>
                                     {({ active }) => (
-                                        <Link tto="management/bills"
+                                        <Link to="management/bills"
                                             className={classNames(
                                                 active ? 'bg-gray-100 text-gray-900' : 'text-white',
                                                 'block px-4 py-2 text-sm'
