@@ -1,7 +1,7 @@
 import axios from "axios";
 import {Component, createRef} from "react";
-import AddMission from "../components/AddMission";
-import {Link, NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
+import '../index.css'
 
 export default class MissionOverview extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ export default class MissionOverview extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/missions/all')
+        axios.get('http://localhost:5000/api/mission/all')
             .then(res => {
                 this.setState({missions: res.data})
             })
@@ -22,32 +22,34 @@ export default class MissionOverview extends Component {
             })
     }
 
-
+    boolConverter(bool){
+        if(bool === true) {
+            bool = "Oui"
+            return bool
+        }
+        else if (bool === false) {
+            bool = "Non"
+            return bool
+        }
+    }
 
     render() {
         return(
-            <div className="container">
-                <h1 className="title">Liste des missions</h1>
-                <Link to="/missions/create" className="btn">Créer une mission</Link>
-                <div className="missionsList">
-                    {this.state.missions.map(mission => {
-                        return <div className="max-w-xs overflow-hidden rounded-lg shadow-lg">
-                            <div className="px-6 py-4">
-                                <p>ID : {mission.id}</p>
-                                <p>Nom : {mission.name}</p>
-                                <p>Description : {mission.description}</p>
-                                <p>Date de début : {mission.startTime}</p>
-                                <p>Date de fin : {mission.endTime}</p>
-                                <p><input type="checkbox" id="terminated" className="terminateCheckbox" ref={this.terminated}/> Terminée</p>
-                                <div className="max-w-xs overflow-hidden bg-yellow-600 flex justify-center rounded-lg shadow-lg">
-                                    <div className="px-6 py-4">
-                                        <button className="cardDetails">Détails</button>
-                                    </div>
-                                </div>
+            <div>
+                <h1>La liste des missions</h1>
+                <Link to={"/mission/add/"}>Créer une mission</Link>
+                {this.state.missions.map((mission, key) => {
+                    return(<div className="max-w-xs overflow-hidden rounded-lg shadow-lg">
+                        <div className="px-6 py-4">
+                            <p>ID : {mission.id}</p>
+                            <p>Nom : {mission.name}</p>
+                            <p>Active : {this.boolConverter(mission.isActive)}</p>
+                            <div className="rounded-full">
+                                <Link to={"/mission/detail/" + mission.id}>Détails</Link>
                             </div>
                         </div>
-                    })}
-                </div>
+                    </div>)
+                })}
             </div>
         )
     }

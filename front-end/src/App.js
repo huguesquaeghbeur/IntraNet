@@ -30,9 +30,12 @@ import Home from "./containers/Home"
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
 import MissionOverview from "./containers/MissionOverview";
+import MissionDetails from "./components/MissionComponents/MissionDetails";
 import { getRole } from './services/userService'
 import BillsManagement from "./containers/billContainers/BillsManagement";
 import HolidayOwn from "./containers/holidayContainers/HolidayOwn";
+import AddMission from "./components/MissionComponents/AddMission";
+import UpdateMission from "./components/MissionComponents/UpdateMission";
 // import BigCalendar from 'react-big-calendar';
 // import Year from './Year';
 
@@ -58,6 +61,7 @@ function App() {
                     <Route
                         path="bills/:id"
                         element={localStorage.getItem("token") !== null ? <BillById /> : <UserLogin />} />
+
                     <Route
                         path="holiday"
                         element={localStorage.getItem("token") !== null ? <HolidayMenu /> : <UserLogin />}
@@ -115,15 +119,6 @@ function App() {
                         element={localStorage.getItem("token") !== null ? <PostRequestDepartment /> : <UserLogin />}
                     />
                     <Route
-
-                        path="missions/create"
-                        element={<AddMission/>}
-                    />
-                    <Route
-                        path="missions"
-                        element={<MissionOverview/>}
-                    />
-                    <Route
                         path="departments/:id"
                         element={localStorage.getItem("token") !== null ? <DepartmentById /> : <UserLogin />}
                     />
@@ -139,6 +134,28 @@ function App() {
                     <Route
                         path="*"
                         element={<Error />}
+                    />
+
+                    {/*ROUTES MISSIONS*/}
+                    <Route
+                        path="missions"
+                        element={localStorage.getItem("token") !== null ? <MissionOverview/> : <Home/>}
+                    />
+                    <Route
+                        path="mission/detail/:id"
+                        element={localStorage.getItem("token") !== null ? <MissionDetails /> : <Home />}
+                    />
+                    <Route
+                        path="mission/add"
+                        element={localStorage.getItem("token") !== null ? <AddMission /> : <Home />}
+                    />
+                    <Route
+                        path="mission/update/:id"
+                        element={localStorage.getItem("token") !== null ? <UpdateMission /> : <Home />}
+                    />
+                    <Route
+                        path="mission/delete/:id"
+                        element={localStorage.getItem("token") !== null ? <MissionOverview/> : <Home/>}
                     />
                 </Routes>
             </Router>

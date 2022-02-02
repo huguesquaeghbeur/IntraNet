@@ -1,6 +1,6 @@
 import axios from "axios";
 import {tokenToFormData} from "./userService"
-const baseUrl = 'http://localhost:42515/intranet/v1';
+const baseUrl = 'http://localhost:5000/intranet/v1';
 
 export const postCollaboratorData = (data) => {
     return axios.post(baseUrl + '/collaborator', data)

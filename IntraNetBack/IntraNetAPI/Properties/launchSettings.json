@@ -11,12 +11,8 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-<<<<<<< HEAD
-      "launchUrl": "mission",
-=======
+      "launchBrowser": false,
       "launchUrl": "intranet/v1/collaborator",
->>>>>>> origin/Dev
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -24,12 +20,8 @@
     "IntraNetAPI": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
-      "launchBrowser": true,
-<<<<<<< HEAD
-      "launchUrl": "mission",
-=======
+      "launchBrowser": false,
       "launchUrl": "intranet/v1/collaborator",
->>>>>>> origin/Dev
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -44,7 +44,9 @@ namespace IntraNetAPI
                 {
                     builder.WithMethods("GET").WithOrigins("https://localhost:5000");
                     builder.WithMethods("POST").WithOrigins("http://localhost:3000");
-
+                    builder.WithMethods("PATCH").WithOrigins("http://localhost:3000");
+                    builder.WithMethods("PUT").WithOrigins("http://localhost:3000");
+                    builder.WithMethods("DELETE").WithOrigins("http://localhost:3000");
                 });
             });
         }
