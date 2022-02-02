@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ButtonComponent from '../toolComponents/ButtonComponent';
-import { updateHolidayApi } from '../../services/holidayData';
+import { updateHolidayAction } from '../../redux/actions/holidayAction';
 
 class HolidayForm extends PureComponent {
     constructor(props) {
@@ -38,7 +38,7 @@ class HolidayForm extends PureComponent {
             formData.append('endOnMorning', this.state.endOnMorning);
             formData.append('leaveType', this.state.leaveType);
         }
-        await updateHolidayApi(this.props.holiday.id, formData).then(res => {
+        await updateHolidayAction(this.props.holiday.id, formData).then(res => {
             console.log("res.data")
             console.log(res.data)
             this.setState({

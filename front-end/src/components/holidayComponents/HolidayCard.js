@@ -16,20 +16,20 @@ class HolidayCard extends Component {
         }
     }
 
-    componentDidMount(){
-        getCollaboratorById(this.props.post.collaboratorId).then(res => {
+    componentDidMount = async () => {
+        await getCollaboratorById(this.props.post.collaboratorId).then(res => {
             this.setState({
                 collab: res.data
             })
-        }).then(() => {
-            // getDepartmentRequestById(this.state.collab.department).then(res => {
-            getDepartmentRequestById(1).then(res => {
-                this.setState({
-                    department: res.data
-                })
-                
-            })
-        })
+        }, [])
+        // .then(() => {
+        //     // getDepartmentRequestById(this.state.collab.department).then(res => {
+        //     getDepartmentRequestById(1).then(res => {
+        //         this.setState({
+        //             department: res.data
+        //         })
+        //     })
+        // })
     }
 
     render() {
@@ -38,23 +38,23 @@ class HolidayCard extends Component {
             <div>
                 {this.props.post !== undefined ? (
                     <div key={this.props.post.id} className="m-2 p-2 md:px-7 xl:px-8 rounded-[20px] bg-white shadow-md hover:shadow-lg mb-8">
-                        <div className="flex justify-between">
+                        <div className="flex">
                             <div>
                                 {(this.props.post.validation === 1) ? (
-                                    <span className="text-sm px-3 bg-yellow-200 text-yellow-700 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation du CDS</span>
+                                    <span className="text-sm px-3 bg-yellow-200 text-yellow-700 rounded-full"><FontAwesomeIcon icon={faClock} /></span>
                                 ) : (this.props.post.validation === 2) ? (
-                                    <div className="text-sm px-3 bg-orange-200 text-orange-600 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation RH</div>
+                                    <div className="text-sm px-3 bg-orange-200 text-orange-600 rounded-full"><FontAwesomeIcon icon={faClock} /></div>
                                 ) : (this.props.post.validation === 3) ? (
-                                    <div className="text-sm px-3 bg-orange-400 text-orange-900 rounded-full"><FontAwesomeIcon icon={faCheck} /> en attente de validation DRH</div>
+                                    <div className="text-sm px-3 bg-orange-400 text-orange-900 rounded-full"><FontAwesomeIcon icon={faClock} /></div>
                                 )
                                     : (this.props.post.validation === 4) ? (
-                                        <div className="text-sm px-3 bg-green-200 text-green-800 rounded-full"><FontAwesomeIcon icon={faCheck} /> Validé</div>
+                                        <div className="text-sm px-3 bg-green-200 text-green-800 rounded-full"><FontAwesomeIcon icon={faCheck} /></div>
                                     ) : (this.props.post.validation === 0) ? (
-                                        <div className="text-sm px-3 bg-red-200 text-red-800 rounded-full"><FontAwesomeIcon icon={faTimesCircle} /> Refusé</div>
+                                        <div className="text-sm px-3 bg-red-200 text-red-800 rounded-full"><FontAwesomeIcon icon={faTimesCircle} /></div>
                                     ) : null}
                             </div>
-                            <div className="rounded-xl bg-slate-300 text-slate-700 p-1 m-1">
-                                # {this.props.post.id}
+                            <div className="text-slate-700 text-end text-sm pl-6">
+                                {this.props.post.id}
                             </div>
                         </div>
                         <div className="flex justify-center">

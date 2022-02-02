@@ -21,17 +21,18 @@ class HolidayById extends PureComponent {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         let url = window.location.pathname.slice(9);
-        // this.props.getUser()
         getHolidayRequestById(url).then(res => {
-            
+
             this.setState({
+                ...this.state,
                 post: res.data,
                 postId: res.data.id,
                 collab: res.data.collaboratorId,
             })
-        }).catch(error => {
+        })
+        await this.props.getUser().catch(error => {
             console.log(error)
         })
     }
@@ -92,21 +93,37 @@ class HolidayById extends PureComponent {
     }
 
     render() {
+        console.log(this.props)
+
         return (
             <div>
                 <div>
                     <Link to="/holiday/list"><ButtonComponent type="button" color="bg-indigo-500" colorText="white" body="Retour" logo={faBackspace} /></Link>
                 </div>
 
-                {/* <div className="flex items-center justify-center bg-white">
+                <div className="flex items-center justify-center bg-white">
                     <div className="flex flex-col">
 
                         <div className="flex flex-col">
                             <div className="text-gray-400 font-bold uppercase">
                                 Demande de congés n° {this.state.post.id}
                             </div>
-                            {this.props.user.user != undefined && this.state.post && (this.props.user.user.id == this.state.post.collaboratorId) ?
-                           
+
+                            <div className="flex flex-col justify-center">
+                                <HolidayCard post={this.state.post} />
+                                <div className="flex justify-center">
+                                    <ButtonComponent type="button" color="bg-red-500" colorText="white"
+                                        body="Supprimer" logo={faTrashAlt}
+                                        onClickMethod={() => this.handleOpenModal()} />
+                                    <ButtonComponent type="button" color="bg-indigo-500" colorText="white"
+                                        body="Modifier" logo={faPencilAlt}
+                                        onClickMethod={() => this.updateClickOpenForm()} />
+                                </div>
+                            </div>
+
+
+                            {/* {this.props.user.user != undefined && this.state.post && (this.props.user.user.id == this.state.post.collaboratorId) ?
+
                                 <div>
                                     {!this.state.showUpdateForm ?
                                         <div className="flex flex-col justify-center">
@@ -154,7 +171,7 @@ class HolidayById extends PureComponent {
                                     </div>
                                     :
                                     this.props.user.user != undefined && this.state.post && (this.props.user.user.status == 0 && this.props.user.user.departmentId == 1 && this.state.post.validation == 2) && this.state.post.collaboratorId != this.props.user.user.id ?
-                                        <div>
+                                        < div >
                                             <div className="flex flex-col justify-center">
                                                 <HolidayCard post={this.state.post} />
                                                 <div className="flex justify-center">
@@ -169,7 +186,8 @@ class HolidayById extends PureComponent {
                                                         onClickMethod={() => this.handleValidate(0)} />
                                                 </div>
                                             </div>
-                                        </div> :
+                                        </div>
+                                        :
                                         this.props.user.user != undefined && this.state.post && (this.props.user.user.id == 3 && this.props.user.user.departmentId == 1 && this.state.post.validation == 3) && this.state.post.collaboratorId != this.props.user.user.id ?
                                             <div>
                                                 <div className="flex flex-col justify-center">
@@ -183,7 +201,8 @@ class HolidayById extends PureComponent {
                                                             onClickMethod={() => this.handleValidate(0)} />
                                                     </div>
                                                 </div>
-                                            </div> :
+                                            </div>
+                                            :
                                             this.props.user.user != undefined && this.state.post && (this.props.user.user.status == 5 && this.state.post.validation == 3) && this.state.post.collaboratorId != this.props.user.user.id ?
                                                 <div>
                                                     <div className="flex flex-col justify-center">
@@ -197,8 +216,52 @@ class HolidayById extends PureComponent {
                                                                 onClickMethod={() => this.handleValidate(0)} />
                                                         </div>
                                                     </div>
-                                                </div> : null */}
-                                {/* // this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && (this.state.post.validation == 1 || this.state.post.validation == 2) ?
+                                                </div>
+                                                : null} */}
+                        </div>
+                    </div>
+                </div>
+            </div >
+        );
+    }
+}
+
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps")
+    return {
+        user: state.user
+    }
+}
+
+const mapActionToProps = (dispatch) => {
+    console.log("mapActionToProps")
+    return {
+        getUser: () => dispatch(getUser())
+    }
+}
+
+// export default connect(mapStateToProps, mapActionToProps)(HolidayById);
+
+export default connect(mapStateToProps, mapActionToProps)(function GetId() {
+    const { id } = useParams()
+    return (
+        <HolidayById holidayId={id} />
+    )
+})
+
+
+
+
+
+
+
+
+
+
+
+
+/* : null
+                                /* // this.state.post && (this.state.idCollab == this.state.post.collaboratorId || this.state.role == "chief" || this.state.department == "Ressources Humaines") && (this.state.post.validation == 1 || this.state.post.validation == 2) ?
                                 //     <div className="bg-orange-400 text-white">
                                 //         Demande en traitement
                                 //     </div>
@@ -219,35 +282,4 @@ class HolidayById extends PureComponent {
                                 //                 :
                                 //                 <div className="bg-red-400 text-white">
                                 //                     Demande inexistante ou droits non appropriés
-                                //                 </div>
-                            } */}
-                        {/* </div>
-                    </div>
-                </div> */}
-            </div>
-        );
-    }
-}
-
-const mapStateToProps = (state) => {
-    console.log("mapStateToProps")
-    return {
-        user: state.user
-    }
-}
-
-const mapActionToProps = (dispatch) => {
-    console.log("mapActionToProps")
-    return {
-        getUser: () => dispatch(getUser()),
-    }
-}
-
-// export default connect(mapStateToProps, mapActionToProps)(HolidayById);
-
-export default connect(mapStateToProps, mapActionToProps)(function GetId() {
-    const { id } = useParams()
-    return (
-        <HolidayById holidayId={id} />
-    )
-})
+                                //                 </div> */
