@@ -1,5 +1,7 @@
 import { PureComponent } from "react"
 
+// parent container : billContainers/BillsOverview
+
 
 export default class ConfirmationModalWindow extends PureComponent {
     constructor(props) {

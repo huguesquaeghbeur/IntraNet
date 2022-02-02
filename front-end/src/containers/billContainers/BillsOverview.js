@@ -1,53 +1,60 @@
 import { PureComponent } from "react"
 import { connect } from 'react-redux';
-import { fetchAllBills, postBill, updateBill, deleteBill } from '../../redux/actions/billsActions'
+import { fetchAllBills, postBill, sendBill, updateSpent, getBillsByDepartment, getBillsByCollaborator, deleteBill } from '../../redux/actions/billsActions'
+import { getUser } from '../../redux/actions/userAction'
+import { getCollaboratorByDepartmentId } from '../../redux/actions/collaboratorAction'
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
+import DetailModalWindow from "../../components/billComponents/DetailModalWindow"
+import { faIgloo, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getDateNowForBdd, dateFormat } from '../../services/formatService'
+import { generateFormDataFromFeeLine } from '../../services/billsService'
+import { getRole } from "../../services/userService";
+import { Navigate } from "react-router-dom";
 
 export class BillsOverview extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
             showConfirmation: false,
+            showDetail: false,
         }
     }
 
+
+
     componentDidMount() {
-        this.props.getAllBillsFromApi()
+        this.props.getBillsByCollaborator()
+        this.props.getUser()
     }
 
-    // handleUpdateClick = () => {
-    //     const formdata = new FormData()
-    //     formdata.append('billId', 7)
-    //     formdata.append('amount', 66)
-    //     formdata.append('commentary', "Ca à l'air de marcher")
-    //     formdata.append('advanceCash', false)
-    //     formdata.append('isExactAmount', false)
-    //     formdata.append('missionId', 1)
-    //     formdata.append('collabId', 1)
 
-    //     console.log("formdata " + formdata)
-
-    //     this.props.updateBill(formdata)
-    // }
     handleCreateBillClick = () => {
         const formData = new FormData()
-        formData.append("collabId", 1)
+        formData.append("collabId", this.props.user.id)
         this.props.postBill(formData)
     }
 
     deleteBill = () => {
-        console.log("dans le delete apres modal")
-        console.log(this.state.idBillToDelete)
         this.props.deleteBill(this.state.idBillToDelete)
         this.setState({
             showConfirmation: false,
             idBillToDelete: undefined
         })
     }
+    sendBill = (bill) => {
+        const b = this.props.bills.filter(b => b.submissionDate == getDateNowForBdd())
+        if (this.props.bills.filter(b => dateFormat(b.submissionDate) == dateFormat(getDateNowForBdd())).length == 0) {
+            bill.submissionDate = getDateNowForBdd()
+            bill.isSubmitted = true
+            this.props.sendBill(bill)
+        }
+    }
     closeConfirmationModalWindow = () => {
         this.setState({
-            showConfirmation: false
+            showConfirmation: false,
+            showDetail: false
         })
     }
     showConfirmationModalWindow = (id) => {
@@ -56,31 +63,57 @@ export class BillsOverview extends PureComponent {
             idBillToDelete: id
         })
     }
+    showDetailModalWindow = (id) => {
+        this.setState({
+            showDetail: true,
+            billId: id
+        })
+
+    }
+
+    changeValidateLevel = (feeLine) => {
+        this.props.updateSpent(feeLine)
+        this.setState({
+            showDetail: false
+        }, () => {
+            this.showDetailModalWindow(feeLine.billId)
+        })
+    }
 
     render() {
-        console.log(this.props.isLoading)
+
         return (
             <section>
+                {this.props.management && getRole() == "Basic" ? <Navigate to="/" /> : null}
+                {console.log("render")}
                 <h1 className="italic text-3xl mb-5 text-center">Gestion des notes de frais</h1>
-                    <div className="text-center m-2 ">
-                        {/* <button onClick={() => this.handleCreateBillClick()} className="h-10 px-5 mb-5 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">Ajouter une note de frais</button> */}
-                        <button onClick={() => this.handleCreateBillClick()} class="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-indigo-800">
-                            <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
-                        </button>
-                    </div>
-                    <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
-                        <svg className="animate-spin h-5 w-5 mr-3 text-indigo-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                    </div>
-                <div>
+                <div className="text-center m-2 ">
+                    {/* <button onClick={() => this.handleCreateBillClick()} className="h-10 px-5 mb-5 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">Ajouter une note de frais</button> */}
+                    <button onClick={() => this.handleCreateBillClick()} class="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-indigo-800">
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                </div>
+                <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
+                    <svg className="animate-spin h-5 w-5 mr-3 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                </div>
+                <div className="">
                     {this.state.showConfirmation ? <ConfirmationModalWindow
                         deleteBillAction={this.deleteBill}
                         showConfirmation={this.showConfirmationModalWindow}
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                     /> : null}
+                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) =>
+                        <div className="mb-5" key={index}>
+                            <BillCard bill={bill}
+                                sendBill={this.sendBill}
+                                showConfirmation={this.showConfirmationModalWindow}
+                                showDetail={this.showDetailModalWindow}
+                                inManagement={false} 
+                                />
+                        </div>) : null}</div>
 
-                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) => <div className="mb-5" key={index}><BillCard bill={bill} showConfirmation={this.showConfirmationModalWindow} /></div>) : null}</div>
                 </div>
             </section>
         )
@@ -90,7 +123,9 @@ export class BillsOverview extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         bills: state.bills.bills,
-        isLoading: state.bills.isLoading
+        isLoading: state.bills.isLoading,
+        user: state.user.user,
+        collaboratorByDepartment: state.collaborator.collaboratorsByDepartment
     }
 }
 
@@ -98,9 +133,13 @@ const mapActionToProps = (dispatch) => {
     return {
         getAllBillsFromApi: () => dispatch(fetchAllBills()),
         postBill: (bill) => dispatch(postBill(bill)),
-        updateBill: (bill) => dispatch(updateBill(bill)),
-        deleteBill: (id) => dispatch(deleteBill(id))
+        sendBill: (bill) => dispatch(sendBill(bill)),
+        deleteBill: (id) => dispatch(deleteBill(id)),
+        updateSpent: (feeLine) => dispatch(updateSpent(feeLine)),
+        getUser: () => dispatch(getUser()),
+        getCollaboratorByDepartmentId: (id) => dispatch(getCollaboratorByDepartmentId(id)),
+        getBillsByDepartment: (id) => dispatch(getBillsByDepartment(id)),
+        getBillsByCollaborator: (id) => dispatch(getBillsByCollaborator(id))
     }
 }
-
 export default connect(mapStateToProps, mapActionToProps)(BillsOverview)

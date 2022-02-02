@@ -3,6 +3,7 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
+    Navigate
 } from "react-router-dom";
 import './index.css';
 
@@ -22,12 +23,16 @@ import DepartmentById from "./components/DptNewFolder/DepartmentById";
 import { DepartmentsOverview } from "./containers/DepartmentContainer/DepartmentsOverview";
 import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
-
-
+import UserLogin from "./components/userPage";
+import Error from "./containers/Error"
+import Home from "./containers/Home"
 
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
 import MissionOverview from "./containers/MissionOverview";
+import { getRole } from './services/userService'
+import BillsManagement from "./containers/billContainers/BillsManagement";
+import HolidayOwn from "./containers/holidayContainers/HolidayOwn";
 // import BigCalendar from 'react-big-calendar';
 // import Year from './Year';
 
@@ -39,68 +44,75 @@ function App() {
         <div className="App">
             <Router>
                 <div>
-                    <HeaderBanner/>
+                    <HeaderBanner />
                 </div>
                 <Routes>
                     <Route
                         path="bills"
-                        element={<BillsOverview />}
+                        element={localStorage.getItem("token") !== null ? <BillsOverview /> : <UserLogin />}
+                    />
+                    <Route
+                        path="management/bills"
+                        element={localStorage.getItem("token") !== null ? <BillsManagement/> : <Error />}
                     />
                     <Route
                         path="bills/:id"
-                        element={<BillById />}/>
+                        element={localStorage.getItem("token") !== null ? <BillById /> : <UserLogin />} />
                     <Route
                         path="holiday"
-                        element={<HolidayMenu />}
+                        element={localStorage.getItem("token") !== null ? <HolidayMenu /> : <UserLogin />}
                     />
                     <Route
                         path="holiday/list"
-                        element={<HolidayList />}
+                        element={localStorage.getItem("token") !== null ? <HolidayList /> : <UserLogin />}
+                    />
+                    <Route
+                        path="holiday/own"
+                        element={localStorage.getItem("token") !== null ? <HolidayOwn /> : <UserLogin />}
                     />
                     <Route
                         path="holiday/:id"
-                        element={<HolidayById />}
+                        element={localStorage.getItem("token") !== null ? <HolidayById /> : <UserLogin />}
                     />
                     <Route
                         path="holiday/post"
-                        element={<PostRequestHoliday />}
-                        
+                        element={localStorage.getItem("token") !== null ? <PostRequestHoliday /> : <UserLogin />}
                     />
                     <Route
                         path="infos"
-                        element={<InfoOverview />}
+                        element={localStorage.getItem("token") !== null ? <InfoOverview /> : <UserLogin />}
                     />
                     <Route
                         path="infolist"
-                        element={<InfoList />}
+                        element={localStorage.getItem("token") !== null ? <InfoList /> : <UserLogin />}
                     />
                     <Route
                         path="collaborator"
-                        element={<CollaboratorPage />}
+                        element={localStorage.getItem("token") !== null ? <CollaboratorPage /> : <UserLogin />}
                     />
                     <Route
                         path="collaborator/post"
-                        element={<AddCollaborator/>}
+                        element={localStorage.getItem("token") !== null ? <AddCollaborator /> : <UserLogin />}
                     />
                     <Route
                         path="collaborator/get"
-                        element={<CollaboratorList/>}
+                        element={localStorage.getItem("token") !== null ? <CollaboratorList /> : <UserLogin />}
                     />
                     <Route
                         path="collaborator/management/:id"
-                        element={<CollaboratorManagement/>}
+                        element={localStorage.getItem("token") !== null ? <CollaboratorManagement /> : <UserLogin />}
                     />
-                        <Route
+                    <Route
                         path="departments"
-                        element={<DepartmentsOverview/>}
-                    />                    
+                        element={localStorage.getItem("token") !== null ? <DepartmentsOverview /> : <UserLogin />}
+                    />
                     <Route
                         path="departments/list"
-                        element={<DepartmentList/>}
+                        element={localStorage.getItem("token") !== null ? <DepartmentList /> : <UserLogin />}
                     />
                     <Route
                         path="departments/post"
-                        element={<PostRequestDepartment/>}
+                        element={localStorage.getItem("token") !== null ? <PostRequestDepartment /> : <UserLogin />}
                     />
                     <Route
 
@@ -113,11 +125,20 @@ function App() {
                     />
                     <Route
                         path="departments/:id"
-                        element={<DepartmentById/>}
-                    />    
+                        element={localStorage.getItem("token") !== null ? <DepartmentById /> : <UserLogin />}
+                    />
                     <Route
                         path="departments/description"
-                        element={<DepartmentDescriptionUniqueId/>}
+                        element={localStorage.getItem("token") !== null ? <DepartmentDescriptionUniqueId /> : <UserLogin />}
+                    />
+                    {/* <Route></Route> */}
+                    <Route
+                        path=""
+                        element={localStorage.getItem("token") === null ? <UserLogin /> : <Home />}
+                    />
+                    <Route
+                        path="*"
+                        element={<Error />}
                     />
                 </Routes>
             </Router>

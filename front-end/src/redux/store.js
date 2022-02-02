@@ -1,6 +1,6 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import collaboratorReducer from './reducers/collaboratorReducer'
-// import userReducer from './reducers/userReducer'
+import userReducer from './reducers/userReducer'
 import billsReducer from './reducers/billsReducer'
 import thunk from 'redux-thunk'
 import { HolidayReducer } from './reducers/holidayReducer';
@@ -11,10 +11,10 @@ const composeEnhancer = compose
 
 export default createStore(
     combineReducers({
-        // user:userReducer,
+        user:userReducer,
         info: InfoReducer,
         collaborator: collaboratorReducer,
-        holiday: HolidayReducer,
+        holidayState: HolidayReducer,
         bills: billsReducer,
         departments: departmentReducer,
     }), composeEnhancer(applyMiddleware(thunk)))

@@ -1,5 +1,8 @@
-﻿using System;
+
+
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace IntraNetAPI.Models
 {
@@ -11,8 +14,10 @@ namespace IntraNetAPI.Models
         private string description;
         private DateTime startTime;
         private DateTime endTime;
-        
+
+        public int DepartmentId { get; set; }
         public virtual Department Department { get; set; }
+        [JsonIgnore]
         public virtual List<Collaborator> Collaborators { get; set; }
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }

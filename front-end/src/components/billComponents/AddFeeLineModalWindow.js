@@ -1,5 +1,11 @@
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PureComponent } from "react";
 import FeeLineForm from "./FeeLineForm";
+
+// parent component : billContainerBillByid
+// child component : billComponent/FeeLineForm
+
 
 export default class AddFeeLineModalWindow extends PureComponent {
     constructor(props) {
@@ -51,7 +57,7 @@ export default class AddFeeLineModalWindow extends PureComponent {
                                 type="button"
                                 onClick={() => this.handleClose()}
                             >
-                                Annuler
+                                <FontAwesomeIcon icon={faTimes} />
                             </button>
 
                         </div>
