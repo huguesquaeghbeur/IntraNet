@@ -25,7 +25,7 @@ export default class DetailModalWindow extends PureComponent {
             <div className="modal fixed inset-x-10 inset-y-20 outline-none  overflow-y-hidden ">
                 <div className="modal-dialog modal-dialog-scrollable relative w-auto pointer-events-none  ">
                     {/*content*/}
-                    <div class="modal-dialog relative w-auto pointer-events-none">
+                    <div className="modal-dialog relative w-auto pointer-events-none">
                         <div className="modal-content   bg-gray-200 border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md  outline-none text-current">
                             {/*header*/}
                             <div className="modal-header   flex flex-row-reverse items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
@@ -61,15 +61,14 @@ export default class DetailModalWindow extends PureComponent {
                                 </p>
                             </div>
                             {/*footer*/}
-                            <div
-                                class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                            <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                                 {/* <button type="button"
-                                class="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                                className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
                                 data-bs-dismiss="modal">
                                 Close
                             </button>
                             <button type="button"
-                                class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
+                                className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
                                 Save changes
                             </button> */}
                             </div>

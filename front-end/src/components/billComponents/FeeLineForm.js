@@ -52,7 +52,6 @@ export default class FeeLineForm extends PureComponent {
         })
     }
     submitAction() {
-        console.log(this.state.validate)
         if(this.state.validate==0)
             this.state.validate++
         this.state.validate++
@@ -75,7 +74,6 @@ export default class FeeLineForm extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(e.target.value)
     }
     handleSelectChange = (e) => {
         this.setState({
