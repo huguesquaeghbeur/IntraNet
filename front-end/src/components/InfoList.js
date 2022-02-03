@@ -32,7 +32,7 @@ class InfoList extends PureComponent{
                                 # {post.id}
                             </div>
                             <div>
-                                Collaborateur : {post.collaborator.firstName}
+                                Collaborateur : {post.firstName}
                             </div>
                             <div>
                                 Titre : {post.title}
