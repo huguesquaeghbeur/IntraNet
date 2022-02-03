@@ -8,7 +8,7 @@ namespace IntraNetAPI.Services
 
         public DateTime FormatDate(DateTime date)
         {
-            return Convert.ToDateTime(date.ToString("dd/MM/yyyy"));
+            return Convert.ToDateTime(date.ToString("dd/mm/yyyy"));
         }
         //public string FormatDate(DateTime date)
         //{

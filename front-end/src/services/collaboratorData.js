@@ -38,3 +38,4 @@ export const getUserFromToken = () => {
 export const deconnect = () => {
     return localStorage.removeItem("token")
 }
+

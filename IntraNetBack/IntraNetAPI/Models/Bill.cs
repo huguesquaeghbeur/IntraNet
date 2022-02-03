@@ -11,7 +11,10 @@ namespace IntraNetAPI.Models
 
         private bool isSubmitted;
         private DateTime submissionDate;
-
+        public Bill()
+        {
+            Spents = new List<Spent>();
+        }
         public int CollaboratorId { get; set; }
         [ForeignKey("CollaboratorId")]
         [JsonIgnore]
