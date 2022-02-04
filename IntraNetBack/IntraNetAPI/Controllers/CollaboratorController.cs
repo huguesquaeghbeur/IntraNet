@@ -34,7 +34,7 @@ namespace IntraNetAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            Collaborator collaborator = _data.Collaborators.Find(id);
+            Collaborator collaborator = _data.Collaborators.Include(c => c.Bills).ThenInclude(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Proofs).Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(c => c.Id == id);
             if (collaborator != null)
             {
                 return Ok(collaborator);

@@ -23,7 +23,6 @@ export class BillsOverview extends PureComponent {
     }
 
 
-
     componentDidMount() {
         this.props.getBillsByCollaborator()
         this.props.getUser()
@@ -102,7 +101,8 @@ export class BillsOverview extends PureComponent {
                         showConfirmation={this.showConfirmationModalWindow}
                         closeConfirmationModalWindow={this.closeConfirmationModalWindow}
                     /> : null}
-                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? this.props.bills.map((bill, index) =>
+                    <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? 
+                    this.props.bills.map((bill, index) =>
                         <div className="mb-5" key={index}>
                             <BillCard bill={bill}
                                 sendBill={this.sendBill}

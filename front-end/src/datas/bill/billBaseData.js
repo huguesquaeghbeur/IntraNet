@@ -4,7 +4,6 @@
 // const CEO = 5
 
 
-
 export const feeType = {
     other: "Autre",
     transport: "Transport",
@@ -19,4 +18,14 @@ export const ValidateLevel = {
     "2" : "2",
     "4" : "3",
     "5" : "3"
+}
+
+
+export const inputName = {
+    expenseDate: "date",
+    amount: "montant",
+    missionId: "mission",
+    feeType: "type de frais",
+    proofs:"justificatif",
+    commentary:"commentaire"
 }

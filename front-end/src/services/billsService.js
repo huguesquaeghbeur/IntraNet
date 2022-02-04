@@ -57,7 +57,7 @@ export const generateFormDataFromFeeLine = (feeLine) =>{
         for(let i =0; i<feeLine.proofs.length;i++)
             formData.append("proofs", feeLine.proofs[i])
     }
-    formData.append("missionId", 1)
+    formData.append("missionId", feeLine.missionId)
     formData.append("advanceCash", feeLine.advanceCash)
     formData.append("commentary", feeLine.commentary)
     formData.append("isExactAmount", feeLine.isExactAmount)

@@ -4,12 +4,13 @@ import { useState } from "react";
 // import { getBillById } from '../../services/billsService'
 import { FeeLine } from '../../components/billComponents/FeeLine'
 import AddFeeLineModalWindow from '../../components/billComponents/AddFeeLineModalWindow'
-import { getCollaboratorById } from "../../services/collaboratorData"
+import { getUserFromToken } from "../../services/collaboratorData"
 import { generateFormDataFromFeeLine, addFeeLineToBillApi } from '../../services/billsService'
 import { connect } from 'react-redux';
 import { deleteSpent, getBillById } from '../../redux/actions/billsActions'
 import { get } from "react-hook-form";
 import { deleteSpentFromApi, getBillByIdApi, updateSpentFromApi } from "../../services/billsService"
+
 
 
 // childs component : billComponent/FeeLineForm & billComponent/AddFeeLineModalWindow
@@ -30,6 +31,12 @@ class BillByIdComponent extends PureComponent {
                 spents: res.data.spents
             })
         })
+        getUserFromToken().then(res=>{
+            this.setState({
+                collaborator: res.data.collaborator
+            })
+        })
+
     }
     handleAddFeeLineClick = () => {
         this.setState({
@@ -122,7 +129,7 @@ class BillByIdComponent extends PureComponent {
                 </div>
                 <div className="flex flex-wrap justify-around">
 
-                    {this.state.isShowingForm ?
+                    {this.state.isShowingForm && this.state.collaborator !==undefined ?
                         <AddFeeLineModalWindow
                             closeForm={this.handleCloseFeeLineForm}
                             bill={this.state.bill}
