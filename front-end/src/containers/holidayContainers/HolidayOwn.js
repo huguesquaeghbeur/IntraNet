@@ -1,17 +1,22 @@
-import { faBackspace, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faBackspace, faPencilAlt, faSpinner, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import HolidayCard from '../../components/holidayComponents/HolidayCard';
+import HolidayForm from '../../components/holidayComponents/HolidayForm';
 import ButtonComponent from '../../components/toolComponents/ButtonComponent';
 import { getHolidaysFromApi } from '../../redux/actions/holidayAction';
 import { getUser } from '../../redux/actions/userAction';
+import { deleteHolidayApi } from '../../services/holidayData';
 
 class HolidayOwn extends PureComponent {
     constructor(props) {
         super(props)
-        this.state = { }
+        this.state = {
+            showUpdateForm: false,
+            holidaySelected: undefined
+        }
     }
 
 
@@ -19,9 +24,29 @@ class HolidayOwn extends PureComponent {
         await this.props.getUser();
         this.props.getAllHolidaysFromApi();
     }
-    handleRole = (e) => {
+
+    handleDelete = async (id) => {
+        // e.preventDefault();
+        // let url = window.location.pathname.slice(9);
+        await deleteHolidayApi(id).then(res => {
+            this.setState({
+                post: "",
+                deleted: true
+            })
+        })
+        window.location.reload(false)
+        // window.location.assign("http://localhost:3000/holiday/list");
+    }
+
+    updateClickOpenForm = async (holiday) => {
         this.setState({
-            [e.target.name]: e.target.value
+            showUpdateForm: true,
+            holidaySelected: holiday
+        })
+    }
+    updateClickCloseForm = async () => {
+        this.setState({
+            showUpdateForm: false
         })
     }
 
@@ -39,17 +64,28 @@ class HolidayOwn extends PureComponent {
 
                         <div className="flex flex-col">
                             <div className="text-gray-400 font-bold uppercase text-center">
-                                Historique des demande de congés en cours 
+                                Historique des demande de congés en cours
                             </div>
                             <div className="flex flex-row flex-wrap justify-around">
                                 {this.props.user.user != undefined && this.props.user.user.id && this.props.holidays.filter(h => h.collaboratorId == this.props.user.user.id) ?
                                     this.props.holidays.filter(h => h.collaboratorId == this.props.user.user.id).map(filteredHoliday => (
-                                        <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
+                                        // <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
+                                        <div key={filteredHoliday.id}>
                                             <HolidayCard post={filteredHoliday} />
-                                        </Link>
-                                    ))
+                                            <div className="flex justify-center">
+                                                <ButtonComponent type="button" color="bg-red-400" colorText="white"
+                                                    logo={faTrashAlt}
+                                                    onClickMethod={() => this.handleDelete(filteredHoliday.id)} />
+                                                <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
+                                                    logo={faPencilAlt}
+                                                    onClickMethod={() => this.updateClickOpenForm(filteredHoliday)} />
+                                            </div>
+                                        </div>
+                                        /* </Link> */
+                                        ))
                                     : null}
                             </div>
+                                    {this.state.showUpdateForm == true ? <HolidayForm holiday={this.state.holidaySelected} updateClickCloseForm={this.updateClickCloseForm} /> : null}
                         </div>
                     </div>
                 </div>

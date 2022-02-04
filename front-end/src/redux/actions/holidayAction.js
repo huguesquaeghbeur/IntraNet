@@ -63,7 +63,7 @@ export const updateHolidayAction = (id, formData) => {
             type: IS_LOADING,
             payload: true
         })
-        updateHolidayApi(id, formData).thenn(res => {
+        updateHolidayApi(id, formData).then(res => {
             dispatch({
                 type: END_UPDATE_HOLIDAY,
                 holiday: res.data.holiday

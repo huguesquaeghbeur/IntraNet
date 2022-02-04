@@ -183,7 +183,7 @@ class PostRequestHoliday extends PureComponent {
                                                 <a href="#top">
                                                     {/* <ButtonComponent type="button" color="bg-indigo-500" colorText="white"
                                                         body="Sauvegarder" logo={faSave} /> */}
-                                                    <button onClick={this.handleCancel} className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                                    <button className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                                         <FontAwesomeIcon icon={faSave} />
                                                     </button>
                                                 </a>
@@ -192,7 +192,7 @@ class PostRequestHoliday extends PureComponent {
                                                 <a href="#top">
                                                     {/* <ButtonComponent type="submit" color="bg-green-500" colorText="white"
                                                         body="Soumettre" logo={faPaperPlane} /> */}
-                                                        <button onClick={this.handleCancel} className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                                        <button className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                                         <FontAwesomeIcon icon={faPaperPlane} />
                                                     </button>
                                                 </a>

@@ -64,10 +64,10 @@ function App() {
                         path="holiday/own"
                         element={localStorage.getItem("token") !== null ? <HolidayOwn /> : <UserLogin />}
                     />
-                    <Route
+                    {/* <Route
                         path="holiday/:id"
                         element={localStorage.getItem("token") !== null ? <HolidayById /> : <UserLogin />}
-                    />
+                    /> */}
                     <Route
                         path="holiday/post"
                         element={localStorage.getItem("token") !== null ? <PostRequestHoliday /> : <UserLogin />}
