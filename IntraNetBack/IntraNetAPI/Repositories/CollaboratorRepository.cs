@@ -1,4 +1,4 @@
-﻿using IntraNetAPI.Interfaces;
+using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +23,7 @@ namespace IntraNetAPI.Repositories
 
         public Collaborator FinById(int id)
         {
-           return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
+            return _dataContext.Collaborators.Include(c => c.Holidays).Include(c => c.Missions).FirstOrDefault(b => b.Id == id);
         }
         public IEnumerable<Collaborator> GetAll()
         {

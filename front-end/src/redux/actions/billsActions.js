@@ -12,7 +12,8 @@ import {
     getBillsByDepartmentApi,
     getBillsByCollaboratorApi,
     getBillsForHRMApi,
-    getBillsForCEOApi
+    getBillsForCEOApi,
+    getBillsForCFOApi
 } from "../../services/billsService";
 import {
     getRole,
@@ -44,25 +45,16 @@ import {
 
 export const deleteSpent = (spentId, billId) => {
     return (dispatch) => {
-        console.log("dans le delete")
-        console.log(spentId)
-        console.log(billId)
-
         dispatch({
             type: IS_LOADING,
             value: true
         })
         deleteSpentFromApi(spentId).then(res => {
-            console.log("dans le res")
-            console.log(res)
-
             dispatch({
                 type: END_DELETING_SPENT,
                 res: { spentId: res.data.id, billId: billId }
             })
         }).catch(err => {
-            console.log("dans le err")
-            console.log(err)
             dispatch({
                 type: ERROR_DELETING_SPENT,
                 error: err
@@ -72,26 +64,17 @@ export const deleteSpent = (spentId, billId) => {
 }
 
 export const deleteBill = (id) => {
-    console.log("dans l deleteBill")
-    console.log(id)
-
     return (dispatch) => {
-        console.log("dans l dispatch")
-
         dispatch({
             type: IS_LOADING,
             value: true
         })
         deleteBillFromApi(id).then(res => {
-            console.log("dans l res")
-            console.log(res)
             dispatch({
                 type: END_DELETING_BILL,
                 res: res.data
             })
         }).catch(err => {
-            console.log("dans l err")
-
             dispatch({
                 type: ERROR_DELETING_BILL,
                 error: err
@@ -101,24 +84,17 @@ export const deleteBill = (id) => {
 }
 
 export function fetchAllBills() {
-    console.log("dans fetch all bill")
-
     return (dispatch) => {
         dispatch({
             type: IS_LOADING,
             value: true
         })
         getAllBills().then(res => {
-            console.log("dans le then")
-
             dispatch({
                 type: END_GETTING_ALL_BILLS,
                 bills: res.data
             })
         }).catch(error => {
-            console.log("dans l'erreur")
-            console.log(error)
-
             dispatch({
                 type: ERROR_GETTING_ALL_BILLS,
                 error: error
@@ -128,23 +104,17 @@ export function fetchAllBills() {
 }
 
 export function postBill(bill) {
-    console.log("post bill ")
     return (dispatch) => {
-        console.log("return bill ")
-
         dispatch({
             type: IS_LOADING,
             value: true
         })
         createBill(bill).then(res => {
-            console.log(res)
             dispatch({
                 type: END_ADDING_BILL,
                 bill: res.data.bill
             })
         }).catch(error => {
-            console.log(error)
-
             dispatch({
                 type: ERROR_ADDING_BILL,
                 error: error
@@ -166,11 +136,7 @@ export function sendBill(bill) {
                 type: END_SENDING_BILL,
                 bill: res.data.bill
             })
-            console.log("dans le res")
-            console.log(res.data.bill)
         }).catch(error => {
-            console.log("dans le err")
-            console.log(error)
             dispatch({
                 type: ERROR_SENDING_BILL,
                 error: error
@@ -180,7 +146,6 @@ export function sendBill(bill) {
 }
 
 export function updateSpent(feeLine) {
-    console.log("dans le update spent actions")
     const formData = generateFormDataFromFeeLine(feeLine)
     return (dispatch) => {
         dispatch({
@@ -202,16 +167,12 @@ export function updateSpent(feeLine) {
 }
 
 export const getBillById = (id) => {
-    console.log("dans l'action")
     return (dispatch) => {
         dispatch({
             type: IS_LOADING,
             value: true
         })
         getBillByIdApi(id).then(res => {
-            console.log("action")
-            console.log(res)
-
             dispatch({
                 type: END_GETTING_BILLS_BY_ID,
                 bill: res.data
@@ -234,7 +195,6 @@ export const getBillsByCollaborator = () => {
             value: true
         })
         getUserFromToken().then(res => {
-            console.log(res.data.collaborator.id)
             getBillsByCollaboratorApi(res.data.collaborator.id).then(res => {
 
                 dispatch({
@@ -259,11 +219,8 @@ export const getBillsByDepartment = () => {
             value: true
         })
         getUserFromToken().then(res => {
-            console.log(res)
             if (res.data.collaborator.status == 2) {
                 getBillsByDepartmentApi(res.data.collaborator.departmentId).then(res => {
-                    console.log(res.data)
-
                     dispatch({
                         type: END_GETTING_BILLS_BY_DEPARTMENTID,
                         bills: res.data
@@ -276,8 +233,6 @@ export const getBillsByDepartment = () => {
                 })
             } else if (res.data.collaborator.status == 3) {
                 getBillsForHRMApi().then(res => {
-                    console.log(res)
-
                     dispatch({
                         type: END_GETTING_BILLS_BY_DEPARTMENTID,
                         bills: res.data
@@ -290,7 +245,18 @@ export const getBillsByDepartment = () => {
                 })
             } else if (res.data.collaborator.status == 5) {
                 getBillsForCEOApi().then(res => {
-                    console.log(res)
+                    dispatch({
+                        type: END_GETTING_BILLS_BY_DEPARTMENTID,
+                        bills: res.data
+                    })
+                }).catch(err => {
+                    dispatch({
+                        type: ERROR_GETTING_BILLS_BY_DEPARTMENTID,
+                        error: err
+                    })
+                })
+            }else if (res.data.collaborator.status == 4) {
+                getBillsForCFOApi().then(res => {
                     dispatch({
                         type: END_GETTING_BILLS_BY_DEPARTMENTID,
                         bills: res.data

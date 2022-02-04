@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fae7aed3-df56-44d5-abae-137bbeedcbf5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.vs/ProjectSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/tasks.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Controllers/MissionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Controllers/MissionController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220113083026_FirstMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220113083026_FirstMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220118132018_holidayMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220118132018_holidayMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220119152239_secondHolidayMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220119152239_secondHolidayMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121072634_SecondMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121072634_SecondMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121111833_ThidMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121111833_ThidMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121125717_fourthMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121125717_fourthMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121130158_fithMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121130158_fithMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121130325_StatusMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121130325_StatusMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121130542_StatusMigrations.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121130542_StatusMigrations.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121140228_collaboratorMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121140228_collaboratorMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121145953_spentMigrationEnum.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/20220121145953_spentMigrationEnum.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Migrations/DataContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Models/Mission.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Models/Mission.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Repositories/MissionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Repositories/MissionRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/IntraNetBack/IntraNetAPI/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/.idea/front-end.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/baseHeaderFooterEtc/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/components/baseHeaderFooterEtc/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/components/billComponents/AddMission.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/redux/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/services/infoData.js" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/services/infoData.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectId" id="24CCxFH06v2hz1dONbmdtjctqqi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jerem\Desktop\front\IntraNet\front-end\src\containers\MissionContainer" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fae7aed3-df56-44d5-abae-137bbeedcbf5" name="Changes" comment="" />
+      <created>1643125426416</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1643125426416</updated>
+      <workItem from="1643125427581" duration="13000" />
+      <workItem from="1643133594435" duration="595000" />
+      <workItem from="1643186651023" duration="4060000" />
+      <workItem from="1643190772338" duration="3340000" />
+      <workItem from="1643199909941" duration="5296000" />
+      <workItem from="1643270465659" duration="10878000" />
+      <workItem from="1643616130367" duration="444000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

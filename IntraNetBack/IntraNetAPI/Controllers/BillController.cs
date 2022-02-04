@@ -58,24 +58,27 @@ namespace IntraNetAPI.Controllers
         {
             Collaborator collaborator = _collaboratorRepository.FinById(id);
             if (collaborator != null)
-                if (collaborator.Status == Collaborator.StatusEnum.DepartmentChief)
                     return Ok(_billRepository.Search(b => b.Collaborator.Id == id ));
-                else
-                    return NotFound(new { Message = "Collaborator is not a department chief" });
             return NotFound(new { Message = "Collaborator not found" });
         }
 
-        [HttpGet("HrmManagament")]
+        [HttpGet("HrmManagement")]
         public IActionResult GetForHrm()
         {
                 return Ok(_billRepository.Search(b => (b.Collaborator.DepartmentId == 3 && b.IsSubmitted) || (b.Collaborator.Status == Collaborator.StatusEnum.CEO && b.IsSubmitted) || (b.Collaborator.Status == Collaborator.StatusEnum.CFO && b.IsSubmitted)));
         }
 
-        [HttpGet("CeoManagament")]
+        [HttpGet("CfoManagement")]
         public IActionResult GetForCfo()
         {
-            return Ok(_billRepository.Search(b => (b.Collaborator.Status == Collaborator.StatusEnum.HRM && b.IsSubmitted)));
+            return Ok(_billRepository.Search(b => (b.Collaborator.Status != Collaborator.StatusEnum.CFO && b.IsSubmitted)));
         }
+        [HttpGet("CeoManagement")]
+        public IActionResult GetForCeo()
+        {
+            return Ok(_billRepository.Search(b => (b.Collaborator.Status == Collaborator.StatusEnum.CFO && b.IsSubmitted)));
+        }
+
 
         [HttpPost]
         public IActionResult Post([FromForm]int collabId)

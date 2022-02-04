@@ -27,9 +27,6 @@ export default function userReducer(state = initialState, action) {
         case LOG_IN:
             localStorage.setItem('token', JSON.stringify(action.data.token))
             window.location.reload(false)
-            console.log("locale storage")
-            console.log(localStorage.getItem("token"))
-            console.log(action.data.collaborator)
             return {
                 ...state,
                 isLoading: false,
@@ -42,8 +39,6 @@ export default function userReducer(state = initialState, action) {
                 error: action.error
             }
         case LOG_OUT:
-            console.log("logout")
-            console.log(state.user)
             localStorage.removeItem("token")
             return {
                 ...state,

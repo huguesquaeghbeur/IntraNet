@@ -12,23 +12,16 @@ import { deleteBillFromApi } from "../../services/billsService"
 
 export function login(formData) {
     return dispatch => {
-        console.log("dans le login")
-        console.log(formData)
         dispatch({
             type: IS_LOADING,
             value: true
         })
         loginUser(formData).then(res => {
-            console.log("dans le res")
-            console.log(res)
-
             dispatch({
                 type: LOG_IN,
                 data: res.data,
             })
         }).catch(err => {
-            console.log("dans le catch")
-            console.log(err)
             dispatch({
                 type: ERROR_LOG_IN,
                 error: err
@@ -38,22 +31,17 @@ export function login(formData) {
 }
 
 export function getUser() {
-    console.log("getuser")
     return dispatch => {
         dispatch({
             type: IS_LOADING,
             value: true
         })
         getUserFromToken().then(res => {
-            // console.log("dans le res")
-            console.log(res)
             dispatch({
                 type: END_GETTING_USER,
                 user: res.data.collaborator,
             })
         }).catch(err => {
-            console.log("dans le catch")
-            console.log(err)
             dispatch({
                 type: ERROR_GETTING_USER,
                 error: err
@@ -64,7 +52,6 @@ export function getUser() {
 
 
 export function logout() {
-    console.log("déconnection")
     return dispatch => {
         dispatch({
             type: LOG_OUT
@@ -73,8 +60,6 @@ export function logout() {
 }
 
 export const deleteBill = (id) => {
-    console.log("dans l deleteBill")
-
     return (dispatch) => {
         dispatch({
             type: IS_LOADING,

@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntraNetAPI.Models;
+using IntraNetAPI.Tools;
 
 
 namespace IntraNetAPI
@@ -41,6 +43,11 @@ namespace IntraNetAPI
                 options.AddPolicy("specialOrigin", builder =>
                 {
                     builder.WithMethods("POST").WithOrigins("http://localhost:42515");
+                    //builder.WithMethods("GET").WithOrigins("https://localhost:5000");
+                    //builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                    //builder.WithMethods("PATCH").WithOrigins("http://localhost:3000");
+                    //builder.WithMethods("PUT").WithOrigins("http://localhost:3000");
+                    //builder.WithMethods("DELETE").WithOrigins("http://localhost:3000");
                 });
             });
         }
@@ -59,7 +66,19 @@ namespace IntraNetAPI
             app.UseCors();
 
             app.UseAuthorization();
+            //app.UseCors(c => c
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod()
+            //    .SetIsOriginAllowed(origin => true)
+            //    .AllowCredentials());
 
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{Controller=Mission}/{Action=Getcollabs}/{id?}");
+            //});
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

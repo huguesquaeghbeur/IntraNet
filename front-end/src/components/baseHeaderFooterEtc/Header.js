@@ -30,7 +30,7 @@ class HeaderBanner extends PureComponent {
         return (
             <div>
                 {/* <div>
-                <div className='classTestGif'><iframe src="https://giphy.com/embed/3oFzmdjqH15YebLQ52" width="100%" height="100%" position="absolute" title='testFrame' frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p></p>
+                <div className='classTestGif'><iframe src="https://giphy.com/embed/3oFzmdjqH15YebLQ52" width="100%" height="100%" position="absolute" title='testFrame' frameBorder="0" className="giphy-embed" allowFullScreen></iframe></div><p></p>
                     
                 </div> */}
 
@@ -56,6 +56,12 @@ class HeaderBanner extends PureComponent {
                                     
                                     <Link to="/holiday" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Congés</Link>
                                     <br/>
+                                    <br />
+                                    <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Departments</Link>
+                                    <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborators</Link>
+                                    <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Bills</Link>
+                                    <Link to="/holiday" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Holidays</Link>
+                                    <Link to="/missions" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Missions</Link>
                                 </div>
                                 <div className='flex flex-col'>
                                     <Link to="/"  >

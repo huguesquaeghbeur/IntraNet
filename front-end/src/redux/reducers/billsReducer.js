@@ -27,7 +27,6 @@ const initialState = {
 }
 
 export default function billsReducer(state = initialState, action) {
-    console.log(action.type)
     switch (action.type) {
         case IS_LOADING:
             return {
@@ -77,9 +76,6 @@ export default function billsReducer(state = initialState, action) {
                 error: action.error
             }
         case END_DELETING_BILL:
-            console.log("action.res")
-
-            console.log(action.res)
             if (action.res.id > 0) {
                 return {
                     ...state,
@@ -122,9 +118,7 @@ export default function billsReducer(state = initialState, action) {
                 error: action.error
             }
         case END_UPDATING_SPENT:
-            console.log("end updating spten")
             // const bill = state.bills.filter(b => b.spents.filter(s=>s.id == action.spent.id).length==1)
-            console.log(state.bills)
             // console.log(state.bills.maps(b => b.Id==action.spent.billId ? spents.map(s => s.id == action.spent.id ? action.spent : s)))
             // bill.map(spents)
             // // console.log(bill)
@@ -150,7 +144,7 @@ export default function billsReducer(state = initialState, action) {
             // state.bills=undefined
             return {
                 ...state,
-                // isLoading: false,
+                isLoading: false,
                 // bills: state.bills.map(b => b.id == action.spent.billId ? {
                 //     ...b,
                 //     spents: spents
@@ -175,7 +169,6 @@ export default function billsReducer(state = initialState, action) {
                 error: action.error
             }
         case END_GETTING_BILLS_BY_COLLABORATOR:
-            console.log(action)
             return {
                 ...state,
                 isLoading: false,
