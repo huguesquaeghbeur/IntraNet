@@ -2,18 +2,17 @@ import React from "react";
 import {
     BrowserRouter as Router,
     Routes,
-    Route,
-    Navigate
+    Route
 } from "react-router-dom";
 import './index.css';
 
 import BillsOverview from "./containers/billContainers/BillsOverview";
-import AddCollaborator from "./components/AddCollaboratorForm";
+import AddCollaborator from "./components/collaboratorComponent/AddCollaboratorForm";
 import PostRequestHoliday from "./components/holidayComponents/PostRequestHoliday";
 import HolidayList from "./components/holidayComponents/HolidayList";
-import CollaboratorList from "./components/CollaboratorList";
-import CollaboratorManagement from "./components/CollaboratorManagement";
-import CollaboratorPage from "./components/CollaboratorPage";
+import CollaboratorList from "./components/collaboratorComponent/CollaboratorList";
+import CollaboratorManagement from "./components/collaboratorComponent/CollaboratorManagement";
+import CollaboratorPage from "./components/collaboratorComponent/CollaboratorPage";
 import BillById from "./containers/billContainers/BillById";
 import HolidayById from "./containers/holidayContainers/HolidayById";
 import HolidayMenu from "./containers/holidayContainers/HolidayMenu";
@@ -25,13 +24,12 @@ import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
 import UserLogin from "./components/userPage";
 import Error from "./containers/Error"
-import Home from "./containers/Home"
-
+//import Home from "./containers/Home"
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
-import { getRole } from './services/userService'
 import BillsManagement from "./containers/billContainers/BillsManagement";
 import HolidayOwn from "./containers/holidayContainers/HolidayOwn";
+import Dashboard from "./containers/Dashboard";
 // import BigCalendar from 'react-big-calendar';
 // import Year from './Year';
 
@@ -125,7 +123,7 @@ function App() {
                     {/* <Route></Route> */}
                     <Route
                         path=""
-                        element={localStorage.getItem("token") === null ? <UserLogin /> : <Home />}
+                        element={localStorage.getItem("token") === null ? <UserLogin /> : <Dashboard />}
                     />
                     <Route
                         path="*"

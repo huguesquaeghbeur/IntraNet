@@ -1,11 +1,13 @@
 import React, { PureComponent } from "react";
-import { getCollaboratorById, updateCollaboratorData } from "../services/collaboratorData";
+import { getCollaboratorById, updateCollaboratorData } from "../../services/collaboratorData";
 import { useParams } from "react-router-dom";
 
 class ManagementCollaborator extends PureComponent {
     constructor(props) {
         super(props)
         this.state = {
+            message: '',
+            success: ''
         }
     }
 
@@ -55,58 +57,59 @@ class ManagementCollaborator extends PureComponent {
         formdata.append('isAdmin', this.state.isAdmin);
         updateCollaboratorData(this.props.collaboratorId, formdata).then(response => {
             this.setState({
-                message: response.data.message
+                message: response.data.message,
+                success: response.data.success
             })
-            console.log(this.state.message)
+            console.log(response.data)
         })
     }
 
     render() {
         return (
             <div>
-                <h1 className="justify-center">Gérer les données d'un collaborateur</h1>
+                <h1 className="italic text-3xl mb-5 text-center">Gérer les données d'un collaborateur</h1>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                        <form className="mb-0 space-y-6" method="PUT" onSubmit={this.handleSubmitUpdate} >
+                        <form className="" method="PUT" onSubmit={this.handleSubmitUpdate} >
                             <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">Prénom</label>
                             <input type="text"
                                 name="firstName"
                                 onChange={this.handleChange}
                                 value={this.state.firstName}
-                                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500" />
                             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Nom</label>
                             <input type="text"
                                 name="lastName"
                                 onChange={this.handleChange}
                                 value={this.state.lastName}
-                                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500" />
                             <label htmlFor="birthday" className="block text-sm font-medium text-gray-700">Date de naissance</label>
                             <input type="datetime-local"
                                 name="birthday"
                                 onChange={this.handleChange}
                                 value={this.state.birthday}
-                                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500" />
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                             <input type="email"
                                 name="email"
                                 onChange={this.handleChange}
                                 value={this.state.email}
-                                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500" />
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Mot de passe</label>
                             <input type="password"
                                 name="password"
                                 onChange={this.handleChange}
                                 value={this.state.password}
-                                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500" />
                         </form>
+                        <br></br>
                         <div className="flex flex-row justify-around">
-                            <button type="submit" onClick={this.handleSubmitUpdate}className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 focus:ring-offset-2 focus:ring-indigo-500">
+                            <button type="submit" onClick={this.handleSubmitUpdate}className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-700 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-700 focus:ring-orange-500">
                                 Modifier
                             </button>
-                            <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 focus:ring-offset-2 focus:ring-red-500">
-                                Supprimer
-                            </button>
                         </div>
+                        <br/>
+                        {this.state.success ? (<div className="justify-center bg-green-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-green-500 dark:focus:border-green-500">{this.state.message}</div>) : (<div className="text-sm rounded-lg dark:bg-red-300 ">{this.state.message}</div>)}
                     </div>
                 </div>
             </div>

@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { getCollaborator } from "../redux/actions/collaboratorAction";
-import { postCollaboratorData } from "../services/collaboratorData";
+import { getCollaborator } from "../../redux/actions/collaboratorAction";
+import { postCollaboratorData } from "../../services/collaboratorData";
+//import AddCollaboratorModalWindow from "./AddCollaboratorModalWindow";
 
 
 class AddCollaborator extends PureComponent {
@@ -14,7 +15,9 @@ class AddCollaborator extends PureComponent {
         password: '',
         status: '',
         isAdmin: false,
-        isActive: false
+        isActive: false,
+        message: '',
+        success: ''
     }
 
     handleChange = (e) => {
@@ -22,6 +25,18 @@ class AddCollaborator extends PureComponent {
             [e.target.name]: e.target.value
         })
     }
+
+    // closeConfirmationModalWindow = () => {
+    //     this.setState({
+    //         showConfirmation: false
+    //     })
+    // }
+    // showConfirmationModalWindow = () => {
+    //     this.setState({
+    //         showConfirmation: true
+    //     })
+    // }
+
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -37,29 +52,31 @@ class AddCollaborator extends PureComponent {
         formdata.append('isActive', this.state.isActive);
         postCollaboratorData(formdata).then(response => {
             this.setState({
-                collaborators: response.data
+                collaborators: response.data,
+                message: response.data.message,
+                success: response.data.success
             })
             console.log(response.data)
         })
     }
     render() {
         return (
-            <div>
-                <h1 className="justify-center">Ajouter un collaborateur</h1>
+            <section>
+                <h1 className="italic text-3xl mb-5 text-center">Ajouter un collaborateur</h1>
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-                        <form className="mb-0 space-y-6" method="POST" onSubmit={this.handleSubmit} >
+                        <form className="" onSubmit={this.handleSubmit} >
                             <div>
                                 <div>
                                     <label htmlFor="firstName"
-                                        className="block text-sm font-medium text-gray-700">
+                                        className="block text-gray-600 mb-2 text-sm font-medium text-gray-900 ">
                                         Prénom
                                     </label>
                                     <input type="text"
                                         name="firstName"
                                         onChange={this.handleChange}
                                         value={this.state.firstName}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                        className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500"
                                         required />
                                 </div>
                                 <div>
@@ -68,7 +85,7 @@ class AddCollaborator extends PureComponent {
                                         name="lastName"
                                         onChange={this.handleChange}
                                         value={this.state.lastName}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                        className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500"
                                         required />
                                 </div>
                                 <div>
@@ -77,17 +94,16 @@ class AddCollaborator extends PureComponent {
                                         name="birthday"
                                         onChange={this.handleChange}
                                         value={this.state.birthday}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                        className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500"
                                         required />
                                 </div>
                                 <div>
                                     <label htmlFor="department" className="block text-sm font-medium text-gray-700">Service</label>
                                     <div className="mt-1">
-                                        <select name="department" 
-                                        onChange={this.handleChange}
-                                        value={this.state.department}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm 
-                                        focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <select name="department"
+                                            onChange={this.handleChange}
+                                            value={this.state.department}
+                                            className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500">
                                             <option value="" onChange={this.handleChange}>--Select--</option>
                                             <option value="0" onChange={this.handleChange}>Comptabilité</option>
                                             <option value="1" onChange={this.handleChange}>Ressource Humaine</option>
@@ -98,31 +114,28 @@ class AddCollaborator extends PureComponent {
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                                     <input type="email"
-                                        className="form-control"
                                         name="email"
                                         onChange={this.handleChange}
                                         value={this.state.email}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                        className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500"
                                         required />
                                 </div>
                                 <div>
                                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">Mot de passe</label>
                                     <input type="password"
-                                        className="form-control"
                                         name="password"
                                         onChange={this.handleChange}
                                         value={this.state.password}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                                        className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500"
                                         required />
                                 </div>
                                 <div>
-                                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">Service</label>
+                                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">Fonction au sein de l'entreprise</label>
                                     <div className="mt-1">
-                                        <select name="status" 
-                                        onChange={this.handleChange}
-                                        value={this.state.status}
-                                        className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm 
-                                        focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                                        <select name="status"
+                                            onChange={this.handleChange}
+                                            value={this.state.status}
+                                            className="bg-gray-50 border border-orange-500 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-300 dark:border-orange-600 dark:placeholder-gray-400 dark:focus:ring-orange-500 dark:focus:border-orange-500">
                                             <option value="" onChange={this.handleChange}>--Select--</option>
                                             <option value="0" onChange={this.handleChange}>Collaborateur</option>
                                             <option value="1" onChange={this.handleChange}>chef de projet</option>
@@ -136,30 +149,34 @@ class AddCollaborator extends PureComponent {
                                 <div>
                                     <div className="form-check">
                                         <div>
-                                            <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" name="isAdmin" onChange={this.handleChange}
+                                            <br></br>
+                                            <input className="form-check-input appearance-none h-4 w-4 border border-orange-500 rounded-sm bg-white checked:bg-orange-500 checked:border-orange-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-right mr-2 cursor-pointer" type="checkbox" name="isAdmin" onChange={this.handleChange}
                                                 value={true} />
                                             <label className="block text-sm font-medium text-gray-700">
                                                 Administrateur
                                             </label>
-                                            <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" name="isActive" onChange={this.handleChange}
+                                            <input className="form-check-input appearance-none h-4 w-4 border border-orange-500 rounded-sm bg-white checked:bg-orange-500 checked:border-orange-500 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-right mr-2 cursor-pointer" type="checkbox" name="isActive" onChange={this.handleChange}
                                                 value={true} />
                                             <label className="block text-sm font-medium text-gray-700">
                                                 En activité
                                             </label>
+                                            <br></br>
                                         </div>
                                     </div>
 
                                     <div className="flex flex-row justify-around">
-                                        <button type="submit" className="w-30 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 focus:ring-offset-2 focus:ring-green-500">
+                                        <button type="submit" className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-700 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-700 focus:ring-orange-500">
                                             Valider
                                         </button>
                                     </div>
+                                    <br></br>
+                                    {this.state.success ? (<div className="justify-center bg-green-500 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-green-500 dark:focus:border-green-500">{this.state.message}</div>) : (<div className="text-sm rounded-lg dark:bg-red-300 ">{this.state.message}</div>)}
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
+            </section>
         )
     }
 }
