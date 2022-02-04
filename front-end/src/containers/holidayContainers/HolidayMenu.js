@@ -47,7 +47,7 @@ class HolidayMenu extends PureComponent {
                                         title="Historique"
                                         text="Liste des congés personnels en attente" />
                                 </Link>
-                                {this.props.user.user != undefined && this.props.user.user.status >= 2 && this.props.user.user.status <= 5 ?
+                                {this.props.user.user != undefined && this.props.user.user.status >= 2 && this.props.user.user.status <= 5 || this.props.user.user && this.props.user.user.status == 0 && this.props.user.user.departmentId == 1 ?
                                     <Link to="/holiday/list">
                                         <MenuItem
                                             icon={faTasks}

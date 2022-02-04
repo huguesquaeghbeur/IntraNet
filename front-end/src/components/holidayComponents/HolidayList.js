@@ -142,13 +142,37 @@ class HolidayList extends PureComponent {
                                                 <ButtonComponent type="button" color="bg-green-400" colorText="white"
                                                     logo={faCheck}
                                                     onClickMethod={() => this.handleStatus(3, filteredHoliday.id)} />
+                                                <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
+                                                    logo={faUndoAlt}
+                                                    onClickMethod={() => this.handleStatus(1, filteredHoliday.id)} />
                                             </div>
                                         </div>
                                         // </Link>
                                     ))
                                     : null}
                                 {/* need to fix exception between HRM - CEO */}
-                                {this.props.user.user != undefined && this.props.user.user.status == 3 && this.props.user.user.departmentId == 1 ?
+                                {this.props.user.user != undefined && this.props.user.user.status >= 3 && this.props.user.user.departmentId == 1 ?
+                                    this.props.holidays.filter(h => h.validation == 3).filter(h => h.collaboratorId != this.props.user.user.id).map(filteredHoliday => (
+                                        // <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
+                                        <div key={filteredHoliday.id}>
+                                            <HolidayCard post={filteredHoliday} />
+                                            <div className="flex justify-center">
+                                                <ButtonComponent type="button" color="bg-red-400" colorText="white"
+                                                    logo={faBan}
+                                                    onClickMethod={() => this.handleStatus(0, filteredHoliday.id)} />
+                                                <ButtonComponent type="button" color="bg-green-400" colorText="white"
+                                                    logo={faCheck}
+                                                    onClickMethod={() => this.handleStatus(4, filteredHoliday.id)} />
+                                                <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
+                                                    logo={faUndoAlt}
+                                                    onClickMethod={() => this.handleStatus(1, filteredHoliday.id)} />
+                                            </div>
+                                        </div>
+                                        /* </Link> */
+                                    ))
+                                    : null}
+
+                                {this.props.user.user != undefined && this.props.user.status == 5 ?
                                     this.props.holidays.filter(h => h.validation == 3).filter(h => h.collaboratorId != this.props.user.user.id).map(filteredHoliday => (
                                         // <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
                                         <div key={filteredHoliday.id}>
@@ -164,13 +188,6 @@ class HolidayList extends PureComponent {
                                         </div>
                                         /* </Link> */
                                     ))
-                                    : null}
-                                {this.props.user.user != undefined && this.props.user.status == 5 ?
-                                    this.props.holidays.filter(h => h.validation == 3).filter(h => h.collaboratorId != this.props.user.user.id).map(filteredHoliday => (
-                                        // <Link to={`/holiday/${filteredHoliday.id}`} key={filteredHoliday.id}>
-                                            <HolidayCard post={filteredHoliday} />
-                                        /* </Link> */
-                                        ))
                                     : null}
                             </div>
                         </div>
