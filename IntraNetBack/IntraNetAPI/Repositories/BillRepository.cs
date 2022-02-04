@@ -17,7 +17,7 @@ namespace IntraNetAPI.Repositories
 
         public Bill FinById(int id)
         {
-            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents.OrderByDescending(s =>s.ExpenseDate)).ThenInclude(s => s.Mission).Include(b => b.Spents).ThenInclude(s => s.Proofs).FirstOrDefault(b=>b.Id==id);
+            return _dataContext.Bills.Include(b => b.Collaborator).Include(b => b.Spents.OrderByDescending(s =>s.ExpenseDate)).Include(b => b.Spents).ThenInclude(s => s.Proofs).FirstOrDefault(b=>b.Id==id);
         }
 
         public IEnumerable<Bill> GetAll()

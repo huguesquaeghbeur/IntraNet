@@ -81,9 +81,9 @@ namespace IntraNetAPI.Controllers
             {
                 spent.MissionId = missionId == default ? spent.MissionId : missionId;   
                 spent.Amount = amount == default ? spent.Amount : amount;
-                spent.Commentary = commentary; 
+                spent.Commentary = commentary == default ? spent.Commentary : commentary; 
                 spent.AdvanceCash = advanceCash == default ? spent.AdvanceCash : advanceCash;
-                spent.IsExactAmount = isExactAmount == default ? spent.IsExactAmount : isExactAmount;
+                spent.IsExactAmount = isExactAmount;
                 spent.Validate = (Spent.ValidationEnum)validate;
                 spent.FeeType = (Spent.FeeTypeEnum)feeType;
                 spent.ExpenseDate = expenseDate;

@@ -27,6 +27,7 @@ namespace IntraNetAPI.Models
         [ForeignKey("MissionId")]
         [JsonIgnore]
         public virtual Mission Mission { get; set; }
+
         public virtual List<Proof> Proofs { get; set; }
         public int Id { get => id; set => id = value; }
         public decimal Amount { get => amount; set => amount = value; }

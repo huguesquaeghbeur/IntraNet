@@ -26,9 +26,9 @@ export default class FeeLineForm extends PureComponent {
     }
 
     componentDidMount() {
+        console.log("ici")
         let tab = []
         let tabMissions = []
-
         Object.keys(feeType).map((key, index) => {
             tab = [...tab, {
                 value: index,
@@ -39,9 +39,12 @@ export default class FeeLineForm extends PureComponent {
 
         this.props.collaborator.missions.map((key, index) => {
             // if (key.isActive) {
+                console.log("key")
+
+                console.log(key)
             tabMissions = [...tabMissions, {
                 value: key.id,
-                label: key.departmentId + "nom de la mission à rentrer",
+                label: key.name,
                 name: "missionId"
             }]
             // }
@@ -104,9 +107,12 @@ export default class FeeLineForm extends PureComponent {
         })
     }
     handleChange = (e) => {
+        console.log(e.target.value)
+        console.log(e.target.name)
+
         this.setState({
             [e.target.name]: e.target.value
-        })
+        },()=> console.log(this.state.advanceCash))
     }
     handleSelectChange = (e) => {
         this.setState({

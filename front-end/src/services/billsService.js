@@ -49,6 +49,7 @@ export const getBillsForCFOApi = () => {
 }
 
 export const generateFormDataFromFeeLine = (feeLine) =>{
+    console.log(feeLine.advanceCash)
     const formData = new FormData()
     if(feeLine.billId !== undefined){
         formData.append("billId",feeLine.billId)

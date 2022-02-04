@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PureComponent } from "react";
 import { deleteSpent } from "../../services/billsService";
 import { dateFormat } from "../../services/formatService"
+import axios from "axios";
 
 // parent component : billContainer/BillByid & billComponent/DetailModalWindow
 
@@ -15,6 +16,16 @@ export class FeeLine extends PureComponent {
     }
 
     componentDidMount() {
+        axios.get("http://localhost:42515/api/mission/detail/"+this.props.FeeLine.missionId).then(res => {
+            
+            this.setState({
+                mission:res.data
+            },()=> {
+                console.log(this.state.mission.name)
+            })
+        }).catch(err=> {
+            console.log(err)
+        })
         this.setState({
             FeeLine: this.props.FeeLine
         })
@@ -35,6 +46,7 @@ export class FeeLine extends PureComponent {
     }
 
     render() {
+        console.log(this.state.FeeLine)
         return (
             <div className="w-80  rounded-lg shadow-lg mb-6">
                 <div className="px-6 py-4 ">
@@ -46,7 +58,7 @@ export class FeeLine extends PureComponent {
 
                     </div>
                     <hr />
-                    <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800">{this.state.FeeLine.missionId !== undefined ? `Mission id : ${this.props.FeeLine.missionId}` : null} </p>
+                    <p className="mb-3 text-xl font-semibold tracking-tight text-gray-800">{this.state.mission !== undefined ? ` ${this.state.mission.name}` : null} </p>
                     <p className="leading-normal text-xl text-gray-700"> {this.state.FeeLine.amount !== undefined ? this.state.FeeLine.amount : null}€ {this.state.FeeLine.advanceCash !== undefined ? this.state.FeeLine.advanceCash === true ? "de frais anticipé." : "de frais réel." : null} </p>
                     <p className="leading-normal text-gray-700"></p>
                     <hr />
