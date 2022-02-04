@@ -18,14 +18,9 @@ export class FeeLine extends PureComponent {
         this.setState({
             FeeLine: this.props.FeeLine
         })
-        // console.log(this.state.FeeLine.validate)
     }
     handleSubmitClick() {
-        console.log("this feeline")
-        console.log(this.state.FeeLine)
-
         this.state.FeeLine.validate++
-        console.log(this.state.FeeLine)
         this.props.changeValidateLevel(this.state.FeeLine)
     }
     handleRejectClick() {

@@ -13,9 +13,6 @@ class Home extends PureComponent {
     componentDidMount() {
         this.props.getUser()
     }
-    componentDidUpdate() {
-        console.log(this.props.user)
-    }
 
     render() {
         return (

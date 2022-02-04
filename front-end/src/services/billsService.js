@@ -39,14 +39,16 @@ export const getBillsByCollaboratorApi = (id) => {
 }
 
 export const getBillsForHRMApi = () => {
-    return axios.get(baseUrl+"/bill/HrmManagament/")
+    return axios.get(baseUrl+"/bill/HrmManagement/")
 }
 export const getBillsForCEOApi = () => {
-    return axios.get(baseUrl+"/bill/CeoManagament/")
+    return axios.get(baseUrl+"/bill/CeoManagement/")
+}
+export const getBillsForCFOApi = () => {
+    return axios.get(baseUrl+"/bill/CfoManagement/")
 }
 
 export const generateFormDataFromFeeLine = (feeLine) =>{
-    console.log(feeLine)
     const formData = new FormData()
     if(feeLine.billId !== undefined){
         formData.append("billId",feeLine.billId)

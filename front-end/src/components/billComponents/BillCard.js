@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { deleteBill } from '../../redux/actions/billsActions'
 import { deleteBillFromApi } from "../../services/billsService"
 import { dateFormat } from '../../services/formatService'
+import { getCollaboratorById } from "../../services/collaboratorData"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListUl, faTrashAlt, faPaperPlane, faEye } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,8 +28,14 @@ export class BillCard extends PureComponent {
         })
     }
     componentDidMount() {
+        if (this.props.inManagement) {
+            getCollaboratorById(this.props.bill.collaboratorId).then(res => {
+                this.setState({
+                    collaborator: res.data
+                })
+            })
+        }
         this.getTotal()
-        console.log(this.props.inManagement)
     }
     componentDidUpdate() {
         this.getTotal()
@@ -44,6 +51,10 @@ export class BillCard extends PureComponent {
                             <p className="leading-normal text-gray-700 ">{this.props.bill.spents !== null ? this.props.bill.spents.length > 1 ? `${this.props.bill.spents.length} lignes` : `${this.props.bill.spents.length} ligne` : null} de frais.</p>
                             <p className="leading-normal text-gray-700">Total : {this.state.total}€</p>
                         </div>
+                        : null
+                    }
+                    {this.props.inManagement && this.state.collaborator !== undefined ?
+                        <p className="leading-normal text-gray-700">{this.state.collaborator.firstName} {this.state.collaborator.lastName}</p>
                         : null}
                     <div className="text-center">
 

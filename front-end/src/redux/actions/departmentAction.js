@@ -13,22 +13,17 @@ import {
 } from "../reducers/departmentReducer"
 
 export function fetchAllDepartments() {
-    console.log("dans fetch all departments ")
-
     return (dispatch) => {
         dispatch({
             type: IS_LOADING,
             value: true
         })
         getAllDepartments().then(res => {
-            console.log("get all departments then " + res.data)
             dispatch({
                 type: END_GETTING_ALL_DEPARTMENTS,
                 departments: res.data
             })
         }).catch(error => {
-            console.log("get all departments error " + error)
-
             dispatch({
                 type: ERROR_GETTING_ALL_DEPARTMENTS,
                 error: error

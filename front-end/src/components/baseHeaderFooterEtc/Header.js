@@ -30,7 +30,7 @@ class HeaderBanner extends PureComponent {
         return (
             <div>
                 {/* <div>
-                <div className='classTestGif'><iframe src="https://giphy.com/embed/3oFzmdjqH15YebLQ52" width="100%" height="100%" position="absolute" title='testFrame' frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p></p>
+                <div className='classTestGif'><iframe src="https://giphy.com/embed/3oFzmdjqH15YebLQ52" width="100%" height="100%" position="absolute" title='testFrame' frameBorder="0" className="giphy-embed" allowFullScreen></iframe></div><p></p>
                     
                 </div> */}
 
