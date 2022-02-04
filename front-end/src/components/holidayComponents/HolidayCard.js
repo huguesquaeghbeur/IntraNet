@@ -1,4 +1,4 @@
-import { faBaby, faCheck, faClock, faDollarSign, faFileMedical, faNotEqual, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBaby, faCheck, faClock, faDollarSign, faFileMedical, faNotEqual, faTimesCircle, faEllipsisV, faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -33,12 +33,13 @@ class HolidayCard extends Component {
     }
 
     render() {
-        
+
         return (
             <div>
                 {this.props.post !== undefined ? (
-                    <div key={this.props.post.id} className="m-2 p-2 md:px-7 xl:px-8 rounded-[20px] bg-white shadow-md hover:shadow-lg mb-8">
-                        <div className="flex">
+                    <div key={this.props.post.id} className="m-2 p-2 md:px-7 xl:px-8 rounded-[20px] bg-white shadow-md hover:shadow-lg mb-1">
+
+                        <div className="flex justify-start">
                             <div>
                                 {(this.props.post.validation === 1) ? (
                                     <span className="text-sm px-3 bg-yellow-200 text-yellow-700 rounded-full"><FontAwesomeIcon icon={faClock} /></span>
@@ -53,9 +54,9 @@ class HolidayCard extends Component {
                                         <div className="text-sm px-3 bg-red-200 text-red-800 rounded-full"><FontAwesomeIcon icon={faTimesCircle} /></div>
                                     ) : null}
                             </div>
-                            <div className="text-slate-700 text-end text-sm pl-6">
-                                {this.props.post.id}
-                            </div>
+                        </div>
+                        <div className="text-slate-700 text-center text-sm">
+                            {this.props.post.id}
                         </div>
                         <div className="flex justify-center">
                             <b>{this.state.collab.firstName} {this.state.collab.lastName}</b>
