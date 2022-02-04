@@ -34,7 +34,6 @@ const collaborator = (state = initialState, action) => {
                 isLoading: action.value
             }
         case END_GETTING_COLLABORATOR_BY_DEPARTMENTID:
-            console.log(action.collaborators)
             return {
                 ...state,
                 collaboratorsByDepartment: action.collaborators
