@@ -24,7 +24,7 @@ import HeaderBanner from "./components/baseHeaderFooterEtc/Header";
 import DepartmentDescriptionUniqueId from "./components/DptNewFolder/DepartmentDescriptionUniqueId";
 import UserLogin from "./components/userPage";
 import Error from "./containers/Error"
-//import Home from "./containers/Home"
+import Home from "./containers/Home"
 import InfoOverview from "./containers/InfoOverview";
 import InfoList from "./components/InfoList";
 import BillsManagement from "./containers/billContainers/BillsManagement";
@@ -32,9 +32,7 @@ import HolidayOwn from "./containers/holidayContainers/HolidayOwn";
 import Dashboard from "./containers/Dashboard";
 import MissionOverview from "./containers/MissionOverview";
 import MissionDetails from "./components/MissionComponents/MissionDetails";
-import { getRole } from './services/userService'
-import BillsManagement from "./containers/billContainers/BillsManagement";
-import HolidayOwn from "./containers/holidayContainers/HolidayOwn";
+import { getRole } from './services/userService';
 import AddMission from "./components/MissionComponents/AddMission";
 import UpdateMission from "./components/MissionComponents/UpdateMission";
 // import BigCalendar from 'react-big-calendar';
