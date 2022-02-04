@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using IntraNetAPI.Interfaces;
 using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntraNetAPI.Controllers
 {
+    [EnableCors("allConnections")]
     [Route("api/[controller]")]
     [ApiController]
     public class MissionController : Controller

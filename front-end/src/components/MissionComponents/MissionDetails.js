@@ -14,7 +14,7 @@ const MissionDetails = () => {
     const [isActive, setIsActive] = useState(0)
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/mission/detail/" + idAxios)
+        axios.get("http://localhost:42515/api/mission/detail/" + idAxios)
             .then(res => {
                 setId(res.data.id)
                 setName(res.data.name)
@@ -31,7 +31,7 @@ const MissionDetails = () => {
     })
 
     const deleteMission = () => {
-        axios.delete("http://localhost:5000/api/mission/detail/" + id)
+        axios.delete("http://localhost:42515/api/mission/detail/" + id)
             .then(res => {
                 console.log(res)
                 if (res.status === 200)

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
 
 namespace IntraNetAPI.Models
 {
@@ -14,6 +16,8 @@ namespace IntraNetAPI.Models
         private DateTime endTime;
 
         public int DepartmentId { get; set; }
+        [ForeignKey("DepartmentId")]
+        [JsonIgnore]
         public virtual Department Department { get; set; }
         [JsonIgnore]
         public virtual List<Collaborator> Collaborators { get; set; }

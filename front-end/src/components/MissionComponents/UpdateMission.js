@@ -17,7 +17,7 @@ export class UpdateMission extends PureComponent {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:5000/api/mission/detail/" + this.state.id)
+        axios.get("http://localhost:42515/api/mission/detail/" + this.state.id)
             .then(res => {
                 this.setState({dptId: res.data.departmentId, name: res.data.name, description: res.data.description,
                 startTime: res.data.startTime, endTime: res.data.endTime, isActive: res.data.isActive})
@@ -48,7 +48,7 @@ export class UpdateMission extends PureComponent {
         formdata.append("endTime", this.state.endTime)
         formdata.append("isActive", this.state.isActive)
 
-        axios.patch("http://localhost:5000/api/mission/update/" + this.state.id, formdata)
+        axios.patch("http://localhost:42515/api/mission/update/" + this.state.id, formdata)
             .then(res => {
                 console.log(res)
             })

@@ -13,8 +13,9 @@ export default class MissionOverview extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/api/mission/all')
+        axios.get('http://localhost:42515/api/mission/all')
             .then(res => {
+                console.log(res)
                 this.setState({missions: res.data})
             })
             .catch(error => {

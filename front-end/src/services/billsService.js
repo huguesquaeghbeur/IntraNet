@@ -1,5 +1,5 @@
 import axios from "axios"
-const baseUrl = "http://localhost:5000/intranet/v1"
+const baseUrl = "http://localhost:42515/intranet/v1"
 
 export const getAllBills = () => {
     return axios.get(baseUrl+"/bill")

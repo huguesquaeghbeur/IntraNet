@@ -19,13 +19,13 @@ export class FormDepartment extends Component {
                 title : ''
             })    
             console.log(title)
-            axios.post('http://localhost:5000/department', title)
+            axios.post('http://localhost:42515/department', title)
         .then(response => this.setState({titleInput: response.data}))
         }
     }
 
     // addBddDepartment = (title) => {
-    //     axios.post('http://localhost:5000/department', title)
+    //     axios.post('http://localhost:42515/department', title)
     //     .then(response => this.setState({title: response.data}))
     // }
     

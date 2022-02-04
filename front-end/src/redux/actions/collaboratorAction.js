@@ -27,17 +27,11 @@ export const getCollaboratorByDepartmentId = (departmentId) => {
             value: true
         })
         getCollaboratorByDepartmentIdApi(departmentId).then(res => {
-            console.log("get by dpt then")
-            console.log(res.data)
-
             dispatch({
                 type: END_GETTING_COLLABORATOR_BY_DEPARTMENTID,
                 collaborators: res.data
             })
         }).catch(err => {
-            console.log("get by dpt then")
-            console.log(err)
-
             dispatch({
                 type: ERROR_GETTING_COLLABORATOR_BY_DEPARTMENTID,
                 error: err
