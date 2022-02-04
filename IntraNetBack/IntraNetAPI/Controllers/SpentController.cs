@@ -77,12 +77,12 @@ namespace IntraNetAPI.Controllers
         public IActionResult Patch([FromForm] int validate, [FromForm] DateTime expenseDate, [FromForm] int id, [FromForm] int feeType, [FromForm] IFormFile[] proofs, [FromForm] int missionId, [FromForm] decimal amount, [FromForm] bool advanceCash, [FromForm] string commentary, [FromForm] bool isExactAmount)
         {
             Spent spent = _spentRepository.FinById(id);
-            if (spent != null)
+            if (spent != null)  
             {
-                spent.MissionId = missionId == default ? spent.MissionId : missionId;   
-                spent.Amount = amount == default ? spent.Amount : amount;
-                spent.Commentary = commentary == default ? spent.Commentary : commentary; 
-                spent.AdvanceCash = advanceCash == default ? spent.AdvanceCash : advanceCash;
+                spent.MissionId = missionId;   
+                spent.Amount = amount;
+                spent.Commentary = commentary; 
+                spent.AdvanceCash = advanceCash;
                 spent.IsExactAmount = isExactAmount;
                 spent.Validate = (Spent.ValidationEnum)validate;
                 spent.FeeType = (Spent.FeeTypeEnum)feeType;

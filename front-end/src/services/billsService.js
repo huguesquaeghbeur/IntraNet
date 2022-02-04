@@ -1,5 +1,6 @@
 import axios from "axios"
 const baseUrl = "http://localhost:42515/intranet/v1"
+export const baseSpentUrl = "http://localhost:42515/intranet/v1/proof/"
 
 export const getAllBills = () => {
     return axios.get(baseUrl+"/bill")

@@ -48,7 +48,11 @@ export class BillCard extends PureComponent {
                     {!this.props.inManagement ?
                         <div>
                             <hr />
-                            <p className="leading-normal text-gray-700 ">{this.props.bill.spents !== null ? this.props.bill.spents.length > 1 ? `${this.props.bill.spents.length} lignes` : `${this.props.bill.spents.length} ligne` : null} de frais.</p>
+                            <p className="leading-normal text-gray-700 ">
+                                {this.props.bill.spents !== null ?
+                                    this.props.bill.spents.length > 1 ?
+                                        `${this.props.bill.spents.filter(s=>s.validate===4).length}/${this.props.bill.spents.length} lignes de frais validées` : `${this.props.bill.spents.length} ligne de frais`
+                                    : null}.</p>
                             <p className="leading-normal text-gray-700">Total : {this.state.total}€</p>
                         </div>
                         : null

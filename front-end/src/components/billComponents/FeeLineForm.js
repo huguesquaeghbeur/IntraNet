@@ -107,12 +107,9 @@ export default class FeeLineForm extends PureComponent {
         })
     }
     handleChange = (e) => {
-        console.log(e.target.value)
-        console.log(e.target.name)
-
         this.setState({
             [e.target.name]: e.target.value
-        },()=> console.log(this.state.advanceCash))
+        })
     }
     handleSelectChange = (e) => {
         this.setState({
