@@ -17,8 +17,7 @@ namespace IntraNetAPI.Controllers
     [HttpGet("{filePath}")]
     public async Task<ActionResult> DownloadFile(string filePath)
     {
-            // ... code for validation and get the file
-                           var provider = new FileExtensionContentTypeProvider();
+        var provider = new FileExtensionContentTypeProvider();
         if (!provider.TryGetContentType(filePath, out var contentType))
         {
             contentType = "application/octet-stream";
