@@ -45,8 +45,17 @@ class HeaderBanner extends PureComponent {
                         <div>
                             <div className='w-full block flex-grow lg:flex lg:items-center lg:w-auto'>
                                 <div className='text-sm lg:flex-grow'>
-                                    <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>HOME</Link>
+                                    <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Acceuil</Link>
                                     <br />
+                                    
+                                    <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Services</Link>
+                                    
+                                    <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborateurs</Link>
+                                    
+                                    <Link to="/bills" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Notes de frais</Link>
+                                    
+                                    <Link to="/holiday" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Congés</Link>
+                                    <br/>
                                     <br />
                                     <Link to="/departments" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Departments</Link>
                                     <Link to="/collaborator" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Collaborators</Link>
@@ -56,10 +65,10 @@ class HeaderBanner extends PureComponent {
                                 </div>
                                 <div className='flex flex-col'>
                                     <Link to="/"  >
-                                        <button className='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0'
+                                        <button className='inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-700 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-700 focus:ring-orange-500'
                                             onClick={() => this.handleLogoutClick()}
                                         >
-                                            déconnexion
+                                            Déconnexion
                                         </button>
                                     </Link>
                                     {this.state.role !== "Basic" && this.state.role !== undefined ? <Management currentUser={this.state.role} /> : null}
@@ -70,7 +79,7 @@ class HeaderBanner extends PureComponent {
                         :
                         <div>
 
-                            <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>HOME</Link>
+                            <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Acceuil</Link>
                         </div>
 
                     }

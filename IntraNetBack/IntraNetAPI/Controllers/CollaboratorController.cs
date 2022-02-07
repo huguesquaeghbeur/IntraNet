@@ -62,9 +62,9 @@ namespace IntraNetAPI.Controllers
             _data.Collaborators.Add(collaborator);
             if (_data.SaveChanges() > 0)
             {
-                return Ok(new { Message = "Collaborator added", Collaborator = collaborator });
+                return Ok(new { Success = true,  Message = "Collaborateur ajouter", Collaborator = collaborator });
             }
-            return Ok(new { Message = "Error" });
+            return Ok(new { Success = false, Message = "Une erreur est survenue" });
         }
 
         [HttpPut("{id}")]
@@ -82,9 +82,9 @@ namespace IntraNetAPI.Controllers
 
                 if (_data.SaveChanges() > 0)
                 {
-                    return Ok(new { Message = "Colaborator updated" });
+                    return Ok(new { Success = true, Message = "Données du collaborateur mise à jour" });
                 }
-                return Ok(new { Message = "Error" });
+                return Ok(new { Success = false, Message = "Une erreur est survenue" });
             }
             return NotFound();
         }
@@ -110,8 +110,8 @@ namespace IntraNetAPI.Controllers
         {
             Collaborator collaborator = _data.Collaborators.Include(c=>c.Bills).ThenInclude(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Proofs).Include(c => c.Holidays).Include(c => c.Missions).Where(c => c.Email == email && c.Password == password).FirstOrDefault();
             if(collaborator != null)
-                return Ok(new { collaborator = collaborator } );
-            return NotFound();
+                return Ok(new { Success = true, Message = "Vous êtes connecter", collaborator = collaborator } );
+            return Ok(new { Success = false, Message = "Mail ou mot de passe incorrect" });
 
         }
 
