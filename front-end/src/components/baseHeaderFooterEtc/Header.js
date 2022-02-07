@@ -45,7 +45,7 @@ class HeaderBanner extends PureComponent {
                         <div>
                             <div className='w-full block flex-grow lg:flex lg:items-center lg:w-auto'>
                                 <div className='text-sm lg:flex-grow'>
-                                    <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Acceuil</Link>
+                                    <Link to="/" className='classLienClickable block mt-4 lg:inline-block lg:mt-0 text-orange-400 hover:text-green-200 mr-4'>Accueil</Link>
                                     <br />
                                     <br />
 
