@@ -86,7 +86,7 @@ export class BillsOverview extends PureComponent {
                         {this.props.bills !== undefined && this.props.user !== undefined ?
                             this.props.bills.map((bill, index) =>
                                 bill.spents.filter(s => s.validate == ValidateLevel[this.props.user.status]).length > 0 ?
-                                    <div className="mb-5" key={index}>
+                                    <div className="mb-5 w-2/3 lg:w-1/3 mx-2" key={index}>
                                         <BillCard bill={bill}
                                             sendBill={this.sendBill}
                                             showConfirmation={this.showConfirmationModalWindow}

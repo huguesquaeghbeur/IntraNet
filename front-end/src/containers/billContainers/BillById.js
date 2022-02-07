@@ -1,16 +1,14 @@
 import { PureComponent, useEffect } from "react"
 import { useParams } from 'react-router-dom';
 import { useState } from "react";
-// import { getBillById } from '../../services/billsService'
 import { FeeLine } from '../../components/billComponents/FeeLine'
 import AddFeeLineModalWindow from '../../components/billComponents/AddFeeLineModalWindow'
 import { getUserFromToken } from "../../services/collaboratorData"
 import { generateFormDataFromFeeLine, addFeeLineToBillApi } from '../../services/billsService'
-import { connect } from 'react-redux';
 import { deleteSpent, getBillById } from '../../redux/actions/billsActions'
-import { get } from "react-hook-form";
 import { deleteSpentFromApi, getBillByIdApi, updateSpentFromApi } from "../../services/billsService"
-
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 // childs component : billComponent/FeeLineForm & billComponent/AddFeeLineModalWindow
@@ -31,7 +29,7 @@ class BillByIdComponent extends PureComponent {
                 spents: res.data.spents
             })
         })
-        getUserFromToken().then(res=>{
+        getUserFromToken().then(res => {
             this.setState({
                 collaborator: res.data.collaborator
             })
@@ -103,7 +101,7 @@ class BillByIdComponent extends PureComponent {
             ...this.state.bill,
             spents: spents
         }
-        
+
         this.setState({
             spents: undefined,
             spentId: undefined,
@@ -120,16 +118,16 @@ class BillByIdComponent extends PureComponent {
 
     render() {
         return (
-            <section className="m-3.5">
+            <section>
                 <h1 className="italic text-3xl mb-5 text-center">Ligne de frais</h1>
                 <div className="text-center m-2 ">
                     <button onClick={() => this.handleAddFeeLineClick()} className="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-indigo-800">
-                        <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" fillRule="evenodd"></path></svg>
+                        <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>
                 <div className="flex flex-wrap justify-around">
 
-                    {this.state.isShowingForm && this.state.collaborator !==undefined ?
+                    {this.state.isShowingForm && this.state.collaborator !== undefined ?
                         <AddFeeLineModalWindow
                             closeForm={this.handleCloseFeeLineForm}
                             bill={this.state.bill}
@@ -139,17 +137,17 @@ class BillByIdComponent extends PureComponent {
                             UpdateFeeLine={this.UpdateFeeLine}
                             spentId={this.state.spentId}
                         /> : null}
-                    <div className="flex flex-wrap justify-around">{this.state.spents !== undefined ? this.state.spents.map((spent, index) => 
-                    <FeeLine key={index} 
-                    FeeLine={spent} 
-                    Index={index} 
-                    handleDeleteClick={this.handleDeleteClick} 
-                    changeValidateLevel={this.changeValidateLevel} 
-                    modifyClick={this.handleModifyClick} 
-                    submitClick={this.submitFeeLine}
-                    collaborator={this.state.collaborator}
-                    inManagement={false} 
-                    />) : null}</div>
+                    <div className="flex flex-wrap justify-around w-2/3">{this.state.spents !== undefined ? this.state.spents.map((spent, index) =>
+                        <FeeLine key={index}
+                            FeeLine={spent}
+                            Index={index}
+                            handleDeleteClick={this.handleDeleteClick}
+                            changeValidateLevel={this.changeValidateLevel}
+                            modifyClick={this.handleModifyClick}
+                            submitClick={this.submitFeeLine}
+                            collaborator={this.state.collaborator}
+                            inManagement={false}
+                        />) : null}</div>
                 </div>
             </section>
         )

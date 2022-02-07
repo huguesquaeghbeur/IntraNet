@@ -23,28 +23,27 @@ export default class DetailModalWindow extends PureComponent {
 
     render() {
         return (
-            <div className="modal fixed inset-x-10 inset-y-20 outline-none  overflow-y-hidden ">
+            <div className="modal fixed inset-y-20 inset-x-10 lg:inset-y-auto  lg:w-6 min-w-fit lg:inset-x-20 outline-none  overflow-y-hidden ">
                 <div className="modal-dialog modal-dialog-scrollable relative w-auto pointer-events-none  ">
                     {/*content*/}
                     <div className="modal-dialog relative w-auto pointer-events-none">
-                        <div className="modal-content   bg-gray-200 border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md  outline-none text-current">
+                        <div className="modal-content bg-gray-200 border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md  outline-none text-current">
                             {/*header*/}
-                            <div className="modal-header   flex flex-row-reverse items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                            <div className="modal-header flex flex-row-reverse items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
                                 <button
-                                    className="h-8 px-3  text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800"
+                                    className="h-8 px-3 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800"
                                     type="button"
                                     onClick={() => this.handleCancelAction()}
                                 >
                                     <FontAwesomeIcon icon={faTimes} />
                                 </button>
-
                             </div>
                             {/*body*/}
-                            <div className="modal-body   relative  bg-gray-100 overflow-y-scroll h-96 ">
+                            <div className="modal-body relative bg-white overflow-y-scroll h-96">
                                 <p className="text-center my-5 text-blueGray-500 text-lg leading-relaxed">
                                     <div className="flex flex-wrap justify-around ">{this.state.bill[0] !== undefined ? this.state.bill[0].spents.map((spent, index) =>
                                         spent.validate == ValidateLevel[this.props.user.status] ?
-                                            <div className="mb-5" key={index}>
+                                            <div className="mb-3 lg:mx-3" key={index}>
                                                 <FeeLine
                                                     key={index}
                                                     FeeLine={spent}
@@ -57,7 +56,7 @@ export default class DetailModalWindow extends PureComponent {
                                                 />
                                             </div>
                                             : null)
-                                        : <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
+                                        : <div className={`flex flex-wrap justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
                                             <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
                                         </div>}
                                     </div>
@@ -77,7 +76,6 @@ export default class DetailModalWindow extends PureComponent {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>);
     }

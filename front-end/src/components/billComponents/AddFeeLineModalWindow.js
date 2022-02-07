@@ -20,11 +20,11 @@ export default class AddFeeLineModalWindow extends PureComponent {
 
     render() {
         return (
-            <div className="modal fixed inset-x-auto top-0 outline-none  overflow-y-hidden md:top-56 lg:top-10 ">
+            <div className="w-11/12 md:w-fit w-modal fixed inset-x-auto top-0 outline-none  overflow-y-hidden  md:top-10 ">
                 <div className="modal-dialog modal-dialog-scrollable relative w-auto pointer-events-none  ">
                     {/*content*/}
-                    <div className="modal-dialog relative w-auto pointer-events-none">
-                        <div className="modal-content   bg-gray-200 border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md  outline-none text-current">
+                    <div className="modal-dialog relative w-auto pointer-events-none ">
+                        <div className="modal-content bg-gray-200 border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md  outline-none text-current">
 
                             {/*header*/}
                             <div className="flex items-center justify-between p-2 border-b border-solid border-blueGray-200 rounded-t">
@@ -41,7 +41,7 @@ export default class AddFeeLineModalWindow extends PureComponent {
 
                             </div>
                             {/*body*/}
-                            <div className="modal-body px-4  relative  bg-gray-100   ">
+                            <div className="modal-body px-4 relative bg-white border-2">
 
                                 <FeeLineForm
                                     bill={this.props.bill}
@@ -53,8 +53,8 @@ export default class AddFeeLineModalWindow extends PureComponent {
                                 />
                             </div>
                             {/*footer*/}
-                            {/* <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
-                            </div> */}
+                            <div className="modal-footer p-4 border-gray-200 rounded-b">
+                            </div>
 
                         </div>
 

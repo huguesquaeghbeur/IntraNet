@@ -44,7 +44,7 @@ export class BillsOverview extends PureComponent {
     }
     sendBill = (bill) => {
         const b = this.props.bills.filter(b => b.submissionDate == getDateNowForBdd())
-        if (this.props.bills.filter(b => dateFormat(b.submissionDate) == dateFormat(getDateNowForBdd())).length == 0) {
+        if (this.props.bills.filter(b => dateFormat(b.submissionDate).slice(3) === dateFormat(getDateNowForBdd()).slice(3)).length === 0) {
             bill.submissionDate = getDateNowForBdd()
             bill.isSubmitted = true
             this.props.sendBill(bill)
@@ -81,7 +81,7 @@ export class BillsOverview extends PureComponent {
     render() {
 
         return (
-            <section>
+            <section className=" mx-auto">
                 {this.props.management && getRole() == "Basic" ? <Navigate to="/" /> : null}
                 <h1 className="italic text-3xl mb-5 text-center">Gestion des notes de frais</h1>
                 <div className="text-center m-2 ">
@@ -101,7 +101,7 @@ export class BillsOverview extends PureComponent {
                     /> : null}
                     <div className="flex flex-wrap justify-around ">{this.props.bills !== undefined ? 
                     this.props.bills.map((bill, index) =>
-                        <div className="mb-5" key={index}>
+                        <div className="mb-5 w-2/3" key={index}>
                             <BillCard bill={bill}
                                 sendBill={this.sendBill}
                                 showConfirmation={this.showConfirmationModalWindow}

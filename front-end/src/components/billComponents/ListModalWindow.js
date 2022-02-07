@@ -14,14 +14,14 @@ export default class ListModalWindow extends PureComponent {
     render() {
         return (
             <div className="mx-justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                <div className="relative w-11/12 md:w-auto my-6 mx-auto max-w-3xl">
                     {/*content*/}
                     <div className="bg-gray-200 border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         {/*header*/}
                         <div className="flex items-center justify-end p-1 border-t border-solid mt-3">
                         </div>
                         {/*body*/}
-                        <div className="flex justify-center">
+                        <div className="flex justify-center border-4">
                             {this.props.proofs !== undefined ?
                                 <ul className="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
                                     {

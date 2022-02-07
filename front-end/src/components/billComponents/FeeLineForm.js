@@ -37,7 +37,6 @@ export default class FeeLineForm extends PureComponent {
             }]
         })
         this.props.collaborator.missions.map((key, index) => {
-            console.log(key)
             tabMissions = [...tabMissions, {
                 value: key.id,
                 label: key.name,
@@ -46,14 +45,11 @@ export default class FeeLineForm extends PureComponent {
 
         })
         if (this.state.spent[0] === undefined) {
-            console.log(this.state)
-
             this.setState({
                 validate: 1,
                 options: tab,
                 optionsMission: tabMissions
             })
-
         }
         else {
             this.setState({
@@ -110,14 +106,11 @@ export default class FeeLineForm extends PureComponent {
     }
 
     handleFileChange = (e) => {
-        console.log(this.state)
         this.setState({
             [e.target.name]: e.target.files,
         })
     }
     handleChange = (e) => {
-        console.log(this.state)
-
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -135,7 +128,6 @@ export default class FeeLineForm extends PureComponent {
     }
 
     handleProofClick(proofs) {
-        console.log(proofs)
         this.setState({
             proofs: proofs
         }, () => {
@@ -227,13 +219,14 @@ export default class FeeLineForm extends PureComponent {
 
                     {/* files input */}
                     <div>
-                        <div className="flex flex-between pt-3">
+                        <div className="flex flex-between pt-2">
                             <label htmlFor="file" className="block text-gray-600  text-sm font-medium text-gray-900 " >Justificatifs</label>
                             <input onChange={(e) => this.handleFileChange(e)} type="file" name="proofs" className="block text-gray-600 ml-2 mb-2 text-sm font-medium text-gray-900 " multiple />
                         </div>
-                        {console.log(this.state.files)}
                         {this.state.files !== undefined && this.state.files.length > 0 ?
-                            <button type="button" onClick={() => this.handleProofClick(this.state.files)} className="text-sm text-gray-600 ">Afficher les justificatifs</button>
+                            <button type="button" onClick={() => this.handleProofClick(this.state.files)} className="text-sm text-gray-700 underline mb-2">
+                                Afficher les justificatifs
+                            </button>
                             :
                             null
                         }
@@ -242,7 +235,7 @@ export default class FeeLineForm extends PureComponent {
                     {/* Commentary */}
                     <div>
                         <label htmlFor="commentary" className="block mb-1 text-gray-600 text-sm font-medium text-gray-900 dark:text-gray-400">Your message</label>
-                        <textarea value={this.state.commentary ?? ""} onChange={(e) => this.handleChange(e)} name="commentary" rows="4" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></textarea>
+                        <textarea value={this.state.commentary ?? ""} onChange={(e) => this.handleChange(e)} name="commentary" rows="2" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-300 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></textarea>
                     </div>
                     <div className="flex items-center justify-end p-2 border-t border-solid border-blueGray-200 rounded-b">
                         <button
