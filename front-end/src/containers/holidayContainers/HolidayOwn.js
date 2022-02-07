@@ -59,6 +59,7 @@ class HolidayOwn extends PureComponent {
 
     render() {
         const { filterStatusHoliday } = this.state;
+        console.log(this.props.user)
         return (
             <div>
                 <div className="flex justify-between">

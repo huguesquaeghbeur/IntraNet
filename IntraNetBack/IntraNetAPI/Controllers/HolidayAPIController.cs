@@ -80,8 +80,15 @@ namespace IntraNetAPI.Controllers
             Holiday holiday = _holidayRepository.FinById(id);
             if (holiday != null)
             {
+                Collaborator collaborator = _collaboratorRepository.FinById(holiday.CollaboratorId);
+
                 holiday.Validation = (Holiday.ValidationEnum)validation;
-                
+
+                if (collaborator != null && validation == 4)
+                {
+                    collaborator.HalfDayBreak -= holiday.HalfDayBreakCount;
+                }
+
                 msg = _holidayService.validationStateMsg(validation);
 
                 if (_holidayRepository.Update(holiday))
@@ -119,7 +126,7 @@ namespace IntraNetAPI.Controllers
         public IActionResult Delete(int id)
         {
             Holiday holiday = _holidayRepository.FinById(id);
-            if(holiday != null)
+            if (holiday != null)
             {
                 _holidayRepository.Delete(holiday);
                 return Ok(new { Message = "holiday deleted", Id = holiday.Id });

@@ -40,7 +40,7 @@ namespace IntraNetAPI.Repositories
         }
         public Collaborator SearchOne(Expression<Func<Collaborator, bool>> searchMethode)
         {
-            return _dataContext.Collaborators.Include(c => c.Bills).ThenInclude(b => b.Spents.OrderByDescending(s => s.ExpenseDate)).ThenInclude(s => s.Proofs).Include(c => c.Holidays).Include(c => c.Missions).Where(searchMethode).FirstOrDefault();
+            return _dataContext.Collaborators.Where(searchMethode).FirstOrDefault();
         }
         public bool Update(Collaborator collaborator)
         {

@@ -80,7 +80,7 @@ class HolidayList extends PureComponent {
                 validation: res.data
             })
         })
-        window.location.reload(false);
+        window.location.reload(true);
     }
 
     render() {
@@ -119,7 +119,7 @@ class HolidayList extends PureComponent {
                                                     onClickMethod={() => this.handleStatus(0, filteredHoliday.id)} />
                                                 <ButtonComponent type="button" color="bg-green-400" colorText="white"
                                                     logo={faCheck}
-                                                    onClickMethod={() => this.handleStatus(3, filteredHoliday.id)} />
+                                                    onClickMethod={() => this.handleStatus(2, filteredHoliday.id)} />
                                                 <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
                                                     logo={faUndoAlt}
                                                     onClickMethod={() => this.handleStatus(1, filteredHoliday.id)} />

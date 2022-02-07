@@ -35,7 +35,7 @@ namespace IntraNetAPI.Services
             {
                 if (collab.Status == Collaborator.StatusEnum.Basic)
                 {
-                    if (collab.Department.Title == "Ressources Humaines")
+                    if (collab.DepartmentId == 1) // HR
                     {
                         return Holiday.ValidationEnum.HRValidation;
                     }
@@ -43,7 +43,7 @@ namespace IntraNetAPI.Services
                 }
                 else if (collab.Status == Collaborator.StatusEnum.ProjectChief || collab.Status == Collaborator.StatusEnum.DepartmentChief)
                 {
-                    if (collab.Department.Title == "Ressources Humaines")
+                    if (collab.DepartmentId == 1) // HR
                     {
                         return Holiday.ValidationEnum.HRValidation;
                     }
