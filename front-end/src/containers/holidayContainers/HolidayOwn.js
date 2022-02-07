@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ConfirmModal from '../../components/holidayComponents/ConfirmModal';
 import HolidayCard from '../../components/holidayComponents/HolidayCard';
 import HolidayForm from '../../components/holidayComponents/HolidayForm';
 import ButtonComponent from '../../components/toolComponents/ButtonComponent';
@@ -15,6 +16,8 @@ class HolidayOwn extends PureComponent {
         super(props)
         this.state = {
             showUpdateForm: false,
+            showConfirmModal: false,
+            holi: undefined,
             holidaySelected: undefined,
             filterStatusHoliday: "all"
         }
@@ -25,10 +28,11 @@ class HolidayOwn extends PureComponent {
         this.props.getAllHolidaysFromApi();
     }
 
-    handleDelete = async (id) => {
+    handleDelete = () => {
+        console.log(this.state.holi)
         // e.preventDefault();
         // let url = window.location.pathname.slice(9);
-        await deleteHolidayApi(id).then(res => {
+        deleteHolidayApi(this.state.holi.id).then(res => {
             this.setState({
                 post: "",
                 deleted: true
@@ -54,6 +58,19 @@ class HolidayOwn extends PureComponent {
     updateClickCloseForm = async () => {
         this.setState({
             showUpdateForm: false
+        })
+    }
+    openDelete = (holiday) => {
+        this.setState({
+            showConfirmModal: true,
+            holi: holiday
+        })
+        console.log(this.state.holi)
+        console.log(this.state.showConfirmModal)
+    }
+    deleteClickCloseModal = () => {
+        this.setState({
+            showConfirmModal: false
         })
     }
 
@@ -95,7 +112,7 @@ class HolidayOwn extends PureComponent {
                                             <div className="flex justify-center">
                                                 <ButtonComponent type="button" color="bg-red-400" colorText="white"
                                                     logo={faTrashAlt}
-                                                    onClickMethod={() => this.handleDelete(filteredHoliday.id)} />
+                                                    onClickMethod={() => this.openDelete(filteredHoliday)} />
                                                 <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
                                                     logo={faPencilAlt}
                                                     onClickMethod={() => this.updateClickOpenForm(filteredHoliday)} />
@@ -113,7 +130,7 @@ class HolidayOwn extends PureComponent {
                                             <div className="flex justify-center">
                                                 <ButtonComponent type="button" color="bg-red-400" colorText="white"
                                                     logo={faTrashAlt}
-                                                    onClickMethod={() => this.handleDelete(filteredHoliday.id)} />
+                                                    onClickMethod={() => this.openDelete(filteredHoliday)} />
                                                 <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
                                                     logo={faPencilAlt}
                                                     onClickMethod={() => this.updateClickOpenForm(filteredHoliday)} />
@@ -130,7 +147,7 @@ class HolidayOwn extends PureComponent {
                                             <div className="flex justify-center">
                                                 <ButtonComponent type="button" color="bg-red-400" colorText="white"
                                                     logo={faTrashAlt}
-                                                    onClickMethod={() => this.handleDelete(filteredHoliday.id)} />
+                                                    onClickMethod={() => this.openDelete(filteredHoliday)} />
                                                 <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
                                                     logo={faPencilAlt}
                                                     onClickMethod={() => this.updateClickOpenForm(filteredHoliday)} />
@@ -147,7 +164,7 @@ class HolidayOwn extends PureComponent {
                                             <div className="flex justify-center">
                                                 <ButtonComponent type="button" color="bg-red-400" colorText="white"
                                                     logo={faTrashAlt}
-                                                    onClickMethod={() => this.handleDelete(filteredHoliday.id)} />
+                                                    onClickMethod={() => this.openDelete(filteredHoliday)} />
                                                 <ButtonComponent type="button" color="bg-indigo-400" colorText="white"
                                                     logo={faPencilAlt}
                                                     onClickMethod={() => this.updateClickOpenForm(filteredHoliday)} />
@@ -156,8 +173,9 @@ class HolidayOwn extends PureComponent {
                                     ))
                                     : null}
                             </div>
-                            {this.state.showUpdateForm == true ? <HolidayForm holiday={this.state.holidaySelected} updateClickCloseForm={this.updateClickCloseForm} /> : null}
+                            {this.state.showUpdateForm === true ? <HolidayForm holiday={this.state.holidaySelected} updateClickCloseForm={this.updateClickCloseForm} /> : null}
                         </div>
+                        {this.state.showConfirmModal === true ? <ConfirmModal closeConfirmationModalWindow={this.deleteClickCloseModal} deleteAction={() => this.handleDelete(this.state.holi.id)} bill={this.state.holi} /> : null}
                     </div>
                 </div>
 

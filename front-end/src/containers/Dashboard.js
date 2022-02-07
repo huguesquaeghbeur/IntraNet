@@ -38,7 +38,7 @@ class Dashboard extends PureComponent {
                                         onClick={() => this.setState({ checked: false })} >Voir vos notes de frais</button>
                                     <h2 className="text-xl mb-5 text-center">Demande de congé</h2>
                                     <div className="flex justify-start grid grid-cols-1 gap-1">
-                                        {userDash.holidays.map(u =>
+                                        {/* {userDash.holidays.map(u =>
                                             <div key={u.id} className="m-2 p-2 md:px-7 xl:px-8 rounded-[20px] bg-white shadow-md hover:shadow-lg mb-8">
                                                 <div className="flex justify-between">
                                                     <div>
@@ -92,7 +92,39 @@ class Dashboard extends PureComponent {
                                                     </div>
                                                 </div>
                                             </div>
-                                        )}
+                                        )} */}
+                                        {userDash.holidays.length > 0 ?
+                                                <div>
+                                                    <table className="table-fixed border-collapse border border-slate-500 min-w-full">
+                                                        <thead>
+                                                            <tr className="bg-gray-700 text-sm font-medium text-white">
+                                                                <th className="border border-slate-600">#</th>
+                                                                <th className="border border-slate-600">Type</th>
+                                                                <th className="border border-slate-600">Début (date)</th>
+                                                                <th className="border border-slate-600">Heure (début)</th>
+                                                                <th className="border border-slate-600">Fin (date)</th>
+                                                                <th className="border border-slate-600">Heure (fin)</th>
+                                                                <th className="border border-slate-600">Demi-journée(s)</th>
+                                                                <th className="border border-slate-600">Validation</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {userDash.holidays.map(h =>
+                                                            <tbody key={h.id}>
+                                                                <tr>
+                                                                    <td className="border border-slate-700">{h.id}</td>
+                                                                    <td className="border border-slate-700">{h.leaveType === 0 ? "payé" : h.leaveType === 1 ? "maladie" : h.leaveType === 2 ? "familial" : h.leaveType === 3 ? "sans solde" : null }</td>
+                                                                    <td className="border border-slate-700">{dateFormat(h.startDate)}</td>
+                                                                    <td className="border border-slate-700">{h.startOnMorning === true ? ("matin") : ("après-midi")}</td>
+                                                                    <td className="border border-slate-700">{dateFormat(h.endDate)}</td>
+                                                                    <td className="border border-slate-700">{h.endOnMorning === true ? ("matin") : ("après-midi")}</td>
+                                                                    <td className="border border-slate-700">{h.halfDayBreakCount}</td>
+                                                                    <td className="border border-slate-700">{h.validation === 0 ? "refusé" : h.validation === 1 ? "initial" : h.validation === 2 ? "département" : h.validation === 3 ? "RH" : h.validation === 4 ? "acceptée" : null }</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        )}
+                                                    </table>
+                                                </div>
+                                            : null}
                                     </div>
                                 </span>
                             ) : (
