@@ -31,7 +31,7 @@ export class FeeLine extends PureComponent {
     }
 
     handleSubmitClick() {
-        if (this.props.collaborator !== undefined && this.props.collaborator.status !== "0" && !inManagement) {
+        if (this.props.collaborator !== undefined && this.props.collaborator.status !== "0" && !this.props.inManagement) {
             this.setState({
                 FeeLine: {
                     ...this.state.FeeLine,
