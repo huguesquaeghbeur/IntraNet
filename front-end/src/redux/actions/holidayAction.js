@@ -1,4 +1,4 @@
-import { deleteHolidayApi, getAllHolidays, getHolidayRequestById, postHolidayData } from "../../services/holidayData";
+import { deleteHolidayApi, getAllHolidays, getHolidayRequestById, postHolidayData, updateHolidayApi } from "../../services/holidayData";
 
 export const ADD_REQUEST_HOLIDAY_ACTION = "ADD_REQUEST_HOLIDAY_ACTION";
 export const UPDATE_REQUEST_HOLIDAY_ACTION = "UPDATE_REQUEST_HOLIDAY_ACTION";
@@ -12,6 +12,8 @@ export const END_POST_HOLIDAY = 'END_POST_HOLIDAY';
 export const ERROR_POST_HOLIDAY = 'ERROR_POST_HOLIDAY';
 export const END_DELETE_HOLIDAY = 'END_DELETE_HOLIDAY';
 export const ERROR_DELETE_HOLIDAY = 'ERROR_DELETE_HOLIDAY';
+export const END_UPDATE_HOLIDAY = 'END_UPDATE_HOLIDAY';
+export const ERROR_UPDATE_HOLIDAY = 'ERROR_UPDATE_HOLIDAY';
 
 export const getHolidaysFromApi = () => {
     return (dispatch) => {
@@ -49,6 +51,27 @@ export const postRequestHolidayInApi = (holidayObj) => {
             console.log(error)
             dispatch({
                 type: ERROR_POST_HOLIDAY,
+                error: error
+            })
+        })
+    }
+}
+
+export const updateHolidayAction = (id, formData) => {
+    return(dispatch) => {
+        dispatch({
+            type: IS_LOADING,
+            payload: true
+        })
+        updateHolidayApi(id, formData).then(res => {
+            dispatch({
+                type: END_UPDATE_HOLIDAY,
+                holiday: res.data.holiday
+            })
+        }).catch(error => {
+            console.log(error)
+            dispatch({
+                type: ERROR_UPDATE_HOLIDAY,
                 error: error
             })
         })

@@ -1,4 +1,4 @@
-import { END_DELETE_HOLIDAY, END_FETCHING_DATA, END_FETCHING_HOLIDAY_DATA_BY_ID, END_POST_HOLIDAY, ERROR_DELETE_HOLIDAY, ERROR_FETCHING_DATA, ERROR_FETCHING_HOLIDAY_DATA_BY_ID, ERROR_POST_HOLIDAY, IS_LOADING } from "../actions/holidayAction";
+import { END_DELETE_HOLIDAY, END_FETCHING_DATA, END_FETCHING_HOLIDAY_DATA_BY_ID, END_POST_HOLIDAY, ERROR_DELETE_HOLIDAY, ERROR_FETCHING_DATA, ERROR_FETCHING_HOLIDAY_DATA_BY_ID, ERROR_POST_HOLIDAY, IS_LOADING, END_UPDATE_HOLIDAY } from "../actions/holidayAction";
 
 
 const initialState = {
@@ -71,7 +71,12 @@ export const HolidayReducer = (state = initialState, action) => {
                     ...state,
                     isLoading: false,
                     error: action.error
-                }
+                    }
+            case END_UPDATE_HOLIDAY:
+                    return {
+                        ...state,
+                        isLoading: false,
+                    }
         default:
             return { ...initialState }
             break;

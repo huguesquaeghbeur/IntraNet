@@ -97,7 +97,8 @@ namespace IntraNetAPI.Controllers
             int tmpHalfDayBreak = _holidayService.calculHalfDayBreak(startDate, endDate, startOnMorning, endOnMorning);
 
             Holiday holiday = _holidayRepository.FinById(id);
-            if(holiday != null)
+            Collaborator c = _collaboratorRepository.SearchOne(c => c.Id == holiday.CollaboratorId);
+            if (holiday != null)
             {
                 holiday.StartDate = startDate;
                 holiday.StartOnMorning = startOnMorning;
@@ -105,6 +106,7 @@ namespace IntraNetAPI.Controllers
                 holiday.EndOnMorning = endOnMorning;
                 holiday.HalfDayBreakCount = ((endDate.DayOfYear - startDate.DayOfYear) * 2) + tmpHalfDayBreak;
                 holiday.LeaveType = (Holiday.LeaveTypeEnum)leaveType;
+                holiday.Validation = _holidayService.calculStatus(c);
             }
             if (_holidayRepository.Update(holiday))
             {

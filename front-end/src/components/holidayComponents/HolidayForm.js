@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 import ButtonComponent from '../toolComponents/ButtonComponent';
-import { updateHolidayApi } from '../../services/holidayData';
+import { updateHolidayAction } from '../../redux/actions/holidayAction';
+import { updateHolidayApi } from "../../services/holidayData";
 
 class HolidayForm extends PureComponent {
     constructor(props) {
@@ -25,7 +26,7 @@ class HolidayForm extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(this.state)
+        console.log(this.props.holiday.id)
     }
     handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,14 +39,12 @@ class HolidayForm extends PureComponent {
             formData.append('endOnMorning', this.state.endOnMorning);
             formData.append('leaveType', this.state.leaveType);
         }
-        await updateHolidayApi(this.props.holiday.id, formData).then(res => {
-            console.log("res.data")
-            console.log(res.data)
+        updateHolidayApi(this.props.holiday.id, formData).then(res => {
             this.setState({
                 holiday: res.data
             })
         })
-        window.location.reload(true)
+        window.location.reload(false)
     }
 
     render() {
@@ -65,7 +64,7 @@ class HolidayForm extends PureComponent {
                             </div>
                         </div>
                         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                            <form method="PUT" onSubmit={this.handleSubmit}>
+                            <form method='PUT' onSubmit={(e) => this.handleSubmit(e)}>
                                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                                     Informations du congé
                                 </h6>
@@ -160,6 +159,7 @@ class HolidayForm extends PureComponent {
                                                 colorText="white"
                                                 body="Valider les modifications"
                                                 logo={faCheck}
+                                                onClickMethod={() => this.handleSubmit()}
                                             />
                                         </div>
                                     </div>

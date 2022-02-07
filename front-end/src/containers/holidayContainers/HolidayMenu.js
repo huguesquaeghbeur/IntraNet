@@ -29,7 +29,7 @@ class HolidayMenu extends PureComponent {
                         :
                         <div className="flex flex-col">
                             <div className="text-gray-400 font-bold uppercase text-center">
-                                Gestion des congès
+                                Gestion des congés
                             </div>
 
                             <div className="flex flex-col items-stretch mt-5">
@@ -47,12 +47,12 @@ class HolidayMenu extends PureComponent {
                                         title="Historique"
                                         text="Liste des congés personnels en attente" />
                                 </Link>
-                                {this.props.user.user != undefined && this.props.user.user.status >= 2 && this.props.user.user.status <= 5 ?
+                                {this.props.user.user != undefined && this.props.user.user.status >= 2 && this.props.user.user.status <= 5 || this.props.user.user && this.props.user.user.status == 0 && this.props.user.user.departmentId == 1 ?
                                     <Link to="/holiday/list">
                                         <MenuItem
                                             icon={faTasks}
                                             title="Gestion"
-                                            text="Gestion des gongès en attente" />
+                                            text="Gestion des congés en attente" />
                                     </Link>
                                     : null}
                             </div>

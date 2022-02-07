@@ -11,16 +11,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class PostRequestHoliday extends PureComponent {
     constructor(props) {
         super(props)
-        this.state = {
-            collabId: '',
-            startDate: '',
-            startOnMorning: true,
-            endDate: '',
-            endOnMorning: true,
-            leaveType: '',
-            halfDayBreakCount: '',
-            alertC: 0,
-        }
+        this.handleChange = this.handleChange.bind(this)
+    }
+    state = {
+        collabId: '',
+        startDate: '',
+        startOnMorning: true,
+        endDate: '',
+        endOnMorning: true,
+        leaveType: '',
+        halfDayBreakCount: '',
+        alertC: 0,
     }
 
     componentDidMount() {
@@ -191,7 +192,7 @@ class PostRequestHoliday extends PureComponent {
                                                 <a href="#top">
                                                     {/* <ButtonComponent type="submit" color="bg-green-500" colorText="white"
                                                         body="Soumettre" logo={faPaperPlane} /> */}
-                                                    <button className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                                        <button className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                                         <FontAwesomeIcon icon={faPaperPlane} />
                                                     </button>
                                                 </a>
