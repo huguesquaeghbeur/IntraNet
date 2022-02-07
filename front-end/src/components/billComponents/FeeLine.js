@@ -13,7 +13,7 @@ export class FeeLine extends PureComponent {
         super(props)
         this.state = {
             FeeLine: {},
-            showingList:false
+            showingList: false
         }
     }
 
@@ -31,8 +31,19 @@ export class FeeLine extends PureComponent {
     }
 
     handleSubmitClick() {
-        this.state.FeeLine.validate++
-        this.props.changeValidateLevel(this.state.FeeLine)
+        if (this.props.collaborator !== undefined && this.props.collaborator.status !== "0" && !inManagement) {
+            this.setState({
+                FeeLine: {
+                    ...this.state.FeeLine,
+                    validate: 3
+                }
+            }, () => {
+                this.props.changeValidateLevel(this.state.FeeLine)
+            })
+        } else {
+            this.state.FeeLine.validate++
+            this.props.changeValidateLevel(this.state.FeeLine)
+        }
     }
     handleRejectClick() {
         this.state.FeeLine.validate = 0
@@ -44,29 +55,28 @@ export class FeeLine extends PureComponent {
     handleDeleteClick() {
         this.props.handleDeleteClick(this.props.FeeLine.id)
     }
-    closeListMW=()=> {
+    closeListMW = () => {
         this.setState({
-            showingList:false,
-            proofs:undefined,
-            commentary:undefined
+            showingList: false,
+            proofs: undefined,
+            commentary: undefined
         })
     }
-    handleProofClick(proofs){
-        console.log(proofs)
+    handleProofClick(proofs) {
         this.setState({
-            proofs:proofs
-        },()=>{
+            proofs: proofs
+        }, () => {
             this.setState({
-                showingList:true
+                showingList: true
             })
         })
     }
-    handleCommentaryClick(commentary){
+    handleCommentaryClick(commentary) {
         this.setState({
-            commentary:commentary
-        },()=>{
+            commentary: commentary
+        }, () => {
             this.setState({
-                showingList:true
+                showingList: true
             })
         })
     }
@@ -91,10 +101,10 @@ export class FeeLine extends PureComponent {
                     <p className="text-xl font-semibold tracking-tight text-gray-800">{this.state.mission !== undefined ? ` ${this.state.mission.name}` : null} </p>
                     <p className="leading-normal text-lg text-gray-800"> {this.state.FeeLine.amount !== undefined ? this.state.FeeLine.amount : null}€ {this.state.FeeLine.advanceCash !== undefined ? this.state.FeeLine.advanceCash === true ? "de frais anticipé." : "de frais réel." : null} </p>
                     {this.state.FeeLine.proofs !== undefined && this.state.FeeLine.proofs.length > 0 ?
-                        <button onClick={()=>this.handleProofClick(this.state.FeeLine.proofs)}>Afficher les justificatifs</button>    
-                        : 
-                        <button onClick={()=>this.handleCommentaryClick(this.state.FeeLine.commentary)}>Afficher le commentaire</button>    
-                        }
+                        <button onClick={() => this.handleProofClick(this.state.FeeLine.proofs)}>Afficher les justificatifs</button>
+                        :
+                        <button onClick={() => this.handleCommentaryClick(this.state.FeeLine.commentary)}>Afficher le commentaire</button>
+                    }
                     <div className="text-center">
                         {/* {(this.state.FeeLine.validate > 1) ?
                             <button onClick={() => this.handleViewClick()} className="h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">

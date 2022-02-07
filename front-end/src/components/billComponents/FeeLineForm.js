@@ -2,7 +2,7 @@ import { PureComponent } from "react";
 import { feeType } from "../../datas/bill/billBaseData"
 import Select from 'react-select'
 import ValidationFormModalWindow from "./ValidationFormModalWindow";
-
+import ListModalWindow from "./ListModalWindow";
 
 // parent component : billComponent/AddFeeLineModalWindow
 
@@ -12,21 +12,21 @@ export default class FeeLineForm extends PureComponent {
         super(props);
         this.state = {
             validationFormMW: false,
-            isExactAmount: "true",
-            advanceCash: "false",
+            showingList: false,
             spent: this.props.bill.spents.filter(s => s.id == this.props.spentId),
             billId: this.props.bill.id,
             expenseDate: undefined,
             amount: undefined,
             missionId: undefined,
             feeType: undefined,
-            // proofs: undefined,
-            // commentary: undefined,
+            advanceCash: undefined,
+            isExactAmount: undefined,
+            commentary: undefined,
         }
     }
 
     componentDidMount() {
-        console.log("ici")
+
         let tab = []
         let tabMissions = []
         Object.keys(feeType).map((key, index) => {
@@ -36,25 +36,24 @@ export default class FeeLineForm extends PureComponent {
                 name: "feeType"
             }]
         })
-
         this.props.collaborator.missions.map((key, index) => {
-            // if (key.isActive) {
-                console.log("key")
-
-                console.log(key)
+            console.log(key)
             tabMissions = [...tabMissions, {
                 value: key.id,
                 label: key.name,
                 name: "missionId"
             }]
-            // }
+
         })
-        if (this.state.spent[0] == undefined) {
+        if (this.state.spent[0] === undefined) {
+            console.log(this.state)
+
             this.setState({
                 validate: 1,
                 options: tab,
                 optionsMission: tabMissions
             })
+
         }
         else {
             this.setState({
@@ -71,18 +70,27 @@ export default class FeeLineForm extends PureComponent {
                 validate: this.state.spent[0].validate,
                 files: this.state.spent[0].proofs,
             })
-
         }
-        this.setState({
-            options: tab,
-        })
+
     }
 
     submitAction() {
-        if (this.state.validate == 0)
-            this.state.validate++
-        this.state.validate++
-        this.confirmAction()
+        if (this.props.collaborator !== undefined && this.props.collaborator.status !== "0") {
+            this.setState({
+                ...this.state,
+                validate: 3
+            }, () => {
+                this.confirmAction()
+            })
+        }
+        else {
+            this.setState({
+                ...this.state,
+                validate: 2
+            }, () => {
+                this.confirmAction()
+            })
+        }
     }
 
     confirmAction() {
@@ -102,11 +110,14 @@ export default class FeeLineForm extends PureComponent {
     }
 
     handleFileChange = (e) => {
+        console.log(this.state)
         this.setState({
             [e.target.name]: e.target.files,
         })
     }
     handleChange = (e) => {
+        console.log(this.state)
+
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -122,13 +133,37 @@ export default class FeeLineForm extends PureComponent {
             validationFormMW: false,
         })
     }
+
+    handleProofClick(proofs) {
+        console.log(proofs)
+        this.setState({
+            proofs: proofs
+        }, () => {
+            this.setState({
+                showingList: true
+            })
+        })
+    }
+    closeListMW = () => {
+        this.setState({
+            showingList: false,
+            proofs: undefined,
+        })
+    }
+
     render() {
         return (
             <section>
-                {this.state.validationFormMW ? <ValidationFormModalWindow
-                    closeValidationMW={this.closeValidationMW}
-                    inputName={Object.keys(this.state).find(key => this.state[key] === undefined || this.state[key] === "")}
-                /> : null}
+                {this.state.validationFormMW ?
+                    <ValidationFormModalWindow
+                        closeValidationMW={this.closeValidationMW}
+                        inputName={Object.keys(this.state).find(key => this.state[key] === undefined || this.state[key] === "")}
+                    /> : null}
+                {this.state.showingList ?
+                    <ListModalWindow
+                        closeListMW={this.closeListMW}
+                        proofs={this.state.proofs}
+                    /> : null}
                 <form className="" >
                     {/* Date de la dépense */}
                     <div>
@@ -191,10 +226,17 @@ export default class FeeLineForm extends PureComponent {
                     </div>
 
                     {/* files input */}
-                    <div className="flex flex-between pt-3">
-                        <label htmlFor="file" className="block text-gray-600  text-sm font-medium text-gray-900 " >Justificatifs</label>
-                        <input onChange={(e) => this.handleFileChange(e)} type="file" name="proofs" className="block text-gray-600 ml-2 mb-2 text-sm font-medium text-gray-900 " multiple />
-
+                    <div>
+                        <div className="flex flex-between pt-3">
+                            <label htmlFor="file" className="block text-gray-600  text-sm font-medium text-gray-900 " >Justificatifs</label>
+                            <input onChange={(e) => this.handleFileChange(e)} type="file" name="proofs" className="block text-gray-600 ml-2 mb-2 text-sm font-medium text-gray-900 " multiple />
+                        </div>
+                        {console.log(this.state.files)}
+                        {this.state.files !== undefined && this.state.files.length > 0 ?
+                            <button type="button" onClick={() => this.handleProofClick(this.state.files)} className="text-sm text-gray-600 ">Afficher les justificatifs</button>
+                            :
+                            null
+                        }
                     </div>
 
                     {/* Commentary */}

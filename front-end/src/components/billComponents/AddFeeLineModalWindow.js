@@ -13,33 +13,10 @@ export default class AddFeeLineModalWindow extends PureComponent {
         this.state = {
             spentId: this.props.spentId
         }
-        // console.log("props modal bill id "+this.props.billId)
     }
     handleClose() {
         this.props.closeForm()
     }
-    // handleSave(feeLine){
-    //     console.log("save")
-    //     console.log(feeLine)
-    //     // console.log(this.state.spentId)
-
-    //     // this.setState({
-    //     //     spentId:undefined
-    //     // })
-    //     this.props.SaveFeeLine(feeLine);
-    // }
-    // handleSubmit(feeLine){
-    //     // this.setState({
-    //     //     spentId:undefined
-    //     // })
-    //     this.props.SubmitFeeLine(feeLine);
-    // }
-    // handleUpdate(formData, feeLine){
-    //     // this.setState({
-    //     //     spentId:undefined
-    //     // })
-    //     this.props.UpdateFeeLine(formData, feeLine);
-    // }
 
     render() {
         return (

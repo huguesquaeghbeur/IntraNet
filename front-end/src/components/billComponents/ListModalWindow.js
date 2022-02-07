@@ -7,10 +7,6 @@ export default class ListModalWindow extends PureComponent {
         super(props)
     }
 
-    componentDidMount() {
-        console.log(this.props)
-
-    }
     handleCancelAction() {
         this.props.closeListMW()
     }
@@ -22,6 +18,8 @@ export default class ListModalWindow extends PureComponent {
                     {/*content*/}
                     <div className="bg-gray-200 border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                         {/*header*/}
+                        <div className="flex items-center justify-end p-1 border-t border-solid mt-3">
+                        </div>
                         {/*body*/}
                         <div className="flex justify-center">
                             {this.props.proofs !== undefined ?
@@ -34,12 +32,10 @@ export default class ListModalWindow extends PureComponent {
                                                 </a>
                                             </li>)
                                     }
-
                                 </ul>
-                                : 
+                                :
                                 <p className="text-center py-5 bg-white rounded-lg border border-gray-200 w-96 text-gray-900">{this.props.commentary}</p>
-                                }
-
+                            }
                         </div>
                         {/*footer*/}
                         <div className="flex items-center justify-end p-1 border-t border-solid ">
@@ -50,12 +46,10 @@ export default class ListModalWindow extends PureComponent {
                             >
                                 Fermer
                             </button>
-
                         </div>
                     </div>
                 </div>
             </div>
         )
-
     }
 }

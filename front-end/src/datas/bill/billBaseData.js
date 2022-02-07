@@ -27,5 +27,7 @@ export const inputName = {
     missionId: "mission",
     feeType: "type de frais",
     proofs:"justificatif",
-    commentary:"commentaire"
+    commentary:"commentaire",
+    isExactAmount: "montant exact",
+    advanceCash: "avance sur frais",
 }

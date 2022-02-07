@@ -147,6 +147,7 @@ class BillByIdComponent extends PureComponent {
                     changeValidateLevel={this.changeValidateLevel} 
                     modifyClick={this.handleModifyClick} 
                     submitClick={this.submitFeeLine}
+                    collaborator={this.state.collaborator}
                     inManagement={false} 
                     />) : null}</div>
                 </div>

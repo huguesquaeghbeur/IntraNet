@@ -1,8 +1,8 @@
 import { PureComponent } from "react"
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faTimes,faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FeeLine } from "./FeeLine";
-import {ValidateLevel} from '../../datas/bill/billBaseData'
+import { ValidateLevel } from '../../datas/bill/billBaseData'
 
 // parent container : billContainers/BillsOverview
 
@@ -12,7 +12,8 @@ export default class DetailModalWindow extends PureComponent {
         this.state = {
             bill: this.props.bills.filter(b => b.id == this.props.billId)
         }
-
+        if (this.state.bill[0].spents.filter(s => s.validate == ValidateLevel[this.props.user.status]).length === 0)
+            this.handleCancelAction()
     }
 
     handleCancelAction() {
@@ -39,10 +40,10 @@ export default class DetailModalWindow extends PureComponent {
 
                             </div>
                             {/*body*/}
-                            <div className="modal-body   relative  bg-gray-100 overflow-y-scroll max-h-96 ">
+                            <div className="modal-body   relative  bg-gray-100 overflow-y-scroll h-96 ">
                                 <p className="text-center my-5 text-blueGray-500 text-lg leading-relaxed">
                                     <div className="flex flex-wrap justify-around ">{this.state.bill[0] !== undefined ? this.state.bill[0].spents.map((spent, index) =>
-                                        spent.validate ==  ValidateLevel[this.props.user.status] ?
+                                        spent.validate == ValidateLevel[this.props.user.status] ?
                                             <div className="mb-5" key={index}>
                                                 <FeeLine
                                                     key={index}
@@ -52,11 +53,13 @@ export default class DetailModalWindow extends PureComponent {
                                                     changeValidateLevel={this.props.changeValidateLevel}
                                                     modifyClick={this.handleModifyClick}
                                                     submitClick={this.submitFeeLine}
-                                                    inManagement={true} 
-                                                    />
-                                                    </div>
+                                                    inManagement={true}
+                                                />
+                                            </div>
                                             : null)
-                                        : null}
+                                        : <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
+                                            <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
+                                        </div>}
                                     </div>
                                 </p>
                             </div>
