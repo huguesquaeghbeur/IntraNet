@@ -390,5 +390,5 @@ FodyWeavers.xsd
 .vs/slnx.sqlite
 *vs/slnx.sqlite
 
-#pdf IntranetApi
-/IntraNetAPI/pdf
+# pdf folder
+IntranetApi/pdf/
