@@ -17,13 +17,18 @@ namespace IntraNetAPI.Controllers
     [HttpGet("{filePath}")]
     public async Task<ActionResult> DownloadFile(string filePath)
     {
-        var provider = new FileExtensionContentTypeProvider();
-        if (!provider.TryGetContentType(filePath, out var contentType))
-        {
-            contentType = "application/octet-stream";
-        }
-        var bytes = await System.IO.File.ReadAllBytesAsync("pdf/"+filePath);
-        return File(bytes, contentType, Path.GetFileName(filePath));
+            var t = Environment.CurrentDirectory + "/pdf/" + filePath;
+            if (System.IO.File.Exists(Environment.CurrentDirectory + "/pdf/" + filePath))
+            {
+                var provider = new FileExtensionContentTypeProvider();
+                if (!provider.TryGetContentType(filePath, out var contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+                var bytes = await System.IO.File.ReadAllBytesAsync("pdf/" + filePath);
+                return File(bytes, contentType, Path.GetFileName(filePath));
+            }
+            return NotFound(new { Message = "File not found" });
     }
 }
 }
