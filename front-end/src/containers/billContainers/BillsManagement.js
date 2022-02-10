@@ -6,7 +6,7 @@ import { getCollaboratorByDepartmentId } from '../../redux/actions/collaboratorA
 import { BillCard } from "../../components/billComponents/BillCard";
 import ConfirmationModalWindow from "../../components/billComponents/ConfirmationModalWindow";
 import DetailModalWindow from "../../components/billComponents/DetailModalWindow"
-import { faIgloo, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getDateNowForBdd, dateFormat } from '../../services/formatService'
 import { generateFormDataFromFeeLine } from '../../services/billsService'
@@ -44,7 +44,6 @@ export class BillsOverview extends PureComponent {
             bill.isSubmitted = true
             this.props.sendBill(bill)
         }
-
     }
 
     showDetailModalWindow = (id) => {
@@ -71,9 +70,7 @@ export class BillsOverview extends PureComponent {
                 <h1 className="italic text-3xl mb-5 text-center">Gestion des notes de frais</h1>
 
                 <div className={`flex flex-wrap  justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
-                    <svg className="animate-spin h-5 w-5 mr-3 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
+                    <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
                 </div>
 
                 <div className="">
@@ -89,7 +86,7 @@ export class BillsOverview extends PureComponent {
                         {this.props.bills !== undefined && this.props.user !== undefined ?
                             this.props.bills.map((bill, index) =>
                                 bill.spents.filter(s => s.validate == ValidateLevel[this.props.user.status]).length > 0 ?
-                                    <div className="mb-5" key={index}>
+                                    <div className="mb-5 w-2/3 lg:w-1/3 mx-2" key={index}>
                                         <BillCard bill={bill}
                                             sendBill={this.sendBill}
                                             showConfirmation={this.showConfirmationModalWindow}

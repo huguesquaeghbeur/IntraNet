@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,7 +43,9 @@ namespace IntraNetAPI.Controllers
         {
             Bill bill = _billRepository.FinById(billId);
             if (bill != null)
+            {
                 return Ok(bill);
+            }
             return NotFound(new { Message = "bill not found" });
         }
         [HttpGet("department/{id}")]

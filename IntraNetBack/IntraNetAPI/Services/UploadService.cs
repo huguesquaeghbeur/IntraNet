@@ -20,13 +20,13 @@ namespace IntraNetAPI.Services
 
         public string Upload(IFormFile file)
         {
-            string fileName = Guid.NewGuid().ToString();
+            string fileName = Guid.NewGuid().ToString()+"-"+file.FileName;
             string path = Path.Combine(Environment.CurrentDirectory, "pdf", fileName);
             MakeDir(Path.Combine(Environment.CurrentDirectory, "pdf"));
             Stream stream = System.IO.File.Create(path);
             file.CopyTo(stream);
             stream.Close();
-            return "pdf/" + fileName;
+            return fileName;
         }
     }
 }

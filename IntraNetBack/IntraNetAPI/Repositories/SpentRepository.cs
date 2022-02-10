@@ -23,12 +23,12 @@ namespace IntraNetAPI.Repositories
 
         public Spent FinById(int id)
         {
-            return _dataContext.Spents.Include(s=>s.Mission).Include(s=>s.Proofs).FirstOrDefault(s=>s.Id == id);
+            return _dataContext.Spents.Include(s=>s.Proofs).FirstOrDefault(s=>s.Id == id);
         }
 
         public IEnumerable<Spent> GetAll()
         {
-            return _dataContext.Spents.Include(s => s.Mission).Include(s => s.Proofs);
+            return _dataContext.Spents.Include(s => s.Proofs);
         }
 
         public bool Save(Spent element)
@@ -39,12 +39,12 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Spent> Search(Expression<Func<Spent, bool>> predicate)
         {
-            return _dataContext.Spents.Include(s => s.Mission).Include(s => s.Proofs).Where(predicate);
+            return _dataContext.Spents.Include(s => s.Proofs).Where(predicate);
         }
 
         public Spent SearchOne(Expression<Func<Spent, bool>> searchMethode)
         {
-            return _dataContext.Spents.Include(s => s.Mission).Include(s => s.Proofs).Where(searchMethode).FirstOrDefault();
+            return _dataContext.Spents.Include(s => s.Proofs).Where(searchMethode).FirstOrDefault();
         }
 
         public bool Update(Spent element)

@@ -42,20 +42,27 @@ export class BillCard extends PureComponent {
     }
     render() {
         return (
-            <div className="w-96 overflow-hidden rounded-lg shadow-lg ">
-                <div className="px-6 py-4">
-                    <h5 className="mb-3 text-xl font-semibold tracking-tight text-gray-800">{!this.props.bill.isSubmitted ? "En rédaction" : dateFormat(this.props.bill.submissionDate)}</h5>
+            <div className="overflow-hidden rounded-lg bg-gray-100">
+                <div className="">
+                    <div className="px-5 py-2 mb-3 ml-2 lg:ml-8 lg:flex lg:justify-between">
+                        <h5 className="text-xl font-semibold tracking-tight text-gray-800">{!this.props.bill.isSubmitted ? "En rédaction" : dateFormat(this.props.bill.submissionDate).slice(3)}</h5>
+                        {this.props.inManagement && this.state.collaborator !== undefined ?
+                            <p className="leading-normal lg:text-center text-gray-700">collaborateur : {this.state.collaborator.firstName} {this.state.collaborator.lastName}</p>
+                            : null}
+                    </div>
+                    <hr />
                     {!this.props.inManagement ?
-                        <div>
-                            <hr />
-                            <p className="leading-normal text-gray-700 ">{this.props.bill.spents !== null ? this.props.bill.spents.length > 1 ? `${this.props.bill.spents.length} lignes` : `${this.props.bill.spents.length} ligne` : null} de frais.</p>
+                        <div className="my-2 text-center lg:flex lg:justify-around">
+                            <p className="leading-normal text-gray-700 ">
+                                {this.props.bill.spents !== null ?
+                                    this.props.bill.spents.length > 1 ?
+                                        `${this.props.bill.spents.filter(s => s.validate === 4).length}/${this.props.bill.spents.length} lignes de frais validées` : `${this.props.bill.spents.length} ligne de frais`
+                                    : null}.</p>
                             <p className="leading-normal text-gray-700">Total : {this.state.total}€</p>
                         </div>
                         : null
                     }
-                    {this.props.inManagement && this.state.collaborator !== undefined ?
-                        <p className="leading-normal text-gray-700">{this.state.collaborator.firstName} {this.state.collaborator.lastName}</p>
-                        : null}
+
                     <div className="text-center">
 
                         {!this.props.bill.isSubmitted ?

@@ -1,5 +1,6 @@
 import axios from "axios"
 const baseUrl = "http://localhost:42515/intranet/v1"
+export const baseSpentUrl = "http://localhost:42515/intranet/v1/proof/"
 
 export const getAllBills = () => {
     return axios.get(baseUrl+"/bill")
@@ -49,6 +50,7 @@ export const getBillsForCFOApi = () => {
 }
 
 export const generateFormDataFromFeeLine = (feeLine) =>{
+    console.log(feeLine.advanceCash)
     const formData = new FormData()
     if(feeLine.billId !== undefined){
         formData.append("billId",feeLine.billId)
@@ -57,7 +59,7 @@ export const generateFormDataFromFeeLine = (feeLine) =>{
         for(let i =0; i<feeLine.proofs.length;i++)
             formData.append("proofs", feeLine.proofs[i])
     }
-    formData.append("missionId", 1)
+    formData.append("missionId", feeLine.missionId)
     formData.append("advanceCash", feeLine.advanceCash)
     formData.append("commentary", feeLine.commentary)
     formData.append("isExactAmount", feeLine.isExactAmount)
