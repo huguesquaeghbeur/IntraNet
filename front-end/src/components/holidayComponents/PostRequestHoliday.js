@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { postHolidayData } from '../../services/holidayData';
 import AlertComponent from '../toolComponents/AlertComponent';
-import { faCheckCircle, faPaperPlane, faSave, faWindowClose, faBackspace, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faPaperPlane, faSave, faWindowClose, faBackspace, faTrash, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import ButtonComponent from '../toolComponents/ButtonComponent';
 import { getUser } from '../../redux/actions/userAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { dateFormat } from '../../services/formatService';
 
 class PostRequestHoliday extends PureComponent {
     constructor(props) {
@@ -31,6 +32,26 @@ class PostRequestHoliday extends PureComponent {
         this.setState({
             [e.target.name]: e.target.value
         })
+        // if (this.state.startDate !== undefined && this.state.endDate !== undefined) {
+        //     this.setState({
+        //         halfDayBreakCount: (new Date(this.state.endDate) - new Date(this.state.startDate))
+        //     })
+        // }
+        console.log(dateFormat(this.state.startDate))
+        if (dateFormat(this.state.startDate) !== "Invalid Date" && dateFormat(this.state.endDate) !== "Invalid Date")
+        {
+            let oneDay = 24 * 60 * 60 * 1000;
+            this.setState({
+                halfDayBreakCount: Math.round((new Date(dateFormat(this.state.endDate)) - new Date(dateFormat(this.state.startDate))) / oneDay / 30).toString()
+            })
+        }
+        console.log(this.state.halfDayBreakCount)
+        // const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        // const firstDate = new Date(dateFormat(this.state.startDate));
+        // const secondDate = new Date(dateFormat(this.state.endDate));
+        // const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
+        // console.log(diffDays)
+
     }
 
     handleCancel = () => {
@@ -153,12 +174,19 @@ class PostRequestHoliday extends PureComponent {
                                         </div>
 
                                         {/* Will be calculated automatically with input form */}
-                                        <div>
-                                            <label htmlFor="halfDayBreakCount" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
+                                        {this.state.halfDayBreakCount !== undefined ?
                                             <div>
-                                                <input type="text" value={halfDayBreakCount} id="halfDayBreakCount" name="halfDayBreakCount" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                                <label htmlFor="halfDayBreakCount" className="block text-sm font-medium text-gray-700">Nombre(s) de demi-journée(s)</label>
+                                                <div>
+                                                    <input type="text" value={halfDayBreakCount} id="halfDayBreakCount" name="halfDayBreakCount" readOnly className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+                                                </div>
                                             </div>
-                                        </div>
+                                            :
+                                            <div className={`flex flex-wrap justify-center items-center space-x-4 ${this.props.isLoading ? null : "invisible"}`}>
+                                                <FontAwesomeIcon icon={faSpinner} className="animate-spin text-2xl" />
+                                            </div>
+                                        }
+
 
                                         {/* <div>
                                         <label htmlFor="commentary" className="block text-sm font-medium text-gray-700">Commentaires</label>
@@ -192,7 +220,7 @@ class PostRequestHoliday extends PureComponent {
                                                 <a href="#top">
                                                     {/* <ButtonComponent type="submit" color="bg-green-500" colorText="white"
                                                         body="Soumettre" logo={faPaperPlane} /> */}
-                                                        <button className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
+                                                    <button className="text-center h-10 px-5 m-2 text-gray-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800">
                                                         <FontAwesomeIcon icon={faPaperPlane} />
                                                     </button>
                                                 </a>

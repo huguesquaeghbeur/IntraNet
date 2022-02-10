@@ -1,7 +1,7 @@
 import { PureComponent } from "react";
 import { connect } from "react-redux";
 import { getUser } from "../redux/actions/userAction";
-import { faBaby, faCheck, faClock, faDollarSign, faFileMedical, faNotEqual, faTimesCircle, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { dateFormat } from '../services/formatService';
 
@@ -38,61 +38,6 @@ class Dashboard extends PureComponent {
                                         onClick={() => this.setState({ checked: false })} >Voir vos notes de frais</button>
                                     <h2 className="text-xl mb-5 text-center">Demande de congé</h2>
                                     <div className="flex justify-start grid grid-cols-1 gap-1">
-                                        {/* {userDash.holidays.map(u =>
-                                            <div key={u.id} className="m-2 p-2 md:px-7 xl:px-8 rounded-[20px] bg-white shadow-md hover:shadow-lg mb-8">
-                                                <div className="flex justify-between">
-                                                    <div>
-                                                        {(u.validation === 1) ? (
-                                                            <span className="text-sm px-3 bg-yellow-200 text-yellow-700 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation du CDS</span>
-                                                        ) : (u.validation === 2) ? (
-                                                            <div className="text-sm px-3 bg-orange-200 text-orange-600 rounded-full"><FontAwesomeIcon icon={faClock} /> en attente de validation RH</div>
-                                                        ) : (u.validation === 3) ? (
-                                                            <div className="text-sm px-3 bg-orange-400 text-orange-900 rounded-full"><FontAwesomeIcon icon={faCheck} /> en attente de validation DRH</div>
-                                                        ) : (u.validation === 4) ? (
-                                                            <div className="text-sm px-3 bg-green-200 text-green-800 rounded-full"><FontAwesomeIcon icon={faCheck} /> Validé</div>
-                                                        ) : (u.validation === 0) ? (
-                                                            <div className="text-sm px-3 bg-red-200 text-red-800 rounded-full"><FontAwesomeIcon icon={faTimesCircle} /> Refusé</div>
-                                                        ) : null}
-                                                    </div>
-                                                    <div className="rounded-xl bg-slate-300 text-slate-700 p-1 m-1">
-                                                        # {u.id}
-                                                    </div>
-                                                </div>
-                                                <div className="flex justify-center">
-                                                    <b>{userDash.firstName} {userDash.lastName}</b>
-                                                </div>
-                                                <div className="text-blue-500 pt-2 text-center">
-                                                    <b>
-                                                        {u.leaveType === 0 ? (
-                                                            <span>Congé payé <FontAwesomeIcon icon={faDollarSign} /></span>
-                                                        ) : (u.leaveType === 1) ? (
-                                                            <span>Congé maladie <FontAwesomeIcon icon={faFileMedical} /></span>
-                                                        ) : (u.leaveType === 2) ? (
-                                                            <span>Congé parental <FontAwesomeIcon icon={faBaby} /></span>
-                                                        ) : (u.leaveType === 3) ? (
-                                                            <span>Congé sans solde <FontAwesomeIcon icon={faNotEqual} /></span>
-                                                        ) : null}
-                                                    </b>
-                                                </div>
-                                                <div className="flex flex-col justify-around">
-                                                    <div className="pt-2 flex justify-center">
-                                                        Début : <b className="pl-1">{dateFormat(u.startDate)}</b>
-                                                    </div>
-                                                    <div className="flex justify-center">
-                                                        <b>{u.startOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="text-orange-500">Après-midi</div>}</b>
-                                                    </div>
-                                                    <div className="flex justify-center">
-                                                        Fin : <b className="pl-1">{dateFormat(u.endDate)}</b>
-                                                    </div>
-                                                    <div className="flex justify-center pb-2">
-                                                        <b>{u.endOnMorning === true ? <div className="text-yellow-500">Matin</div> : <div className="text-orange-500">Après-midi</div>}</b>
-                                                    </div>
-                                                    <div className="rounded-xl bg-slate-300 flex justify-center mt-4">
-                                                        Jours cumulés : <b>{(u.halfDayBreakCount / 2).toString()}</b>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )} */}
                                         {userDash.holidays.length > 0 ?
                                                 <div>
                                                     <table className="table-fixed border-collapse border border-slate-500 min-w-full">
