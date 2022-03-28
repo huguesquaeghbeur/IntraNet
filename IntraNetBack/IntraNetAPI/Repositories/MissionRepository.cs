@@ -1,9 +1,12 @@
-﻿using IntraNetAPI.Interfaces;
-using IntraNetAPI.Models;
-using IntraNetAPI.Tools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Web.Http.Results;
+using IntraNetAPI.Interfaces;
+using IntraNetAPI.Models;
+using IntraNetAPI.Tools;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntraNetAPI.Repositories
 {
@@ -11,16 +14,23 @@ namespace IntraNetAPI.Repositories
     {
         public MissionRepository(DataContext dataContext) : base(dataContext)
         {
+
+        }
+
+        public bool Delete(Mission element)
+        {
+            _dataContext.Missions.Remove(element);
+            return true;
         }
 
         public Mission FinById(int id)
         {
-            throw new NotImplementedException();
+            return _dataContext.Missions.Find(id);
         }
 
         public IEnumerable<Mission> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Missions;
         }
 
         public bool Save(Mission element)
@@ -30,17 +40,18 @@ namespace IntraNetAPI.Repositories
 
         public IEnumerable<Mission> Search(Expression<Func<Mission, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _dataContext.Missions.Where(predicate);
         }
 
         public Mission SearchOne(Expression<Func<Mission, bool>> searchMethode)
         {
             throw new NotImplementedException();
         }
-
+        
         public bool Update(Mission element)
         {
             throw new NotImplementedException();
         }
     }
 }
+

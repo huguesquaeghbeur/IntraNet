@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntraNetAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220113083026_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20220121130325_StatusMigration")]
+    partial class StatusMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,8 +40,14 @@ namespace IntraNetAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CollaboratorId")
+                    b.Property<int>("CollaboratorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsSubmitted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -59,6 +65,9 @@ namespace IntraNetAPI.Migrations
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("Department")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
@@ -71,10 +80,10 @@ namespace IntraNetAPI.Migrations
                     b.Property<int>("HalfDayBreak")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAdmin")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool>("IsChief")
+                    b.Property<bool>("IsAdmin")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
@@ -82,6 +91,9 @@ namespace IntraNetAPI.Migrations
 
                     b.Property<string>("Password")
                         .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -110,11 +122,20 @@ namespace IntraNetAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CollaboratorId")
+                    b.Property<int>("CollaboratorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("EndOnMorning")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("HalfDayBreakCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LeaveType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
@@ -218,7 +239,7 @@ namespace IntraNetAPI.Migrations
                     b.Property<bool>("IsExactAmount")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("MissionId")
+                    b.Property<int>("MissionId")
                         .HasColumnType("int");
 
                     b.Property<int>("Validate")
@@ -252,25 +273,27 @@ namespace IntraNetAPI.Migrations
                 {
                     b.HasOne("IntraNetAPI.Models.Collaborator", "Collaborator")
                         .WithMany("Bills")
-                        .HasForeignKey("CollaboratorId");
+                        .HasForeignKey("CollaboratorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Collaborator");
                 });
 
             modelBuilder.Entity("IntraNetAPI.Models.Collaborator", b =>
                 {
-                    b.HasOne("IntraNetAPI.Models.Department", "Department")
+                    b.HasOne("IntraNetAPI.Models.Department", null)
                         .WithMany("Collaborators")
                         .HasForeignKey("DepartmentId");
-
-                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("IntraNetAPI.Models.Holiday", b =>
                 {
                     b.HasOne("IntraNetAPI.Models.Collaborator", "Collaborator")
                         .WithMany("Holidays")
-                        .HasForeignKey("CollaboratorId");
+                        .HasForeignKey("CollaboratorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Collaborator");
                 });
@@ -314,7 +337,9 @@ namespace IntraNetAPI.Migrations
 
                     b.HasOne("IntraNetAPI.Models.Mission", "Mission")
                         .WithMany()
-                        .HasForeignKey("MissionId");
+                        .HasForeignKey("MissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Mission");
                 });

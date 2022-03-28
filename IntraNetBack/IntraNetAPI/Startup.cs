@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntraNetAPI.Models;
 using IntraNetAPI.Tools;
+
 
 namespace IntraNetAPI
 {
@@ -26,18 +28,26 @@ namespace IntraNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new Converters.DateTimeConverter());
+            });
             services.AddOurServices();
-            services.AddControllers();
+            
             services.AddCors(options =>
             {
-                options.AddPolicy("allConnections", buider =>
+                options.AddPolicy("allConnections", builder =>
                 {
-                    buider.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy("specialOrigin", builder =>
                 {
-                    builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                    builder.WithMethods("POST").WithOrigins("http://localhost:42515");
+                    //builder.WithMethods("GET").WithOrigins("https://localhost:5000");
+                    //builder.WithMethods("POST").WithOrigins("http://localhost:3000");
+                    //builder.WithMethods("PATCH").WithOrigins("http://localhost:3000");
+                    //builder.WithMethods("PUT").WithOrigins("http://localhost:3000");
+                    //builder.WithMethods("DELETE").WithOrigins("http://localhost:3000");
                 });
             });
         }
@@ -52,13 +62,23 @@ namespace IntraNetAPI
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseCors();
 
-
- 
-
             app.UseAuthorization();
+            //app.UseCors(c => c
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod()
+            //    .SetIsOriginAllowed(origin => true)
+            //    .AllowCredentials());
 
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{Controller=Mission}/{Action=Getcollabs}/{id?}");
+            //});
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

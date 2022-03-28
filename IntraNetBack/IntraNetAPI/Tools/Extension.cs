@@ -1,6 +1,8 @@
-﻿using IntraNetAPI.Interfaces;
+using IntraNetAPI.Interfaces;
+using IntraNetAPI.Tools;
 using IntraNetAPI.Models;
 using IntraNetAPI.Repositories;
+using IntraNetAPI.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IntraNetAPI.Tools
@@ -11,13 +13,18 @@ namespace IntraNetAPI.Tools
         {
             services.AddDbContext<DataContext>();
             services.AddScoped<IRepository<Bill>, BillRepository>();
-            services.AddScoped<IRepository<Collaborator>, CollaboratorRepository>();
+            services.AddScoped<IRepository<Collaborator>, collaboratorRepository>();
             services.AddScoped<IRepository<Department>, DepartmentRepository>();
             services.AddScoped<IRepository<Holiday>, HolidayRepository>();
             services.AddScoped<IRepository<Info>, InfoRepository>();
             services.AddScoped<IRepository<Mission>, MissionRepository>();
             services.AddScoped<IRepository<Proof>, ProofRepository>();
             services.AddScoped<IRepository<Spent>, SpentRepository>();
+            services.AddTransient<UploadService>();
+            services.AddScoped<LoginService>();
+            services.AddScoped<FormatService>();
+            services.AddScoped<HolidayService>();
         }
     }
 }
+
